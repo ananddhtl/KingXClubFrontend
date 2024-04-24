@@ -3,26 +3,23 @@ import { Modal } from "@/components/modal/Modal";
 import { cn } from "@/utils/cn";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
+import { IUser } from "..";
 
 interface IHeader {
     classname?: string;
+    user: IUser
+    setUser: React.Dispatch<React.SetStateAction<IUser>>
+    showLoginModal: boolean
+    setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-interface IUser {
-    amount: number,
-    email: string, 
-    name: string, 
-    phone: string
-
-} 
-const Header: FC<IHeader> = ({ classname }) => {
+const Header: FC<IHeader> = ({ classname, user, setUser, showLoginModal, setShowLoginModal }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [showLoginModal, setShowLoginModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [user, setUser] = useState<null | IUser>(null);
+    console.log({showLoginModal});
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);

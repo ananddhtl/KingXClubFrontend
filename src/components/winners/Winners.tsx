@@ -1,11 +1,29 @@
+import { getLuckyWinners } from '@/api/api';
 import { cn } from '@/utils/cn';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface WinnersProps {
   className?: string
 }
 
 export const Winners: FC<WinnersProps> = ({ className }) => {
+    const [winners, setWinners] = useState([])
+console.log({winners});
+
+    useEffect(() => {
+        (async() => {
+            try{
+                const winners = await getLuckyWinners()
+                console.log({winners});
+                setWinners(winners.data)
+            } catch (error) {
+                console.log(`Error fetching lucky winner: ${error}`);
+                toast(error.response?.data?.message || 'Unknown error')
+            }
+        })()
+    }, [])
+    
   return (
     <div className={cn(className)}>
      <section className="top-player-section" id="top-player">
@@ -33,6 +51,8 @@ export const Winners: FC<WinnersProps> = ({ className }) => {
                 <div className="col">
                     <div className="swiper swiper-top-player">
                         <div className="swiper-wrapper my-1">
+                            {winners.map((winner) => (
+
                             <div className="swiper-slide">
                                 <div className="player-card d-grid gap-6 p-6 card-tilt" data-tilt>
                                     <div className="player-info-area d-between w-100">
@@ -40,133 +60,40 @@ export const Winners: FC<WinnersProps> = ({ className }) => {
                                             <div className="player-img position-relative">
                                                 <img className="w-100 rounded-circle" src="assets/img/top-player1.png"
                                                     alt="player"/>
-                                                <span
-                                                    className="player-status position-absolute end-0 bottom-0 tcn-1 fs-xs d-center">1</span>
-                                            </div>
+                                               </div>
                                             <div>
-                                                <h5 className="player-name tcn-1 mb-1 title-anim">Sompal KC</h5>
+                                                <h5 className="player-name tcn-1 mb-1 title-anim">{winner.name}</h5>
                                             </div>
                                         </div>
-                                        <form action="#">
-                                            <button className="follow-btn box-style">
-                                                <i className="ti ti-user-plus fs-xl"></i>
-                                            </button>
-                                        </form>
                                     </div>
                                     <div className="player-score-details d-flex align-items-center flex-wrap gap-3">
                                         <div className="score">
-                                            <h6 className="score-title tcn-6 mb-2">Score</h6>
-                                            <ul className="d-flex align-items-center gap-1 tcp-2">
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-half-filled"></i></li>
-                                                <li><i className="ti ti-star"></i></li>
-                                            </ul>
+                                            <h6 className="score-title tcn-6 mb-2">Won</h6>
+                                            <span className="tcn-1 fs-sm">
+                                            <i className="ti ti-diamond"></i>Rs. {winner.returns}</span>
+                                            
                                         </div>
                                         <div className="rank">
-                                            <h6 className="rank-title tcn-6 mb-2">Rank</h6>
+                                            <h6 className="rank-title tcn-6 mb-2">Ticket Number</h6>
                                             <span className="tcn-1 fs-sm">
-                                                <i className="ti ti-diamond"></i>Number: 15</span>
+                                                <i className="ti ti-diamond"></i>Ticket: {winner.ticket}</span>
                                         </div>
                                         
                                         <div className="team">
-                                            <h6 className="team-title tcn-6 mb-2">Biratnagar</h6>
+                                            <h6 className="team-title tcn-6 mb-2">{winner.place}</h6>
                                             <span className="tcs-1 fs-sm text-uppercase"> City</span>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="swiper-slide">
-                                <div className="player-card d-grid gap-6 p-6 card-tilt" data-tilt>
-                                    <div className="player-info-area d-between w-100">
-                                        <div className="player-info d-flex align-items-center gap-4">
-                                            <div className="player-img position-relative">
-                                                <img className="w-100 rounded-circle" src="assets/img/top-player2.png" alt="player"/>
-                                                <span
-                                                    className="player-status position-absolute end-0 bottom-0 tcn-1 fs-xs d-center">2</span>
-                                            </div>
-                                            <div>
-                                                <h5 className="player-name tcn-1 mb-1 title-anim">
-                                                    Avisek Chaudhary
-                                                </h5>
-                                                <span className="tcn-6 fs-sm">Duelist</span>
-                                            </div>
-                                        </div>
-                                        <form action="#">
-                                            <button className="follow-btn box-style">
-                                                <i className="ti ti-user-plus fs-xl"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div className="player-score-details d-flex align-items-center flex-wrap gap-3">
-                                        <div className="score">
-                                            <h6 className="score-title tcn-6 mb-2">Score</h6>
-                                            <ul className="d-flex align-items-center gap-1 tcp-2">
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-half-filled"></i></li>
-                                                <li><i className="ti ti-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div className="rank">
-                                            <h6 className="rank-title tcn-6 mb-2">Rank</h6>
-                                            <span className="tcn-1 fs-sm">
-                                                <i className="ti ti-diamond"></i> Number: 20</span>
-                                        </div>
-                                        
                                         <div className="team">
-                                            <h6 className="team-title tcn-6 mb-2">POkhara</h6>
-                                            <span className="tcs-1 fs-sm text-uppercase"> City</span>
+                                            <h6 className="team-title tcn-6 mb-2">{new Date(winner.time).toLocaleString("default", {
+                                                                month: "long",
+                                                                day: "2-digit",
+                                                            })}</h6>
+                                            <span className="tcs-1 fs-sm text-uppercase"> Date</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="swiper-slide">
-                                <div className="player-card d-grid gap-6 p-6 card-tilt" data-tilt>
-                                    <div className="player-info-area d-between w-100">
-                                        <div className="player-info d-flex align-items-center gap-4">
-                                            <div className="player-img position-relative">
-                                                <img className="w-100 rounded-circle" src="assets/img/top-player3.png" alt="player" />
-                                                <span
-                                                    className="player-status position-absolute end-0 bottom-0 tcn-1 fs-xs d-center">3</span>
-                                            </div>
-                                            <div>
-                                                <h5 className="player-name tcn-1 mb-1 title-anim">Ramesh Budhathoki</h5>
-                                                <span className="tcn-6 fs-sm">Duelist</span>
-                                            </div>
-                                        </div>
-                                        <form action="#">
-                                            <button className="follow-btn box-style">
-                                                <i className="ti ti-user-plus fs-xl"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div className="player-score-details d-flex align-items-center flex-wrap gap-3">
-                                        <div className="score">
-                                            <h6 className="score-title tcn-6 mb-2">Score</h6>
-                                            <ul className="d-flex align-items-center gap-1 tcp-2">
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-filled"></i></li>
-                                                <li><i className="ti ti-star-half-filled"></i></li>
-                                                <li><i className="ti ti-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div className="rank">
-                                            <h6 className="rank-title tcn-6 mb-2">Rank</h6>
-                                            <span className="tcn-1 fs-sm">
-                                                <i className="ti ti-diamond"></i> Number: 5</span>
-                                        </div>
-                                       
-                                        <div className="team">
-                                            <h6 className="team-title tcn-6 mb-2">Kathmandu</h6>
-                                            <span className="tcs-1 fs-sm text-uppercase">City</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                             
                         </div>
                     </div>

@@ -7,6 +7,7 @@ const baseURL = axios.create({
     baseURL: import.meta.env.VITE_BASEAPP_API_SERVER,
     headers: {
         "Content-Type": "application/json",
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || ''
     },
 });
 

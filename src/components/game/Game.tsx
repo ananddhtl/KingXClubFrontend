@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "../modal/Modal";
-import { buyOneTicket } from "@/api/api";
+import { buyOneTicket, getTodayTicketStatus } from "@/api/api";
 import toast from "react-hot-toast";
+import { useProfileContext } from "../layout";
 
 export const Game = () => {
     const balance =1000
     const [showTicketModal, setShowTicketModal] = useState<null | string>(null);
+    const {user, setShowLoginModal} = useProfileContext()
     const [isLoading, setIsLoading] = useState(false);
-    const [time, setTime] = useState("");
-    const [amount, setAmount] = useState("");
-    const [digit, setDigit] = useState(1);
-    const [ticket, setTicket] = useState("");
-    console.log(showTicketModal, !!showTicketModal);
-    
-
-    const events = [
+    const [data, setData] = useState({
+        digit: null,
+        ticket: null,
+        amount: null,
+        time: null
+    });
+    const [events, setEvents] = useState([
         {
             place: "Pokhara",
             image: "assets/img/pok.jpg",
@@ -36,17 +37,68 @@ export const Game = () => {
             totalPlayers: 13,
             time: ['09:00', '12:00', '15:00', '21:00']
         },
-    ];
-    const handleChange = (e) => {
-        console.log('ok');
-        
-        console.log(e.target);
-    };
+    ])
 
+    // const events = [
+    //     {
+    //         place: "Pokhara",
+    //         image: "assets/img/pok.jpg",
+    //         totalAmount: 10000000,
+    //         totalPlayers: 13,
+    //         time: ['09:00', '12:00', '15:00', '21:00']
+    //     },
+    //     {
+    //         place: "Kathmandu",
+    //         image: "assets/img/baratnagar.jpg",
+    //         totalAmount: 1000,
+    //         totalPlayers: 13,
+    //         time: ['09:00', '12:00', '15:00', '21:00']
+    //     },
+    //     {
+    //         place: "Butwal",
+    //         image: "assets/img/ktm.jpg",
+    //         totalAmount: 1000,
+    //         totalPlayers: 13,
+    //         time: ['09:00', '12:00', '15:00', '21:00']
+    //     },
+    // ];
+    function handleChange (e: any, dataFor: string) {
+        
+        if(dataFor === 'digit'){
+            const ticketDropdown = document.querySelectorAll('.ticket-dropdown')
+            ticketDropdown.forEach((element: HTMLElement) => element.style.display = 'none')
+            for (let index = 0; index < Number(e.target.value); index++) {
+                (ticketDropdown[index] as HTMLElement).style.display = 'block'
+            }
+        }
+        
+        if(dataFor === 'ticket'){
+            const selectElements = document.querySelectorAll("select");
+            const selectedValues = [];
+            // let selectedValue
+            
+            selectElements.forEach(function(select) {
+                // selectedValue = select.value;
+                selectedValues.push(select.value);
+            });
+            // console.log(selectedValues, selectedValue);
+            
+            const ticket = selectedValues.join('').slice(0, Number(data.digit));
+            setData({...data, [dataFor]: Number(ticket)})
+            return
+        }
+        setData({...data, [dataFor]: Number(e.target.value)})
+
+    }
+    console.log({data});
+    
     const buyTicket = async (): Promise<any> => {
+        if(!data.amount) return toast('Please entery your bet amount')
+        if(!data.time) return toast('Please select from above time')
+        if(!data.ticket) return toast('Please choose a number')
         try {
             setIsLoading(true);
-            const res = await buyOneTicket({ tickect: "123" });
+            const res = await buyOneTicket({ ...data, place: showTicketModal });
             console.log(res);
 
             toast(res.data?.message || "Unknown error");
@@ -60,6 +112,26 @@ export const Game = () => {
             setShowTicketModal(null);
         }
     };
+
+    useEffect(() => {
+        (async() => {
+            try{
+                const status = await getTodayTicketStatus()
+                console.log({status});
+                setEvents(prevItems =>
+                    prevItems.map(item => {
+                        const stat = status.data?.find(({_id}) => _id === item.place)
+                        console.log({stat});
+                        
+                        return {...item, totalAmount: stat?.totalAmount || 0, totalPlayers: stat?.count || 0}
+                    }))
+                
+            } catch (error) {
+                console.log(`Error logging user: ${error}`);
+                toast(error.response?.data?.message || 'Unknown error')
+            }
+        })()
+    }, [])
     return (
         <>
             <section className="tournament-section pb-120" id="tournament-hero">
@@ -92,7 +164,13 @@ export const Game = () => {
                                 {events.map((event) => (
                                     <div
                                         role="button"
-                                        onClick={() => setShowTicketModal(event.place)}
+                                        onClick={() => {
+                                            if(!user) {
+                                                setShowLoginModal(true)
+                                                return
+                                            }
+                                            setShowTicketModal(event.place)
+                                        }}
                                         className="col-xl-4 col-md-6"
                                     >
                                         <div className="tournament-card p-xl-4 p-3 bgn-4">
@@ -210,22 +288,12 @@ export const Game = () => {
                         <div className="flex flex-col items-center justify-center">
                             <p>Select Time</p>
                             <div className="btn-group gap-3" role="group" aria-label="Bet Date">
-                                {events.find((event) => event.place === showTicketModal).time.map((timestamp) => (
-                                    <>
-                                <input
-                                    className="btn-check bet-date"
-                                    type="radio"
-                                    key={timestamp}
-                                    name="betDate"
-                                    value={new Date().setHours(Number(timestamp.split(':')[0]), Number(timestamp.split(':')[1]))}
-                                    // autoComplete="off"
-                                    // required
-                                    />
-                                <label 
-                                    onClick={handleChange}
-                                    className="btn rounded-pill">{timestamp}{" "}{Number(timestamp.split(':')[0]) > 12 ? 'PM' : 'AM'}</label>
-                                    </>
-                                ))}
+                            {events.find((event) => event.place === showTicketModal).time.map((timestamp, index) => (
+                                <>
+                                <input onChange={(e) => handleChange(e, 'time')} className="btn-check bet-date" type="radio" name="betDate" id={`betDate${index}`} value={new Date().setHours(Number(timestamp.split(':')[0]), Number(timestamp.split(':')[1]))} autoComplete="off" required />
+                                <label className="btn rounded-pill" htmlFor={`betDate${index}`}>{timestamp}{" "}{Number(timestamp.split(':')[0]) > 12 ? 'PM' : 'AM'}</label>
+                                </>
+                            ))}
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center mt-8">
@@ -238,7 +306,8 @@ export const Game = () => {
                                     id="betAmount"
                                     name="betAmount"
                                     min="1"
-                                    max="100"
+                                    max={balance}
+                                    onChange={(e) => handleChange(e, 'amount')}
                                     required
                                 />
                             </div>
@@ -254,44 +323,47 @@ export const Game = () => {
                                 className="btn-group gap-3"
                                 role="group"
                                 aria-label="ticket number"
-                            >
-                                <input
+                            > <input
+                                 onChange={(e) => handleChange(e, 'digit')}
                                     className="btn-check"
                                     type="radio"
                                     name="ticket"
-                                    id="ticket1"
+                                    id="ticketDigit1"
                                     defaultChecked
                                     value="1"
                                     autoComplete="off"
                                     required
                                 />
-                                <label className="btn rounded-pill">Single</label>
+                                <label htmlFor="ticketDigit1" className="btn rounded-pill">Single</label>
 
                                 <input
+                                 onChange={(e) => handleChange(e, 'digit')}
                                     className="btn-check"
                                     type="radio"
                                     name="ticket"
-                                    id="ticket2"
+                                    id="ticketDigit2"
                                     value="2"
                                     autoComplete="off"
                                     required
                                 />
-                                <label className="btn rounded-pill">Double</label>
+                                <label htmlFor="ticketDigit2" className="btn rounded-pill">Double</label>
 
                                 <input
+                                 onChange={(e) => handleChange(e, 'digit')}
                                     className="btn-check"
                                     type="radio"
                                     name="ticket"
-                                    id="ticket3"
+                                    id="ticketDigit3"
                                     value="3"
                                     autoComplete="off"
                                     required
                                 />
-                                <label className="btn rounded-pill">Triple</label>
+                                <label htmlFor="ticketDigit3" className="btn rounded-pill">Triple</label>
                             </div>
                             <div className="flex items-center space-x-2 mt-8">
                                 <select
                                     id="ticket3"
+                                    onChange={(e) => handleChange(e, 'ticket')}
                                     className="ticket-dropdown w-12 h-8 border rounded-md outline-none text-orange-500"
                                 >
                                     <option value="0">0</option>
@@ -307,6 +379,7 @@ export const Game = () => {
                                 </select>
                                 <select
                                     id="ticket2"
+                                    onChange={(e) => handleChange(e, 'ticket')}
                                     className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
                                 >
                                     <option value="0">0</option>
@@ -322,6 +395,7 @@ export const Game = () => {
                                 </select>
                                 <select
                                     id="ticket1"
+                                    onChange={(e) => handleChange(e, 'ticket')}
                                     className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
                                 >
                                     <option value="0">0</option>
@@ -339,17 +413,18 @@ export const Game = () => {
                             <input
                                 type="number"
                                 className="form-control hidden"
+                                onChange={(e) => handleChange(e, 'ticket')}
                                 id="ticketNumber"
                                 name="ticketNumber"
                                 required
                             />
                         </div>
-                        <h4
+                        {/* <h4
                             id="bet-city-title"
                             className="bet-city-title tcn-1 mb-1 cursor-scale growDown title-anim font-bold text-xl"
                         >
                             Returns
-                        </h4>
+                        </h4> */}
                     </form>
                 </Modal>
             )}
