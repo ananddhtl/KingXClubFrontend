@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  width: 100dvw;
+  height: 100dvh;
+}
