@@ -1,4 +1,4 @@
-export const routes = { INDEX: '/' }
+export const routes = { INDEX: '/', ADMIN: '/admin' }
 
 export const EXTERNAL_LINKS = {
     TWITTER: 'https://twitter.com/cedro_finance',

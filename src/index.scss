@@ -2,12 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
+  scroll-behavior: smooth;
   margin: 0;
   padding: 0;
   overflow: auto;
   width: 100dvw;
   height: 100dvh;
+}
+
+@layer utilities {
+
+  .scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #fff;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #ddb0b0;
+    border-radius: 100vh;
+    border: 3px solid #fff;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #000;
+    cursor: pointer;
+  }
 }

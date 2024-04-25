@@ -20,17 +20,31 @@ export const getLuckyWinners = () => {
     });
 };
 
-// export const getTodayTicketStatus = (address: string) => {
-//     return baseURL.get("/ticket/today", {
-//         params: { address },
-//     });
-// };
-
-export const logIn = (payload: any) => {
-    return baseURL.post("/auth/login", payload);
+export const getTodaysTicket = () => {
+    return baseURL.get("/ticket/today/all", {
+    });
 };
 
-export const register = (payload: any) => {
+
+export const getAllResult = () => {
+    return baseURL.get("/result/all", {
+    });
+};
+
+// export const getTodayTicketStatus = (address: string) => {
+    //     return baseURL.get("/ticket/today", {
+        //         params: { address },
+        //     });
+        // };
+        
+        export const logIn = (payload: any) => {
+            return baseURL.post("/auth/login", payload);
+        };
+        
+        export const publishResultAPI = (payload: any) => {
+            return baseURL.post("/result/publish", payload);
+        };
+        export const register = (payload: any) => {
     return baseURL.post("/auth/register", payload);
 };
 

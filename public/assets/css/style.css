@@ -3374,7 +3374,7 @@ ul li {
     border: none;
 }
 .panel .panel-heading{
-    background: #00324a;
+    background: #b3521a;
     padding: 20px 40px;
     border-radius: 0;
     margin: 0 0;
@@ -3407,7 +3407,7 @@ ul li {
 }
 .panel .panel-body .table tbody tr:hover{ background-color: rgba(0,0,0,0.03); }
 .panel .panel-body .table tbody tr td{
-    color: #555;
+    color: #161616;
     font-size: 18px;
     padding: 12px 12px;
     vertical-align: middle;

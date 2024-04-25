@@ -7,7 +7,7 @@ interface ContactsProps {
 
 export const Contacts: FC<ContactsProps> = ({ className }) => {
   return (
-    <div className={cn(className)}>
+    <div id="contactus" className={cn(className)}>
      <div className="call-to-action pt-120 pb-120 bgn-4 overflow-x-hidden" id="cta">
         <div className="container">
             <div className="row justify-content-between g-6">

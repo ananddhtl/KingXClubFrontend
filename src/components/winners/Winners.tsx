@@ -25,7 +25,7 @@ console.log({winners});
     }, [])
     
   return (
-    <div className={cn(className)}>
+    <div id='lucky-winner' className={cn(className)}>
      <section className="top-player-section" id="top-player">
         <div className="sword-area">
             <img className="w-100" src="assets/img/sword.png" alt="sword" />

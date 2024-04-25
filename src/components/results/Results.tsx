@@ -1,105 +1,142 @@
-import { cn } from '@/utils/cn';
-import { FC } from 'react';
+import { getAllResult } from "@/api/api";
+import { cn } from "@/utils/cn";
+import { FC, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface ResultsProps {
-  className?: string
+    className?: string;
 }
 
 export const Results: FC<ResultsProps> = ({ className }) => {
-  return (
-    <div className={cn(className)}>
-     <section className="next-level-gaming-section pt-120 pb-120" id="next-level-gaming">
-        <div className="red-ball bottom-50"></div>
-        <div className="container">
-            <div className="row justify-content-between mb-15">
-                <div className="col-lg-6 col-sm-10">
-                    <h2 className="display-four tcn-1 cursor-scale growUp title-anim"><span className="d-block">Result
-                        </span>Chart</h2>
-                </div>
-            </div>
-            </div>
-            <div className="row g-6">
+    const [results, setResults] = useState([]);
+    console.log({ results });
 
-
-        <div className="col-md-12">
-            <div className="panel">
-                <div className="panel-heading">
-                    <div className="row">
-                        <div className="col col-sm-5 col-xs-12">
-                            <h4 className="title">Result <span>List</span></h4>
+    useEffect(() => {
+        (async () => {
+            try {
+                const results = await getAllResult();
+                console.log({ results });
+                setResults(results.data);
+            } catch (error) {
+                console.log(`Error fetching lucky winner: ${error}`);
+                toast(error.response?.data?.message || "Unknown error");
+            }
+        })();
+    }, []);
+    return (
+        <div id="results" className={cn(className)}>
+            <section className="next-level-gaming-section pt-120 pb-120" id="next-level-gaming">
+                <div className="red-ball bottom-50"></div>
+                <div className="container">
+                    <div className="row justify-content-between mb-15">
+                        <div className="col-lg-6 col-sm-10">
+                            <h2 className="display-four tcn-1 cursor-scale growUp title-anim">
+                                <span className="d-block">Result</span>Chart
+                            </h2>
                         </div>
                     </div>
                 </div>
-                <div className="panel-body table-responsive">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr className="active">
-                                <th>Date</th>
-                                <th>Kathmandu</th>
-                                <th>Pokhara</th>
-                                <th>Biratnagar</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>April 15, 2024</td>
-                                <td>54</td>
-                                <td>31</td>
-                                <td><span className="label label-success">845</span></td>
-                                
-                            </tr>
-                            <tr>
-                                <td>April 15, 2024</td>
-                                <td>4</td>
-                                <td>22</td>
-                                <td>85</td>
-                            </tr>
-                            <tr>
-                                <td>April 15, 2024</td>
-                                <td>54</td>
-                                <td>26</td>
-                                <td>55</td>
-                            </tr>
-                            <tr>
-                                <td>April 15, 2024</td>
-                                <td>59</td>
-                                <td>26</td>
-                                <td>92</td>
-                            </tr>
-                            <tr>
-                                <td>April 15, 2024</td>
-                                <td>64</td>
-                                <td>20</td>
-                                <td>32</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="panel-footer">
-                    <div className="row">
-                        <div className="col-lg-11">
-                            <ul className="pagination pull-right">
-                                <li className="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul>
+                <div className="row g-6">
+                    <div className="col-md-12">
+                        <div className="panel">
+                            <div className="panel-heading ">
+                                <div className="row">
+                                    <div className="col col-sm-5 col-xs-12">
+                                        <h4 className="title">
+                                            Result <span>List</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-body table-responsive overflow-scroll scrollbar">
+                                <table className="table table-hover table-auto">
+                                    <thead>
+                                        <tr className="active">
+                                            <th>Date</th>
+                                            <th>Place</th>
+                                            <th>Ticket</th>
+                                            <th>Winners</th>
+                                            <th>Total Amount Distributed</th>
+                                            <th>Total Amount collected</th>
+                                            <th>Total ticket sold</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {results.length > 0 ? (
+                                            <>
+                                                {results.map((result) => (
+                                                    <tr>
+                                                        <td>
+                                                            {new Date(result.time).toLocaleString(
+                                                                "default",
+                                                                {
+                                                                    month: "long",
+                                                                    year: "numeric",
+                                                                    day: "2-digit",
+                                                                    hour: "numeric",
+                                                                    minute: "numeric",
+                                                                }
+                                                            )}
+                                                        </td>
+                                                        <td>{result.place}</td>
+                                                        <td>
+                                                            <span className="label label-success">
+                                                                {result.result}
+                                                            </span>
+                                                        </td>
+                                                        <td>{result.winnerCount}</td>
+                                                        <td>{result.totalDistributedAmount}</td>
+                                                        <td>{result.totalCollectedAmount}</td>
+                                                        <td>{result.ticketCount}</td>
+                                                    </tr>
+                                                ))}
+                                            </>
+                                        ) : (
+                                            <tr>
+                                                <td />
+                                                <td />
+                                                <td />
+                                                <td />
+                                                <td
+                                                    aria-colspan={5}
+                                                    className="bg-white text-orange-500"
+                                                >
+                                                    No data found
+                                                </td>
+                                                <td />
+                                                <td />
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {/* <div className="panel-footer">
+                                <div className="row">
+                                    <div className="col-lg-11">
+                                        <ul className="pagination pull-right">
+                                            <li className="active">
+                                                <a href="#">1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">2</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">3</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">4</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">5</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
-                            <div className="col-lg-1">
-                            <ul className="pagination visible-xs pull-right">
-                                <li><a href="#"> 1 </a></li>
-                                <li><a href="#"> 2 </a></li>
-                            </ul>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-
-            </div>
-        </div>
-    </section>
-    </div>
-  );
+    );
 };

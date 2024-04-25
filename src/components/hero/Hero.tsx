@@ -26,7 +26,7 @@ export const Hero: FC<HeroProps> = ({ className }) => {
         <div className="rotate-award">
             <img className="w-100" src="assets/img/award.png" alt="award" />
         </div>
-        <div className="container pt-120 pb-15">
+        <div className="container pt-12 md:pt-36 md:pb-10">
             <div className="row g-6 justify-content-between">
                 <div className="col-lg-8 col-md-8 col-sm-8">
                     <div className="hero-content">
