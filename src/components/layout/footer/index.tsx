@@ -1,4 +1,5 @@
 import { cn } from "@/utils/cn";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { FC } from "react";
 
 interface IFooter {
@@ -21,19 +22,19 @@ const Footer: FC<IFooter> = ({ classname }) => {
                         <div className="social-links">
                             <ul className="d-flex align-items-center gap-3 flex-wrap">
                                 <li>
-                                    <a href="#"><i className="ti ti-brand-facebook fs-2xl"></i></a>
+                                    <a href="#"><i className="ti ti-brand-facebook fs-2xl"><FaFacebook/></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i className="ti ti-brand-twitter fs-2xl"></i></a>
+                                    <a href="#"><i className="ti ti-brand-twitter fs-2xl"><FaTwitter/></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i className="ti ti-brand-youtube fs-2xl"></i></a>
+                                    <a href="#"><i className="ti ti-brand-youtube fs-2xl"><FaYoutube/></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i className="ti ti-brand-linkedin fs-2xl"></i></a>
+                                    <a href="#"><i className="ti ti-brand-linkedin fs-2xl"><FaLinkedin/></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i className="ti ti-brand-instagram fs-2xl"></i></a>
+                                    <a href="#"><i className="ti ti-brand-instagram fs-2xl"><FaInstagram/></i></a>
                                 </li>
                             </ul>
                         </div>

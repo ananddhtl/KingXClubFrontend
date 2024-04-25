@@ -470,26 +470,63 @@ export const Game = () => {
                         </form>
                         <div className="border-2" />
                         <div className="flex flex-col items w-full">
+                            <div className="mb-2">Choose ticket</div>
 
-                        <div>Choose ticket</div>
-                        <br/>
-                        {["1", "2", "3"].map((number, index) => (
-                            <>
-                                <input
-                                    onChange={(e) => handleChange(e, "time")}
-                                    className="btn-check bet-date"
-                                    type="radio"
-                                    name="betDate"
-                                    id={`betDate${index}`}
-                                    value={number}
-                                    autoComplete="off"
-                                    required
+                            {/* <br /> */}
+
+                            <div className="flex flex-row justify-around">
+                            <div className="justify-center flex flex-col">
+                            <label htmlFor="ticketSelect" className="form-label">
+                                 2-Digit Ticket
+                            </label>
+                            <select
+                                id="ticketSelect"
+                                className="ticket-dropdown w-24 border rounded-md outline-none text-orange-500"
+                            >
+                                <option value="">Select</option>
+                                {Array.from({ length: 90 }, (_, i) => i + 10).map((number) => (
+                                    <option key={number} value={number}>
+                                        {number}
+                                    </option>
+                                ))}
+                            </select>
+                            </div>
+                            <div className="justify-center flex flex-col">
+                            <label htmlFor="ticketSelect" className="form-label">
+                                 3-Digit Ticket
+                            </label>
+                            <select
+                                id="ticketSelect"
+                                className="ticket-dropdown w-24 border rounded-md outline-none text-orange-500"
+                            >
+                                <option value="">Select </option>
+                                {Array.from({ length: 900 }, (_, i) => i + 100).map((number) => (
+                                    <option key={number} value={number}>
+                                        {number}
+                                    </option>
+                                ))}
+                            </select>
+                            </div>
+                            </div>
+
+
+                            {/* {["1", "2", "3"].map((number, index) => (
+                                <>
+                                    <input
+                                        onChange={(e) => handleChange(e, "time")}
+                                        className="btn-check bet-date"
+                                        type="radio"
+                                        name="betDate"
+                                        id={`betDate${index}`}
+                                        value={number}
+                                        autoComplete="off"
+                                        required
                                     />
-                                <label className="btn rounded-pill" htmlFor={`betDate${index}`}>
-                                    {number}
-                                </label>
-                            </>
-                        ))}
+                                    <label className="btn rounded-pill" htmlFor={`betDate${index}`}>
+                                        {number}
+                                    </label>
+                                </>
+                            ))} */}
                         </div>
                     </div>
                 </Modal>
