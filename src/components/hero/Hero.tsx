@@ -35,7 +35,7 @@ export const Hero: FC<HeroProps> = ({ className }) => {
                             <li>Earn</li>
                             <li>Enjoy</li>
                         </ul>
-                        <h1 className="hero-title display-one tcn-1 cursor-scale growUp mb-10">
+                        <h1 className="hero-title text-2xl md:text-3xl lg:text-5xl xl:text-5xl display-one tcn-1 cursor-scale growUp mb-10">
                             Choose your 
                             <span className="d-block tcp-1">Lucky</span>
                             Number

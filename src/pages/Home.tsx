@@ -7,6 +7,7 @@ import { UserPopup } from "@/components/user-popup/UserPopup"
 import { Winners } from "@/components/winners/Winners"
 import { HelmetProvider } from "react-helmet-async"
 import { Toaster } from "react-hot-toast"
+import BottomNavbar from '../components/DrawerNav/BottomNavbar'
 
 
 export const Home = () => {
@@ -35,5 +36,6 @@ return (
         bottom: 20,
         right: 20,
       }}/>
+      <BottomNavbar/>
     </HelmetProvider>
 )}
