@@ -7,47 +7,41 @@ const baseURL = axios.create({
     baseURL: import.meta.env.VITE_BASEAPP_API_SERVER,
     headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || ''
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}` || "",
     },
 });
 
 export const getTodayTicketStatus = () => {
-    return baseURL.get("/ticket/today", {
-    });
+    return baseURL.get("/ticket/today", {});
 };
 export const getLuckyWinners = () => {
-    return baseURL.get("/ticket/lucky-winners", {
-    });
+    return baseURL.get("/ticket/lucky-winners", {});
 };
 
 export const getTodaysTicket = () => {
-    return baseURL.get("/ticket/today/all", {
-    });
+    return baseURL.get("/ticket/today/all", {});
 };
 
-
 export const getAllResult = () => {
-    return baseURL.get("/result/all", {
-    });
+    return baseURL.get("/result/all", {});
 };
 
 // export const getTodayTicketStatus = (address: string) => {
-    //     return baseURL.get("/ticket/today", {
-        //         params: { address },
-        //     });
-        // };
-        
-        export const logIn = (payload: any) => {
-            return baseURL.post("/auth/login", payload);
-        };
-        
-        export const publishResultAPI = (payload: any) => {
-            return baseURL.post("/result/publish", payload);
-        };
-        export const register = (payload: any) => {
-    return baseURL.post("/auth/register", payload);
+//     return baseURL.get("/ticket/today", {
+//         params: { address },
+//     });
+// };
+
+export const logIn = (payload: any) => {
+    return baseURL.post("/auth/login", payload);
 };
 
+export const publishResultAPI = (payload: any) => {
+    return baseURL.post("/result/publish", payload);
+};
+export const register = (payload: any) => {
+    return baseURL.post("/auth/register", payload);
+};
 
 export const logout = (payload: any) => {
     return baseURL.post("/auth/logout", payload);

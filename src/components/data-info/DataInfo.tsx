@@ -4,13 +4,8 @@ import { getTodaysTicket, publishResultAPI } from "@/api/api";
 import toast from "react-hot-toast";
 import { SelectColumnFilter } from "../table/filters";
 import { Button } from "../button/Button";
-// import toast from 'react-hot-toast';
 
-interface DataProps {
-    className?: string;
-}
-
-export const Data: FC<DataProps> = ({ className }) => {
+export const Data= () => {
     const [tickets, setTickets] = useState<any[]>([]);
     const [dataLoading, setDataLoading] = useState(false);
 
