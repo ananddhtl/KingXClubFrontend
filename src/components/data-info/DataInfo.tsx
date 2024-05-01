@@ -5,8 +5,9 @@ import toast from "react-hot-toast";
 import { SelectColumnFilter } from "../table/filters";
 import { Button } from "../button/Button";
 
-export const Data= () => {
+export const Data = () => {
     const [tickets, setTickets] = useState<any[]>([]);
+    const [summary, setSummary] = useState<any[]>([]);
     const [dataLoading, setDataLoading] = useState(false);
 
     const columns = useMemo(
@@ -64,6 +65,10 @@ export const Data= () => {
                 accessor: "amount" || "",
             },
             {
+                Header: "Position",
+                accessor: "position" || "",
+            },
+            {
                 Header: "Returns",
                 accessor: "returns" || "",
             },
@@ -79,13 +84,66 @@ export const Data= () => {
         []
     );
 
+    const summaryColumns = useMemo(
+        () => [
+            {
+                Header: "Ticket Number",
+                accessor: "_id.ticket" || "",
+            },
+            {
+                Header: "Result Time",
+                accessor: (values) => {
+                    return values?.time || "N/A";
+                },
+                Filter: SelectColumnFilter,
+                filter: "equals",
+                Cell: ({ cell }: any) => {
+                    const { value } = cell;
+                    return (
+                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
+                            {new Date(value).toLocaleString("default", {
+                                month: "long",
+                                year: "numeric",
+                                day: "2-digit",
+                                hour: "numeric",
+                                minute: "numeric",
+                            })}
+                        </div>
+                    );
+                },
+            },
+            {
+                Header: "Place",
+                accessor: "_id.place" || "",
+            },
+            {
+                Header: "Position",
+                accessor: "_id.position" || "",
+            },
+            {
+                Header: "Count",
+                accessor: "count" || "",
+            },
+            {
+                Header: "Amount",
+                accessor: "totalAmount" || "",
+            },
+            {
+                Header: "Returns",
+                accessor: "returnAmount" || "",
+            },
+        ],
+        []
+    );
+
     useEffect(() => {
         (async () => {
             try {
                 setDataLoading(true);
                 const buyers = await getTodaysTicket();
                 console.log({ buyers });
-                setTickets(buyers.data);
+                setTickets(buyers.data.data);
+                setSummary(buyers.data.summary);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
                 toast(error.response?.data?.message || "Unknown error");
@@ -97,7 +155,6 @@ export const Data= () => {
 
     return (
         <section className="bg-neutral-900 w-full py-10 px-3 sm:px-10">
-            <TopSection />
             <PublishResult />
             {dataLoading ? (
                 <svg
@@ -116,22 +173,38 @@ export const Data= () => {
                     <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
                 </svg>
             ) : tickets.length > 0 ? (
-                <Table columns={columns} data={tickets} />
+                <>
+                    <TopSection
+                        text="Today's Ticket Purchase Information"
+                        description="* This data has been shown according to purchase from the website"
+                    />
+
+                    <Table columns={columns} data={tickets} />
+                    <TopSection 
+                    text="Today's Ticket Summary Information"
+                    description="* This data has been shown according to purchase from the website"
+                    />
+
+                    <Table columns={summaryColumns} data={summary} />
+                </>
             ) : (
-                <span>No data found</span>
+                <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">No data found</span>
             )}
         </section>
     );
 };
 
-const TopSection: FC = () => {
+interface ITopSection {
+    text: string,
+    description: string
+}
+
+const TopSection: FC<ITopSection> = ({ text, description }) => {
     return (
         <div className="bg-black/40 rounded-xl p-5 my-5 mx-10 relative">
-            <div className="text-rose-400 font-semibold text-lg">Ticket Purchase Information</div>
-
-            <p className="text-gray-500">
-                * This data has been shown according to purchase from the website
-            </p>
+            <div className="text-rose-400 font-semibold text-lg">{text}</div>
+            {description}
+            <p className="text-gray-500"></p>
         </div>
     );
 };
@@ -157,7 +230,8 @@ const PublishResult: FC = () => {
         },
     ];
     const [data, setData] = useState({
-        result: null,
+        leftTicketNumber: null,
+        rightTicketNumber: null,
         place: "Pokhara",
         time: null,
     });
@@ -169,7 +243,8 @@ const PublishResult: FC = () => {
     }
 
     const publishResult = async (): Promise<any> => {
-        if (!data.result) return toast("Please entery ticket number");
+        if (!data.leftTicketNumber) return toast("Please enter left ticket number");
+        if (!data.rightTicketNumber) return toast("Please enter right ticket number");
         if (!data.time) return toast("Please select from above time");
         if (!data.place) return toast("Please choose a place");
         try {
@@ -228,7 +303,9 @@ const PublishResult: FC = () => {
                             .time.map((timestamp) => {
                                 const time = new Date().setHours(
                                     Number(timestamp.split(":")[0]),
-                                    Number(timestamp.split(":")[1])
+                                    Number(timestamp.split(":")[1]),
+                                    0,
+                                    0
                                 );
                                 return (
                                     <option value={time}>
@@ -243,20 +320,42 @@ const PublishResult: FC = () => {
                             })}
                     </select>
                 </div>
-                <div className="flex items-center">
-                    <label className="text-white text-lg mx-5">Ticket Number</label>
+                <div className="flex items-center gap-3">
+                    <label className="text-white text-lg ">Ticket Number</label>
                     <input
                         type="number"
-                        className="form-control w-32"
+                        className="form-control w-32 placeholder:opacity-50"
                         id="betAmount"
                         name="betAmount"
-                        min="1"
+                        placeholder="Left Number"
+                        min="100"
                         max="999"
-                        onChange={(e) => handleChange(e, "result")}
+                        onChange={(e) => handleChange(e, "leftTicketNumber")}
+                        required
+                    />
+                    <input
+                        type="number"
+                        className="form-control w-32 placeholder:opacity-50"
+                        id="betAmount"
+                        name="betAmount"
+                        placeholder="Right Number"
+                        min="100"
+                        max="999"
+                        onChange={(e) => handleChange(e, "rightTicketNumber")}
                         required
                     />
                 </div>
-                <Button text="Publish result" onAction={publishResult} isLoading={isLoading} />
+                <Button
+                    disabled={
+                        !data.leftTicketNumber ||
+                        !data.rightTicketNumber ||
+                        !data.place ||
+                        !data.time
+                    }
+                    text="Publish result"
+                    onAction={publishResult}
+                    isLoading={isLoading}
+                />
             </form>
         </div>
     );

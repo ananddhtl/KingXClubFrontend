@@ -47,7 +47,7 @@ export const logout = (payload: any) => {
     return baseURL.post("/auth/logout", payload);
 };
 
-export const buyOneTicket = (payload: any) => {
+export const buyTicketAPI = (payload: any) => {
     return baseURL.post("/ticket/buy", payload);
 };
 

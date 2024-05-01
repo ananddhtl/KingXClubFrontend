@@ -8,19 +8,20 @@ interface ModalProps {
   action: string
   isLoading: boolean
   onAction: () => void
+  disabled?: boolean
 }
 
-export const Modal: FC<ModalProps> = ({ children, title, onAction, setShowModal, isLoading, action }) => {
+export const Modal: FC<ModalProps> = ({ children, disabled = false, title, onAction, setShowModal, isLoading, action }) => {
   return (
     <div
-    className="justify-center items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none px-10 transition ease-in-out fixed top-0 right-0 bottom-0 left-0 bg-blur-color backdrop-blur-md h-screen w-screen focus:outline-none"
+    className="justify-center items-center flex overflow-scroll inset-0 z-50 outline-none px-10 transition ease-in-out fixed top-0 right-0 bottom-0 left-0 bg-blur-color backdrop-blur-md h-screen w-screen focus:outline-none "
   >
-    <div className="relative md:w-1/3 my-6 mx-auto max-w-3xl">
+    <div className="relative lg:w-1/3 my-6 mx-auto max-w-3xl">
       {/*content*/}
       <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-orange-500 outline-none focus:outline-none">
         {/*header*/}
         <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-          <h3 className="text-3xl font-semibold">
+          <h3 className="text-xl lg:text-3xl font-semibold">
             {title}
           </h3>
           <button
@@ -33,7 +34,7 @@ export const Modal: FC<ModalProps> = ({ children, title, onAction, setShowModal,
           </button>
         </div>
         {/*body*/}
-        <div className="relative p-6 flex-auto">
+        <div className="relative p-2 lg:p-6 flex-auto">
           {children}
         </div>
         {/*footer*/}
@@ -45,7 +46,9 @@ export const Modal: FC<ModalProps> = ({ children, title, onAction, setShowModal,
           >
             Close
           </button>
-          <Button onAction={onAction} text={action} isLoading={isLoading} />
+          <Button  
+            disabled={disabled}
+            onAction={onAction} text={action} isLoading={isLoading} />
         </div>
       </div>
     </div>

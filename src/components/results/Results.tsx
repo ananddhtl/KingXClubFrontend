@@ -11,6 +11,13 @@ export const Results: FC<ResultsProps> = ({ className }) => {
     const [results, setResults] = useState([]);
     console.log({ results });
 
+
+  const sumOfDigits = (number) => {
+    return String(number)
+      .split('')
+      .reduce((sum, digit) => sum + parseInt(digit), 0);
+  }
+
     useEffect(() => {
         (async () => {
             try {
@@ -55,9 +62,6 @@ export const Results: FC<ResultsProps> = ({ className }) => {
                                             <th>Date</th>
                                             <th>Place</th>
                                             <th>Ticket</th>
-                                            <th>Winners</th>
-                                            <th>Total Amount Distributed</th>
-                                            <th>Total Amount collected</th>
                                             <th>Total ticket sold</th>
                                         </tr>
                                     </thead>
@@ -80,13 +84,9 @@ export const Results: FC<ResultsProps> = ({ className }) => {
                                                         </td>
                                                         <td>{result.place}</td>
                                                         <td>
-                                                            <span className="label label-success">
-                                                                {result.result}
-                                                            </span>
+                                                        {`${result.leftTicketNumber} - ${sumOfDigits(result.leftTicketNumber).toString()[sumOfDigits(result.leftTicketNumber).toString().length - 1]}${result?.rightTicketNumber ? `${sumOfDigits(result.leftTicketNumber).toString()[sumOfDigits(result.leftTicketNumber).toString().length - 1]} - ${result.rightTicketNumber}`  : '* - ***'}`}
+
                                                         </td>
-                                                        <td>{result.winnerCount}</td>
-                                                        <td>{result.totalDistributedAmount}</td>
-                                                        <td>{result.totalCollectedAmount}</td>
                                                         <td>{result.ticketCount}</td>
                                                     </tr>
                                                 ))}
