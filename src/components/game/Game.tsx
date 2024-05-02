@@ -457,7 +457,7 @@ export const Game = () => {
                             <div className="flex items-center space-x-2 my-8">
                                 <select
                                     id="ticket3"
-                                    onChange={(e) => handleChange(digit, "ticket")}
+                                    onChange={() => handleChange(digit, "ticket")}
                                     className="ticket-dropdown w-12 h-8 border rounded-md outline-none text-orange-500"
                                 >
                                     <option value="0">0</option>
@@ -473,7 +473,7 @@ export const Game = () => {
                                 </select>
                                 <select
                                     id="ticket2"
-                                    onChange={(e) => handleChange(digit, "ticket")}
+                                    onChange={() => handleChange(digit, "ticket")}
                                     className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
                                 >
                                     <option value="0">0</option>
@@ -489,7 +489,7 @@ export const Game = () => {
                                 </select>
                                 <select
                                     id="ticket1"
-                                    onChange={(e) => handleChange(digit, "ticket")}
+                                    onChange={() => handleChange(digit, "ticket")}
                                     className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
                                 >
                                     <option value="0">0</option>
