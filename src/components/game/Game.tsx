@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { Modal } from "../modal/Modal";
-import { buyOneTicket, getTodayTicketStatus } from "@/api/api";
+import { buyTicketAPI, getTodayTicketStatus } from "@/api/api";
 import toast from "react-hot-toast";
 import { useProfileContext } from "../layout";
+import { Button } from "../button/Button";
 
 export const Game = () => {
     const [showTicketModal, setShowTicketModal] = useState<null | string>(null);
     const { user, setUser, setShowLoginModal } = useProfileContext();
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState({
-        digit: 1,
-        ticket: 0,
-        amount: null,
-        time: null,
-    });
-    console.log(user);
+    const [digit, setDigit] = useState(1);
+    const [time, setTime] = useState(null);
+    const [position, setPosition] = useState(null);
+    const [amount, setAmount] = useState(0);
+    const [ticket, setTicket] = useState(0);
+    const [tickets, setTickets] = useState<{ amount: number; ticket: number; time: number, position?: string }[]>([]);
 
     const [events, setEvents] = useState([
         {
@@ -46,13 +46,22 @@ export const Game = () => {
             time: ["09:00", "12:00", "15:00", "21:00"],
         },
     ]);
-    function handleChange(e: any, dataFor: string) {
+
+    function handleChange(numberplace: number, dataFor: string) {
         if (dataFor === "digit") {
+            setDigit(numberplace);
             const ticketDropdown = document.querySelectorAll(".ticket-dropdown");
             ticketDropdown.forEach((element: HTMLElement) => (element.style.display = "none"));
-            for (let index = 0; index < Number(e.target.value); index++) {
+            for (let index = 0; index < Number(numberplace); index++) {
                 (ticketDropdown[index] as HTMLElement).style.display = "block";
             }
+            if(numberplace === 2) {
+                document.getElementById('position').style.display = "none";
+            } else{
+                document.getElementById('position').style.display = "block";
+            }
+            handleChange(null, "ticket");
+            return;
         }
 
         if (dataFor === "ticket") {
@@ -66,25 +75,25 @@ export const Game = () => {
             });
             // console.log(selectedValues, selectedValue);
 
-            const ticket = selectedValues.join("").slice(0, Number(data.digit));
-            setData({ ...data, [dataFor]: Number(ticket) });
+            const ticket = selectedValues.join("").slice(0, numberplace);
+            setTicket(Number(ticket));
+            console.log("ok", numberplace, ticket);
+
+            // setData({ ...data, [dataFor]: Number(ticket) });
             return;
         }
-        setData({ ...data, [dataFor]: Number(e.target.value) });
     }
-    console.log({ data });
 
     const buyTicket = async (): Promise<any> => {
-        if (!data.amount) return toast("Please entery your bet amount");
-        if (!data.time) return toast("Please select from above time");
-        if (!data.ticket) return toast("Please choose a number");
+        if (tickets.length === 0) return toast("Please entery your bet amount");
+        if (!time) return toast("Please select from above time");
         try {
             setIsLoading(true);
-            const res = await buyOneTicket({ ...data, place: showTicketModal });
+            const res = await buyTicketAPI({ tickets, place: showTicketModal });
             console.log(res);
 
             toast(res.data?.message || "Unknown error");
-            setUser({ ...user, amount: user.amount - data.amount });
+            setUser({ ...user, amount: user.amount - res.data?.amount });
             return res;
         } catch (error) {
             console.log(`Error logging user: ${error}`);
@@ -190,7 +199,8 @@ export const Game = () => {
                                                             {event.time.map((timestamp) => {
                                                                 const time = new Date().setHours(
                                                                     Number(timestamp.split(":")[0]),
-                                                                    Number(timestamp.split(":")[1])
+                                                                    Number(timestamp.split(":")[1]),
+                                                                    0, 0
                                                                 );
                                                                 return (
                                                                     <p className="border-1 border-orange-500 px-2 rounded-full">
@@ -282,59 +292,218 @@ export const Game = () => {
             </section>
             {!!showTicketModal && (
                 <Modal
+                    disabled={tickets.length === 0 || !time}
                     isLoading={isLoading}
                     title={`Buy Tickets (${showTicketModal})`}
-                    setShowModal={() => setShowTicketModal(null)}
+                    setShowModal={() => {
+                        (document.getElementById("betForm") as HTMLFormElement).reset();
+                        setDigit(1);
+                        setTime(null);
+                        setPosition(null);
+                        setAmount(0);
+                        setTicket(0);
+                        setTickets([]);
+                        setShowTicketModal(null);
+                    }}
                     action="Buy Ticket"
                     onAction={buyTicket}
                 >
-                    <div className="flex gap-3">
-                        <form
-                            id="betForm"
-                            className="bet-form"
-                            hx-post="http://localhost:5000/v1/ticket/buy"
-                            hx-indicator="#spinner"
-                            hx-swap="none"
-                        >
-                            <div className="flex flex-col items-center justify-center">
-                                <p>Select Time</p>
-                                <div className="btn-group gap-3" role="group" aria-label="Bet Date">
-                                    {events
-                                        .find((event) => event.place === showTicketModal)
-                                        .time.map((timestamp, index) => {
-                                            const time = new Date().setHours(
-                                                Number(timestamp.split(":")[0]),
-                                                Number(timestamp.split(":")[1])
-                                            );
-                                            return (
-                                                <>
-                                                    <input
-                                                        onChange={(e) => handleChange(e, "time")}
-                                                        className="btn-check bet-date"
-                                                        type="radio"
-                                                        name="betDate"
-                                                        id={`betDate${index}`}
-                                                        value={time}
-                                                        autoComplete="off"
-                                                        required
-                                                    />
-                                                    <label
-                                                        className="btn rounded-pill"
-                                                        htmlFor={`betDate${index}`}
-                                                    >
-                                                        {new Date(time).toLocaleString("default", {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                        })}
-                                                    </label>
-                                                </>
-                                            );
-                                        })}
-                                </div>
+                    <form
+                        id="betForm"
+                        className="bet-form"
+                        hx-post="http://localhost:5000/v1/ticket/buy"
+                        hx-indicator="#spinner"
+                        hx-swap="none"
+                    >
+                        <div className="flex flex-col items-center justify-center">
+                            <p>Select Time</p>
+                            <div className="btn-group gap-3" role="group" aria-label="Bet Date">
+                                {events
+                                    .find((event) => event.place === showTicketModal)
+                                    .time.map((timestamp, index) => {
+                                        const time = new Date().setHours(
+                                            Number(timestamp.split(":")[0]),
+                                            Number(timestamp.split(":")[1])
+                                        );
+                                        return (
+                                            <>
+                                                <input
+                                                    onChange={(e) =>
+                                                        setTime(Number(e.target.value))
+                                                    }
+                                                    className="btn-check bet-date"
+                                                    type="radio"
+                                                    name="betDate"
+                                                    id={`betDate${index}`}
+                                                    value={time}
+                                                    autoComplete="off"
+                                                    required
+                                                />
+                                                <label
+                                                    className="btn rounded-pill"
+                                                    htmlFor={`betDate${index}`}
+                                                >
+                                                    {new Date(time).toLocaleString("default", {
+                                                        hour: "numeric",
+                                                        minute: "numeric",
+                                                    })}
+                                                </label>
+                                            </>
+                                        );
+                                    })}
                             </div>
-                            <div className="flex flex-col items-center justify-center mt-8">
-                                <label className="form-label w-32">Bet Amount</label>
-                                <div className="input-group w-40">
+                        </div>
+                        {/* <div className="flex flex-col items-center justify-center mt-8">
+                            <label className="form-label w-32">Bet Amount</label>
+                            <div className="input-group w-40">
+                                <span className="input-group-text">Rs</span>
+                                <input
+                                    type="number"
+                                    className="form-control betAmount"
+                                    id="betAmount"
+                                    name="betAmount"
+                                    min="1"
+                                    max={user.amount}
+                                    onChange={(e) => setAmount(Number(e.target.value))}
+                                    required
+                                />
+                            </div>
+                            <span id="amount-warning" className=" text-white hidden">
+                                You have entered your maximum amount. Please load the balance to bet
+                                more.
+                            </span>
+                        </div> */}
+                        <div id="position" className="flex flex-col items-center justify-center mt-5">
+                            <p className="text-center">Select Position</p>
+                            <div className="flex items-center justify-center">
+                                <input
+                                    onChange={(e) => setPosition(e.target.value)}
+                                    className="btn-check bet-position"
+                                    type="radio"
+                                    name="bet-position"
+                                    id={`bet-left`}
+                                    value='Left'
+                                    autoComplete="off"
+                                    required
+                                />
+                                <label className="btn rounded-pill" htmlFor={`bet-left`}>
+                                    Left
+                                </label>
+                                <input
+                                    onChange={(e) => setPosition(e.target.value)}
+                                    className="btn-check bet-position"
+                                    type="radio"
+                                    name="bet-position"
+                                    id={`bet-right`}
+                                    value='Right'
+                                    autoComplete="off"
+                                    required
+                                />
+                                <label className="btn rounded-pill" htmlFor={`bet-right`}>
+                                    Right
+                                </label>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center mt-8">
+                            <label className="form-label">Ticket Number</label>
+                            <div
+                                className="btn-group gap-3"
+                                role="group"
+                                aria-label="ticket number"
+                            >
+                                {" "}
+                                <input
+                                    onChange={(e) => handleChange(Number(e.target.value), "digit")}
+                                    className="btn-check"
+                                    type="radio"
+                                    name="ticket"
+                                    id="ticketDigit1"
+                                    defaultChecked
+                                    value="1"
+                                    autoComplete="off"
+                                    required
+                                />
+                                <label htmlFor="ticketDigit1" className="btn rounded-pill">
+                                    Single
+                                </label>
+                                <input
+                                    onChange={(e) => handleChange(Number(e.target.value), "digit")}
+                                    className="btn-check"
+                                    type="radio"
+                                    name="ticket"
+                                    id="ticketDigit2"
+                                    value="2"
+                                    autoComplete="off"
+                                    required
+                                />
+                                <label htmlFor="ticketDigit2" className="btn rounded-pill">
+                                    Double
+                                </label>
+                                <input
+                                    onChange={(e) => handleChange(Number(e.target.value), "digit")}
+                                    className="btn-check"
+                                    type="radio"
+                                    name="ticket"
+                                    id="ticketDigit3"
+                                    value="3"
+                                    autoComplete="off"
+                                    required
+                                />
+                                <label htmlFor="ticketDigit3" className="btn rounded-pill">
+                                    Triple
+                                </label>
+                            </div>
+                            <div className="flex items-center space-x-2 my-8">
+                                <select
+                                    id="ticket3"
+                                    onChange={() => handleChange(digit, "ticket")}
+                                    className="ticket-dropdown w-12 h-8 border rounded-md outline-none text-orange-500"
+                                >
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                                <select
+                                    id="ticket2"
+                                    onChange={() => handleChange(digit, "ticket")}
+                                    className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
+                                >
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                                <select
+                                    id="ticket1"
+                                    onChange={() => handleChange(digit, "ticket")}
+                                    className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
+                                >
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                                <div className="input-group w-36">
                                     <span className="input-group-text">Rs</span>
                                     <input
                                         type="number"
@@ -343,192 +512,104 @@ export const Game = () => {
                                         name="betAmount"
                                         min="1"
                                         max={user.amount}
-                                        onChange={(e) => handleChange(e, "amount")}
+                                        onChange={(e) => setAmount(Number(e.target.value))}
                                         required
                                     />
                                 </div>
-                                <span id="amount-warning" className=" text-white hidden">
-                                    You have entered your maximum amount. Please load the balance to
-                                    bet more.
-                                </span>
                             </div>
-
-                            <div className="flex flex-col items-center justify-center mt-8">
-                                <label className="form-label">Ticket Number</label>
-                                <div
-                                    className="btn-group gap-3"
-                                    role="group"
-                                    aria-label="ticket number"
-                                >
-                                    {" "}
-                                    <input
-                                        onChange={(e) => handleChange(e, "digit")}
-                                        className="btn-check"
-                                        type="radio"
-                                        name="ticket"
-                                        id="ticketDigit1"
-                                        defaultChecked
-                                        value="1"
-                                        autoComplete="off"
-                                        required
-                                    />
-                                    <label htmlFor="ticketDigit1" className="btn rounded-pill">
-                                        Single
-                                    </label>
-                                    <input
-                                        onChange={(e) => handleChange(e, "digit")}
-                                        className="btn-check"
-                                        type="radio"
-                                        name="ticket"
-                                        id="ticketDigit2"
-                                        value="2"
-                                        autoComplete="off"
-                                        required
-                                    />
-                                    <label htmlFor="ticketDigit2" className="btn rounded-pill">
-                                        Double
-                                    </label>
-                                    <input
-                                        onChange={(e) => handleChange(e, "digit")}
-                                        className="btn-check"
-                                        type="radio"
-                                        name="ticket"
-                                        id="ticketDigit3"
-                                        value="3"
-                                        autoComplete="off"
-                                        required
-                                    />
-                                    <label htmlFor="ticketDigit3" className="btn rounded-pill">
-                                        Triple
-                                    </label>
-                                </div>
-                                <div className="flex items-center space-x-2 mt-8">
-                                    <select
-                                        id="ticket3"
-                                        onChange={(e) => handleChange(e, "ticket")}
-                                        className="ticket-dropdown w-12 h-8 border rounded-md outline-none text-orange-500"
-                                    >
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                    </select>
-                                    <select
-                                        id="ticket2"
-                                        onChange={(e) => handleChange(e, "ticket")}
-                                        className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
-                                    >
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                    </select>
-                                    <select
-                                        id="ticket1"
-                                        onChange={(e) => handleChange(e, "ticket")}
-                                        className="ticket-dropdown hidden w-12 h-8 border rounded-md outline-none text-orange-500"
-                                    >
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                    </select>
-                                </div>
-                                <input
+                            {/* <input
                                     type="number"
                                     className="form-control hidden"
                                     onChange={(e) => handleChange(e, "ticket")}
                                     id="ticketNumber"
                                     name="ticketNumber"
                                     required
+                                /> */}
+                                <div className="flex items-center space-x-2 my-8">
+
+                            <Button
+                                disabled={!ticket || !amount || !time || (digit === 2 ? false :!position)}
+                                onAction={() => {
+                                    setTickets((prev) => [...prev, { amount, ticket, time, position: digit === 2 ? null :position }]);
+                                }}
+                                text="Add Ticket"
                                 />
-                            </div>
-                            {/* <h4
+                            <button
+                                disabled={!time}
+                                className="bg-gradient-to-r from-green-300 to-blue-300 hover:from-pink-300 hover:to-yellow-300 rounded-pill disabled:opacity-45 disabled:cursor-not-allowed px-2 py-1"
+                                onClick={() => {
+                                    setTickets((prev) => [...prev, { amount: 100, ticket: 777, time, position }]);
+                                }}
+                                >Jackpot</button>
+                                </div>
+                        </div>
+                        {tickets.length > 0 && (
+                            <table className="w-full border-1 mt-5">
+                                <thead>
+                                    <tr className="bg-orange-200 text-black">
+                                        <th className="px-1 py-1 md:px-4 md:py-2">S.N</th>
+                                        <th className="px-1 py-1 md:px-4 md:py-2">Ticket</th>
+                                        <th className="px-1 py-1 md:px-4 md:py-2">Time</th>
+                                        <th className="px-1 py-1 md:px-4 md:py-2">Amount</th>
+                                        <th className="px-1 py-1 md:px-4 md:py-2">Position</th>
+                                        <th className="px-1 py-1 md:px-4 md:py-2">Returns</th>
+                                        <th className="px-1 py-1 md:px-4 md:py-2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tickets.map(({ ticket, amount, time, position }, index) => (
+                                        <tr>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">{index + 1}</td>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">{ticket}</td>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">
+                                                {new Date(time).toLocaleString("default", {
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                })}
+                                            </td>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">Rs. {amount}</td>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">{position || '-'}</td>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">
+                                                Rs.{" "}
+                                                {ticket === 777 ? 1000000 :amount *
+                                                    (ticket%10 === 3 ? 499 : ticket%10 === 2 ? 99 : 9)}
+                                            </td>
+                                            <td className="px-1 py-1 md:px-4 md:py-2">
+                                                <button
+                                                    onClick={() => {
+                                                        setTickets((prev) => [
+                                                            ...prev.slice(0, index),
+                                                            ...prev.slice(index + 1),
+                                                        ]);
+                                                    }}
+                                                    type="button"
+                                                    className=" focus:outline-none"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="16"
+                                                        height="16"
+                                                        fill="currentColor"
+                                                        className="bi bi-trash"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                        {/* <h4
                             id="bet-city-title"
                             className="bet-city-title tcn-1 mb-1 cursor-scale growDown title-anim font-bold text-xl"
                         >
                             Returns
                         </h4> */}
-                        </form>
-                        <div className="border-2" />
-                        <div className="flex flex-col items w-full">
-                            <div className="mb-2">Choose ticket</div>
-
-                            {/* <br /> */}
-
-                            <div className="flex flex-row justify-around">
-                            <div className="justify-center flex flex-col">
-                            <label htmlFor="ticketSelect" className="form-label">
-                                 2-Digit Ticket
-                            </label>
-                            <select
-                                id="ticketSelect"
-                                className="ticket-dropdown w-24 border rounded-md outline-none text-orange-500"
-                            >
-                                <option value="">Select</option>
-                                {Array.from({ length: 90 }, (_, i) => i + 10).map((number) => (
-                                    <option key={number} value={number}>
-                                        {number}
-                                    </option>
-                                ))}
-                            </select>
-                            </div>
-                            <div className="justify-center flex flex-col">
-                            <label htmlFor="ticketSelect" className="form-label">
-                                 3-Digit Ticket
-                            </label>
-                            <select
-                                id="ticketSelect"
-                                className="ticket-dropdown w-24 border rounded-md outline-none text-orange-500"
-                            >
-                                <option value="">Select </option>
-                                {Array.from({ length: 900 }, (_, i) => i + 100).map((number) => (
-                                    <option key={number} value={number}>
-                                        {number}
-                                    </option>
-                                ))}
-                            </select>
-                            </div>
-                            </div>
-
-
-                            {/* {["1", "2", "3"].map((number, index) => (
-                                <>
-                                    <input
-                                        onChange={(e) => handleChange(e, "time")}
-                                        className="btn-check bet-date"
-                                        type="radio"
-                                        name="betDate"
-                                        id={`betDate${index}`}
-                                        value={number}
-                                        autoComplete="off"
-                                        required
-                                    />
-                                    <label className="btn rounded-pill" htmlFor={`betDate${index}`}>
-                                        {number}
-                                    </label>
-                                </>
-                            ))} */}
-                        </div>
-                    </div>
+                    </form>
                 </Modal>
             )}
         </>

@@ -17,8 +17,8 @@ return (
     <UserPopup />
     <Hero />
     <Game />
-    <Winners />
     <Results />
+    <Winners />
     <Contacts />
     <Toaster 
     toastOptions={{
