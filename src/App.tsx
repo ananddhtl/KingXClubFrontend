@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import {Profile} from "@/pages/Profile";
 import {BidHistory} from "@/pages/BidHistory";
+import {Result} from "@/pages/Result";
+import {PlaceBid} from "@/pages/PlaceBid";
 import { createContext, useContext, useState } from "react";
 const ProfileContext = createContext(null);
 
@@ -25,10 +27,12 @@ function App() {
         <ProfileContext.Provider value={{user, setUser}}>
                 <Routes>
                     <Route path={routes.INDEX} element={<Home />} />
-                    <Route path={routes.LOGIN} element={<Login />} />
+                    <Route path={routes.LOGIN} element={<Login user={user} setUser={setUser} />} />
                     <Route path={routes.PROFILE} element={<Profile />} />
                     <Route path={routes.BID_HISTORY} element={<BidHistory />} />
-                    <Route path={routes.SIGNUP} element={<Signup />} />
+                    <Route path={`${routes.PLACE_BID}/:city`} element={<PlaceBid />} />
+                    <Route path={routes.RESULT} element={<Result />} />
+                    <Route path={routes.SIGNUP} element={<Signup user={user} setUser={setUser} />} />
                     <Route path={routes.ADMIN} element={<Admin />} />
                     <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
                 </Routes>

@@ -56,7 +56,7 @@ export const BidHistory = () => {
                     </svg>
                 </button>
             </div>
-            <div className="flex flex-col w-full items-center gap-8">  
+            <div className="flex flex-col w-full items-center gap-8 child:max-w-fit">  
                 <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
                    <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
                    <div className="flex flex-wrap gap-5 px-5 ">
