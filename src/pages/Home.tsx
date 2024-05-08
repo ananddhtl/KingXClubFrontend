@@ -8,18 +8,20 @@ import { Winners } from "@/components/winners/Winners"
 import { HelmetProvider } from "react-helmet-async"
 import { Toaster } from "react-hot-toast"
 import BottomNavbar from '../components/DrawerNav/BottomNavbar'
+import Layout from "@/components/layout"
 
 
 export const Home = () => {
 return (
+  <Layout>
     <HelmetProvider>
     <Notification />
     <UserPopup />
     <Hero />
     <Game />
-    <Results />
-    <Winners />
-    <Contacts />
+    {/* <Results /> */}
+    {/* <Winners /> */}
+    {/* <Contacts /> */}
     <Toaster 
     toastOptions={{
         className: '',
@@ -38,4 +40,5 @@ return (
       }}/>
       <BottomNavbar/>
     </HelmetProvider>
+    </Layout>
 )}

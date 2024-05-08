@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { Modal } from "../modal/Modal";
 import { buyTicketAPI, getTodayTicketStatus } from "@/api/api";
 import toast from "react-hot-toast";
-import { useProfileContext } from "../layout";
 import { Button } from "../button/Button";
 
 export const Game = () => {
     const [showTicketModal, setShowTicketModal] = useState<null | string>(null);
-    const { user, setUser, setShowLoginModal } = useProfileContext();
     const [isLoading, setIsLoading] = useState(false);
     const [digit, setDigit] = useState(1);
     const [time, setTime] = useState(null);
@@ -93,7 +91,7 @@ export const Game = () => {
             console.log(res);
 
             toast(res.data?.message || "Unknown error");
-            setUser({ ...user, amount: user.amount - res.data?.amount });
+            // setUser({ ...user, amount: user.amount - res.data?.amount });
             return res;
         } catch (error) {
             console.log(`Error logging user: ${error}`);
@@ -161,10 +159,7 @@ export const Game = () => {
                                     <div
                                         role="button"
                                         onClick={() => {
-                                            if (!user) {
-                                                setShowLoginModal(true);
-                                                return;
-                                            }
+                                            
                                             setShowTicketModal(event.place);
                                         }}
                                         className="col-xl-4 col-md-6"
@@ -511,7 +506,6 @@ export const Game = () => {
                                         id="betAmount"
                                         name="betAmount"
                                         min="1"
-                                        max={user.amount}
                                         onChange={(e) => setAmount(Number(e.target.value))}
                                         required
                                     />
