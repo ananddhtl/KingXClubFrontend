@@ -9,16 +9,17 @@ import { HelmetProvider } from "react-helmet-async"
 import { Toaster } from "react-hot-toast"
 import BottomNavbar from '../components/DrawerNav/BottomNavbar'
 import Layout from "@/components/layout"
-
+import City from "../components/city/City"
 
 export const Home = () => {
 return (
-  <Layout>
+  // <Layout>
     <HelmetProvider>
-    <Notification />
-    <UserPopup />
-    <Hero />
-    <Game />
+      <City/>
+    {/* <Notification />
+    <UserPopup /> */}
+    {/* <Hero /> */}
+    {/* <Game /> */}
     {/* <Results /> */}
     {/* <Winners /> */}
     {/* <Contacts /> */}
@@ -40,5 +41,5 @@ return (
       }}/>
       <BottomNavbar/>
     </HelmetProvider>
-    </Layout>
+    // </Layout>
 )}
