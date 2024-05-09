@@ -1,10 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "@/assets/image/logo.png";
 import { IUser } from "@/App";
 import { logIn } from "@/api/api";
 import toast from "react-hot-toast";
+import { Button } from "@/components/button/Button";
+import { routes } from "@/constants";
 
 interface ILogin {
     user: IUser;
@@ -12,6 +14,7 @@ interface ILogin {
 }
 
 const Login: FC<ILogin> = ({ user, setUser }) => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -35,6 +38,8 @@ const Login: FC<ILogin> = ({ user, setUser }) => {
     const loginUser = async (): Promise<any> => {
         try {
             setIsLoading(true);
+            console.log(email, password);
+
             const res = await logIn({
                 email,
                 password,
@@ -59,6 +64,10 @@ const Login: FC<ILogin> = ({ user, setUser }) => {
         }
     };
 
+    useEffect(() => {
+        if (user) navigate(routes.PROFILE);
+    }, [navigate, user]);
+
     return (
         <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
             <img src={Logo} alt="logo" />
@@ -80,10 +89,23 @@ const Login: FC<ILogin> = ({ user, setUser }) => {
                                 alt="profile image"
                             />
                         </div>
-                        <h2 className="text-white text-xl font-semibold">Jane Dow</h2>
-                        <p className="text-zinc-400">janedow071@gmail.com</p>
+                        {/* <h2 className="text-white text-xl font-semibold">Jane Dow</h2>
+                        <p className="text-zinc-400">janedow071@gmail.com</p> */}
                     </div>
                     <div className="mt-4">
+                        <label
+                            htmlFor="email"
+                            className="block text-white text-sm font-semibold tracking-widest mb-2"
+                        >
+                            Email
+                        </label>
+                        <input
+                            onChange={handleEmailChange}
+                            type="email"
+                            id="email"
+                            className="bg-white text-black mb-4 p-3 rounded-xl w-full leading-tight focus:outline-none"
+                            placeholder="Email"
+                        />
                         <label
                             htmlFor="password"
                             className="block text-white text-sm font-semibold tracking-widest mb-2"
@@ -92,6 +114,7 @@ const Login: FC<ILogin> = ({ user, setUser }) => {
                         </label>
                         <div className="flex items-center bg-white text-black rounded-xl mb-4">
                             <input
+                                onChange={handlePasswordChange}
                                 type={showPassword ? "text" : "password"}
                                 id="password"
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
@@ -99,15 +122,18 @@ const Login: FC<ILogin> = ({ user, setUser }) => {
                             />
                             <button
                                 onClick={togglePasswordVisibility}
-                                className="p-4 rounded-r-full text-black hover:text-white"
+                                className="p-4 outline-none rounded-r-full text-black hover:text-white"
                             >
-                                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
                             </button>
                         </div>
+                        <Button
+                            isLoading={isLoading}
+                            text="Login"
+                            onAction={loginUser}
+                            disabled={isLoading}
+                        />
                     </div>
-                    <button className="w-full bg-[#FE480F] flex justify-center text-white font-bold py-3 px-4 rounded-xl hover:bg-[#fe3f0f]">
-                        Continue
-                    </button>
                     <div className="text-start mt-4">
                         <a href="#" className="text-[#FE480F] hover:text-[#fe3f0f] text-sm">
                             Forgot password?

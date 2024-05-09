@@ -1,10 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "@/assets/image/logo.png";
 import { register } from "@/api/api";
 import toast from "react-hot-toast";
 import { IUser } from "@/App";
+import { Button } from "@/components/button/Button";
+import { routes } from "@/constants";
 
 interface ISignUp {
     user: IUser;
@@ -12,24 +14,35 @@ interface ISignUp {
 }
 
 const Signup: FC<ISignUp> = ({ user, setUser }) => {
+    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
+    const [referCode, setReferCode] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-    const handlePhoneChange = (e) => {
-        setPhone(e.target.value);
+    const handleChange = (e, changeFor: "email" | "phone" | "password" | "referCode") => {
+        switch (changeFor) {
+            case "email":
+                setEmail(e.target.value);
+                break;
+            case "password":
+                setPassword(e.target.value);
+                break;
+            case "phone":
+                setPhone(e.target.value);
+                break;
+            case "referCode":
+                setReferCode(e.target.value);
+                break;
+            default:
+                break;
+        }
     };
 
     const saveLoginData = (tokens) => {
@@ -44,6 +57,7 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
                 email,
                 phone,
                 password,
+                referCode,
             });
             saveLoginData(res.data?.tokens);
             toast(res.data?.message || "Unknown error");
@@ -62,6 +76,13 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
             setIsLoading(false);
         }
     };
+   
+
+    useEffect(() => {
+        if(user)
+        navigate(routes.PROFILE)
+    }, [navigate, user])
+
     return (
         <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
             <img src={Logo} alt="logo" />
@@ -80,15 +101,16 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
                     </div>
                     <div className="mt-4">
                         <label
-                            htmlFor="password"
+                            htmlFor="email"
                             className="block text-white text-sm font-semibold tracking-widest mb-2"
                         >
                             User Email
                         </label>
                         <div className="flex items-center bg-white text-black rounded-xl mb-4">
                             <input
-                                type="text"
-                                id="text"
+                                onChange={(e) => handleChange(e, "email")}
+                                type="email"
+                                id="email"
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
                                 placeholder="Enter your Email"
                             />
@@ -97,15 +119,16 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
 
                     <div className="mt-4">
                         <label
-                            htmlFor="password"
+                            htmlFor="phone"
                             className="block text-white text-sm font-semibold tracking-widest mb-2"
                         >
                             Phone Number
                         </label>
                         <div className="flex items-center bg-white text-black rounded-xl mb-4">
                             <input
-                                type="text"
-                                id="text"
+                                onChange={(e) => handleChange(e, "phone")}
+                                type="number"
+                                id="phone"
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
                                 placeholder="Enter your Phone Number"
                             />
@@ -114,15 +137,16 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
 
                     <div className="mt-4">
                         <label
-                            htmlFor="password"
+                            htmlFor="referCode"
                             className="block text-white text-sm font-semibold tracking-widest mb-2"
                         >
                             Refer Code
                         </label>
                         <div className="flex items-center bg-white text-black rounded-xl mb-4">
                             <input
+                                onChange={(e) => handleChange(e, "referCode")}
                                 type="text"
-                                id="text"
+                                id="referCode"
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
                                 placeholder="Enter your Refer Code"
                             />
@@ -138,6 +162,7 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
                         </label>
                         <div className="flex items-center bg-white text-black rounded-xl mb-4">
                             <input
+                                onChange={(e) => handleChange(e, "password")}
                                 type={showPassword ? "text" : "password"}
                                 id="password"
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
@@ -150,13 +175,8 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
                                 {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                             </button>
                         </div>
+                        <Button isLoading={isLoading} text="Create Account" onAction={registerUser} disabled={isLoading} />
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full flex justify-center bg-[#FE480F] text-white font-bold py-3 px-4 rounded-xl hover:bg-[#fe3f0f]"
-                    >
-                        Create Account
-                    </button>
                 </form>
             </div>
         </section>

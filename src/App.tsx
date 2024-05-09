@@ -28,7 +28,7 @@ function App() {
                 <Routes>
                     <Route path={routes.INDEX} element={<Home />} />
                     <Route path={routes.LOGIN} element={<Login user={user} setUser={setUser} />} />
-                    <Route path={routes.PROFILE} element={<Profile />} />
+                    <Route path={routes.PROFILE} element={<Profile  user={user} setUser={setUser} />} />
                     <Route path={routes.BID_HISTORY} element={<BidHistory />} />
                     <Route path={`${routes.PLACE_BID}/:city`} element={<PlaceBid />} />
                     <Route path={routes.RESULT} element={<Result />} />

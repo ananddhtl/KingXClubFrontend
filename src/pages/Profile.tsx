@@ -1,11 +1,26 @@
+import { IUser } from "@/App";
 import Logo from "@/assets/image/logo.png";
 import { routes } from "@/constants";
-import { NavLink } from "react-router-dom";
+import { FC, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
-export const Profile = () => {
+
+interface IProfile {
+    user: IUser;
+    setUser: React.Dispatch<React.SetStateAction<IUser>>;
+}
+
+export const Profile:FC<IProfile> = ({user, setUser}) => {
+    const navigate = useNavigate()
+    console.log({user});
+    
+    useEffect(() => {
+        if(!user)
+        navigate(routes.LOGIN)
+    }, [navigate, user])
     return (
         <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
-            <span className="text-[40px] font-sans font-light">Profile</span>
+            <span className="text-[40px] font-sans font-light">Welcome {user?.name}</span>
             <img src={Logo} alt="logo" />
             <div className="flex flex-col items-center gap-4">
               <span className="text-xl text-[#FE480F] font-semibold">Wallat Balance: Rs 1000</span>
@@ -19,8 +34,8 @@ export const Profile = () => {
                             xmlns="http://www.w3.org/2000/svg"
                         >
                             <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
+                                fillRule="evenodd"
+                                clipRule="evenodd"
                                 d="M2.25896 4.32276L0.587083 2.65088C0.53901 2.60269 0.477709 2.56985 0.410952 2.55654C0.344195 2.54322 0.274988 2.55003 0.212104 2.5761C0.149221 2.60216 0.0954932 2.64631 0.0577325 2.70295C0.0199718 2.75959 -0.000121242 2.82617 5.50408e-07 2.89424V7.90713C5.50408e-07 8.09686 0.15399 8.25085 0.343726 8.25085H5.35662C5.42469 8.25098 5.49126 8.23088 5.5479 8.19312C5.60454 8.15536 5.64869 8.10163 5.67476 8.03875C5.70083 7.97587 5.70763 7.90666 5.69432 7.8399C5.68101 7.77314 5.64817 7.71184 5.59997 7.66377L3.73286 5.79665C4.94997 4.09679 6.72452 2.87744 8.74775 2.35075C10.771 1.82406 12.9148 2.02337 14.8063 2.914C16.6978 3.80464 18.2171 5.33022 19.1 7.22532C19.9829 9.12041 20.1735 11.2651 19.6385 13.2861C19.1035 15.3072 17.8769 17.0767 16.1721 18.2869C14.4673 19.497 12.3921 20.0712 10.3077 19.9094C8.22335 19.7477 6.26162 18.8603 4.7639 17.4016C3.26617 15.943 2.32724 14.0054 2.11047 11.926C2.0824 11.6538 1.94733 11.4039 1.735 11.2312C1.52267 11.0586 1.25045 10.9774 0.978243 11.0055C0.706034 11.0335 0.456128 11.1686 0.283502 11.3809C0.110875 11.5933 0.0296686 11.8655 0.0577464 12.1377C0.322261 14.683 1.46586 17.0564 3.29166 18.8494C5.11746 20.6424 7.51123 21.7428 10.0609 21.9611C12.6105 22.1794 15.1565 21.502 17.2606 20.0455C19.3646 18.589 20.8951 16.4446 21.5885 13.9813C22.2818 11.5181 22.0948 8.89016 21.0595 6.54997C20.0242 4.20978 18.2054 2.30374 15.9162 1.15998C13.6271 0.0162188 11.0108 -0.293697 8.51778 0.283583C6.02477 0.860863 3.811 2.28922 2.25759 4.32276H2.25896ZM10.6555 5.50105C10.929 5.50105 11.1913 5.60969 11.3846 5.80307C11.578 5.99646 11.6867 6.25874 11.6867 6.53223V10.6459L14.475 11.7624C14.7207 11.8695 14.915 12.068 15.0168 12.316C15.1186 12.564 15.1199 12.8418 15.0203 13.0907C14.9207 13.3396 14.7281 13.5399 14.4834 13.6492C14.2386 13.7585 13.9609 13.7682 13.7091 13.6762L10.2719 12.3013C10.0807 12.2247 9.9169 12.0926 9.80148 11.9221C9.68607 11.7515 9.62436 11.5503 9.62431 11.3444V6.53223C9.62431 6.25874 9.73295 5.99646 9.92634 5.80307C10.1197 5.60969 10.382 5.50105 10.6555 5.50105Z"
                                 fill="#F6571E"
                             />
@@ -37,9 +52,9 @@ export const Profile = () => {
                         <path
                             d="M1 1.5L9 9.5L1 17.5"
                             stroke="white"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         />
                     </svg>
                 </NavLink>
