@@ -1,6 +1,20 @@
 import { routes } from "@/constants";
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import BidModal from './BidModal'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const PlaceBid = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
     const navigate = useNavigate();
     const { city } = useParams();
     console.log({ city });
@@ -25,6 +39,8 @@ export const PlaceBid = () => {
 
     return (
         <section className="bg-[#F4F4F4] flex flex-col items-center justify-start text-black min-h-screen ">
+                  <ToastContainer />
+
             <div className="sticky top-1 flex justify-between items-center p-4 w-full">
                 <button
                     onClick={() => navigate(routes.PROFILE)}
@@ -53,7 +69,7 @@ export const PlaceBid = () => {
                 <div className="bg-white p-3 w-full rounded-3xl">
                     <span className="text-xl font-medium">Select time</span>
                     <div className="flex my-6 justify-between border-1 border-[#F6F6F6] rounded-full">
-                        {places
+                        {/* {places
                             .find((event) => event.place === city)
                             .time.map((timestamp, index) => {
                                 const time = new Date().setHours(
@@ -83,7 +99,7 @@ export const PlaceBid = () => {
                                         </label>
                                     </>
                                 );
-                            })}
+                            })} */}
                     </div>
                     <span className="text-xl font-medium">Select Position</span>
                     <div className="flex mt-6 justify-between w-fit border-1 border-[#F6F6F6] rounded-full">
@@ -117,9 +133,13 @@ export const PlaceBid = () => {
                 </div>
             </form>
             <div className="bg-white flex flex-col items-center justify-center w-full min-h-full py-10">
-                <button className="bg-orange-500 py-2 px-12 text-lg rounded-full text-center text-white w-[50%]">
-                    + Add Tickets
-                </button>
+            <button
+                onClick={handleOpenModal}
+                className="bg-orange-500 py-2 px-12 text-lg rounded-full text-center text-white w-[60%]"
+            >
+                + Add Tickets
+            </button>
+            <BidModal isOpen={isModalOpen} onClose={handleCloseModal} />
                 <table className="table mt-5 table-hover table-auto">
                     <thead className="border-b-[#F6571E]">
                         <tr className="active">
