@@ -1,7 +1,6 @@
 import { useProfileContext } from "@/App";
-import { Button } from "@/components/button/Button";
 import { cn } from "@/utils/cn";
-import React, { useState } from "react";
+import { useState } from "react";
 // import { toast } from "react-toastify";
 import { toast } from "react-hot-toast";
 

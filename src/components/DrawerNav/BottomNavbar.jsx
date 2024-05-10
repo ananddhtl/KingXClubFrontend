@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faDice, faComments, faFootballBall, faBars, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 function BottomNavbar() {
-    const [activeButton, setActiveButton] = useState('home');
 
     return (
         <div>

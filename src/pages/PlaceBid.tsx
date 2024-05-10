@@ -1,8 +1,8 @@
 import { routes } from "@/constants";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BidModal from "./BidModal";
-import { useProfileContext } from "@/App";
+// import { useProfileContext } from "@/App";
 import { cn } from "@/utils/cn";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/button/Button";
@@ -30,7 +30,7 @@ export const PlaceBid = () => {
     const { city } = useParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const { user } = useProfileContext();
+    // const { user } = useProfileContext();
     const [selectedTime, setSelectedTime] = useState(null);
     const [position, setPosition] = useState(null);
     const [tickets, setTickets] = useState({});

@@ -1,6 +1,6 @@
 import { getTodayTicketStatus } from "@/api/api";
 import { routes } from "@/constants";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
 

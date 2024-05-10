@@ -17,7 +17,6 @@ const Layout: FC<LayoutProps> = ({
     className,
     hideheader,
     hideFooter,
-    headerClass,
     mainClass,
 }: LayoutProps) => {
     return (

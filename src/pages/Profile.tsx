@@ -1,13 +1,13 @@
 import { useProfileContext } from "@/App";
 import Logo from "@/assets/image/logo.png";
 import { routes } from "@/constants";
-import { FC, useEffect } from "react";
+import {  useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 
 export const Profile = () => {
     const navigate = useNavigate()
-    const {user, setUser} = useProfileContext()
+    const {user} = useProfileContext()
     
     useEffect(() => {
         if(!user)

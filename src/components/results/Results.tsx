@@ -1,5 +1,6 @@
 import { getAllResult } from "@/api/api";
 import { cn } from "@/utils/cn";
+import { toast } from "react-hot-toast";
 import { FC, useEffect, useState } from "react";
 
 interface ResultsProps {
@@ -25,7 +26,7 @@ export const Results: FC<ResultsProps> = ({ className }) => {
                 setResults(results.data);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
-                toast(error.response?.data?.message || "Unknown error");
+                toast.error(error.response?.data?.message || "Unknown error");
             }
         })();
     }, []);

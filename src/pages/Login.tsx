@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "@/assets/image/logo.png";
-import { IUser, useProfileContext } from "@/App";
+import { useProfileContext } from "@/App";
 import { logIn } from "@/api/api";
 import toast from "react-hot-toast";
 import { Button } from "@/components/button/Button";
