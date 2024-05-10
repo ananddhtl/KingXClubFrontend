@@ -1,19 +1,15 @@
-import React, { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "@/assets/image/logo.png";
 import { register } from "@/api/api";
 import toast from "react-hot-toast";
-import { IUser } from "@/App";
+import { useProfileContext } from "@/App";
 import { Button } from "@/components/button/Button";
 import { routes } from "@/constants";
 
-interface ISignUp {
-    user: IUser;
-    setUser: React.Dispatch<React.SetStateAction<IUser>>;
-}
-
-const Signup: FC<ISignUp> = ({ user, setUser }) => {
+const Signup = () => {
+    const {user, setUser} = useProfileContext()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
@@ -60,7 +56,7 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
                 referCode,
             });
             saveLoginData(res.data?.tokens);
-            toast(res.data?.message || "Unknown error");
+            toast.success(res.data?.message || "Unknown error");
             setUser({
                 amount: res.data?.user?.amount,
                 email: res.data?.user?.email,
@@ -70,7 +66,7 @@ const Signup: FC<ISignUp> = ({ user, setUser }) => {
             return res;
         } catch (error) {
             console.log(`Error registering user: ${error}`);
-            toast(error.response?.data?.message || "Unknown error");
+            toast.error(error.response?.data?.message || "Unknown error");
             throw new Error(`Error registering user: ${error}`);
         } finally {
             setIsLoading(false);

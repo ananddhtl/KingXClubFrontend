@@ -1,7 +1,6 @@
 import { getAllResult } from "@/api/api";
 import { cn } from "@/utils/cn";
 import { FC, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 interface ResultsProps {
     className?: string;
@@ -93,9 +92,7 @@ export const Results: FC<ResultsProps> = ({ className }) => {
                                             </>
                                         ) : (
                                             <tr>
-                                                <td />
-                                                <td />
-                                                <td />
+                                               
                                                 <td />
                                                 <td
                                                     aria-colspan={5}
@@ -103,7 +100,6 @@ export const Results: FC<ResultsProps> = ({ className }) => {
                                                 >
                                                     No data found
                                                 </td>
-                                                <td />
                                                 <td />
                                             </tr>
                                         )}

@@ -29,22 +29,6 @@ return (
     {/* <Results /> */}
     {/* <Winners /> */}
     {/* <Contacts /> */}
-    <Toaster 
-    toastOptions={{
-        className: '',
-        style: {
-          border: '1px solid #fff',
-          padding: '16px',
-          color: '#fff',
-          background: '#cb6b23'
-        },
-      }}
-    containerStyle={{
-        top: 20,
-        left: 20,
-        bottom: 20,
-        right: 20,
-      }}/>
       <BottomNavbar/>
     </HelmetProvider>
     // </Layout>

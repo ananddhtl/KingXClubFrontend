@@ -1,18 +1,13 @@
-import { IUser } from "@/App";
+import { useProfileContext } from "@/App";
 import Logo from "@/assets/image/logo.png";
 import { routes } from "@/constants";
 import { FC, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 
-interface IProfile {
-    user: IUser;
-    setUser: React.Dispatch<React.SetStateAction<IUser>>;
-}
-
-export const Profile:FC<IProfile> = ({user, setUser}) => {
+export const Profile = () => {
     const navigate = useNavigate()
-    console.log({user});
+    const {user, setUser} = useProfileContext()
     
     useEffect(() => {
         if(!user)
