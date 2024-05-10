@@ -81,7 +81,9 @@ const Signup = () => {
 
     return (
         <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
+            <NavLink to="/">
             <img src={Logo} alt="logo" />
+            </NavLink>
             <div>
                 <div className="flex justify-between border max-w-sm border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
                     <button className="bg-transparent text-white tracking-widest font-semibold py-2 px-10 rounded-full">
