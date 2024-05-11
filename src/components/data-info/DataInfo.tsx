@@ -154,7 +154,7 @@ export const Data = () => {
     }, []);
 
     return (
-        <section className="bg-neutral-900 w-full py-10 px-3 sm:px-10">
+        <section className="bg-neutral-900 min-h-screen -z-20 w-full py-10 px-3 sm:px-10">
             <PublishResult />
             {dataLoading ? (
                 <svg
@@ -264,12 +264,12 @@ const PublishResult: FC = () => {
     };
 
     return (
-        <div className="bg-black/40 rounded-xl p-5 my-5 mx-10 relative">
-            <div className="text-rose-400 font-semibold text-lg">Publish Result</div>
+        <div className="bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
+            <div className="text-orange-600 text-center font-semibold text-lg">Publish Result</div>
 
-            <p className="text-gray-500">* Fill the below form to release the result</p>
+            <p className="text-gray-500 my-1">* Fill the below form to release the result</p>
             <form className="flex flex-wrap gap-10">
-                <div className="flex items-center">
+                <div className="flex items-center bg-black/60 rounded-lg w-full justify-around">
                     <label htmlFor="place" className="text-white text-lg mx-2">
                         Place
                     </label>
@@ -277,7 +277,7 @@ const PublishResult: FC = () => {
                     <select
                         id="place"
                         onChange={(e) => handleChange(e, "place")}
-                        className="ticket-dropdown px-4 border rounded-md outline-none text-orange-600"
+                        className="ticket-dropdown my-4 px-4 w-36 border bg-black/40 rounded-md outline-none text-orange-600"
                     >
                         <option value={null}>Select Place</option>
                         {events.map(({ place }) => (
@@ -285,7 +285,7 @@ const PublishResult: FC = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-4 bg-black/60 rounded-lg w-full justify-around p-2">
                     <label htmlFor="place" className="text-white text-lg mx-2">
                         Time
                     </label>
@@ -293,9 +293,9 @@ const PublishResult: FC = () => {
                     <select
                         id="place"
                         onChange={(e) => handleChange(e, "time")}
-                        className="ticket-dropdown px-4 border rounded-md outline-none text-orange-600"
+                        className="ticket-dropdown px-4 w-36 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
                     >
-                        <option value={null} className="text-black/50">
+                        <option value={null} className="text-black/50 ">
                             Select Date
                         </option>
                         {events
@@ -320,8 +320,9 @@ const PublishResult: FC = () => {
                             })}
                     </select>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex bg-black/60 p-2 pb-6 rounded-lg flex-col justify-center w-full items-center gap-3">
                     <label className="text-white text-lg ">Ticket Number</label>
+                    <div className="flex w-full justify-around">
                     <input
                         type="number"
                         className="form-control w-32 placeholder:opacity-50"
@@ -344,6 +345,7 @@ const PublishResult: FC = () => {
                         onChange={(e) => handleChange(e, "rightTicketNumber")}
                         required
                     />
+                    </div>
                 </div>
                 <Button
                     disabled={

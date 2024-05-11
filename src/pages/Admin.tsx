@@ -1,6 +1,7 @@
 import { Data } from "@/components/data-info/DataInfo"
 import { Hero } from "@/components/hero/Hero"
 import Layout from "@/components/layout"
+import Navbar from "@/components/navbar/Navbar"
 import { Notification } from "@/components/notification/Notification"
 import { UserPopup } from "@/components/user-popup/UserPopup"
 import { HelmetProvider } from "react-helmet-async"
@@ -9,11 +10,12 @@ import { Toaster } from "react-hot-toast"
 
 export const Admin = () => {
 return (
-  <Layout>
+  // <Layout>
     <HelmetProvider>
+      <Navbar/>
     <Notification />
     <UserPopup />
-    <Hero />
+    {/* <Hero />   */}
     <Data />
     <Toaster 
     toastOptions={{
@@ -32,6 +34,6 @@ return (
         right: 20,
       }}/>
     </HelmetProvider>
-            </Layout>
+            // </Layout>
 
 )}
