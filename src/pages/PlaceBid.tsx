@@ -43,6 +43,12 @@ export const PlaceBid = () => {
         setIsModalOpen(false);
     };
 
+    const handleDelete = (ticketToDelete) => {
+        const updatedTickets = { ...tickets };
+        delete updatedTickets[ticketToDelete];
+        setTickets(updatedTickets);
+    };
+
     const buyTicket = async (): Promise<any> => {
         try {
             setIsLoading(true);
@@ -253,7 +259,7 @@ export const PlaceBid = () => {
                                                 {position}
                                             </td>
                                             <td
-                                                onClick={() => delete tickets[ticket]}
+                                                onClick={() => handleDelete(ticket)}
                                                 className="text-[#281F1D] cursor-pointer text-center leading-[14px]"
                                             >
                                                 <svg

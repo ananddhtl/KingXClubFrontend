@@ -86,7 +86,7 @@ const Navbar = () => {
               </li>
               <div className='w-full my-3 h-[1px] bg-orange-400'></div>
               <li className='group hover:text-orange-700'>
-                <NavLink className="flex items-center justify-start w-full" to="/deposit" onClick={toggleSidebar}>
+                <NavLink to="https://wa.me/+971563664115" className="flex items-center justify-start w-full"  onClick={toggleSidebar}>
                   <img className="w-8 h-8 mr-2" src="./assets/img/pdeposit.png" alt="deposit icon" />
                   <p>Deposit</p>
                 </NavLink>
@@ -94,7 +94,7 @@ const Navbar = () => {
               <div className='w-full my-3 h-[1px] bg-orange-400'></div>
 
               <li className='group hover:text-orange-700'>
-                <NavLink className="flex items-center justify-start w-full" to="/withdraw" onClick={toggleSidebar}>
+                <NavLink to="https://wa.me/+971563664115" className="flex items-center justify-start w-full"  onClick={toggleSidebar}>
                   <img className="w-8 h-8 mr-2" src="./assets/img/pwithdraw.png" alt="withdraw icon" />
                   <p>Withdraw</p>
                 </NavLink>

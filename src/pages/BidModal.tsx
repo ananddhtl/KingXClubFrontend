@@ -3,6 +3,8 @@ import { cn } from "@/utils/cn";
 import { useState } from "react";
 // import { toast } from "react-toastify";
 import { toast } from "react-hot-toast";
+import { AnimatePresence, motion } from 'framer-motion';
+
 
 const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets }) => {
     const [selectedType, setSelectedType] = useState("single");
@@ -139,7 +141,7 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets }) => {
                         </span>
                         <div />
                     </div>
-                    <div className="flex flex-col items-center justify-between pb-20 bg-gradient-to-b to-[rgba(254,72,15,0.81)] text-white from-[#FE480F] w-full h-full rounded-t-3xl">
+                    <div className="flex flex-col items-center justify-between pb-20 bg-gradient-to-b to-[rgba(254,72,15,0.81)] text-    from-[#FE480F] w-full h-full rounded-t-3xl">
                         <form className="flex justify-center w-full">
                             <div className="flex my-6 justify-between bg-white/20 border-2 p-1 border-white/50 w-[80%] rounded-full">
                                 <input
@@ -214,7 +216,7 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets }) => {
                             </span>
                             <button
                                 onClick={handlePlaceBid}
-                                className="bg-white hover:bg-white text-[#FE480F] w-fit outline-none flex justify-center py-3 px-4 rounded-xl font-semibold"
+                                className="bg-white hover:bg-white text-[#FE480F] hover:text-[#FE480F] w-fit outline-none flex justify-center py-3 px-4 rounded-xl font-semibold"
                             >Continue</button>
                         </div>
                     </div>
