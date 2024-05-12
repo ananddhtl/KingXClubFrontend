@@ -4,6 +4,8 @@ import BottomNavbar from '../components/DrawerNav/BottomNavbar';
 import City from '../components/city/City';
 import Navbar from '@/components/navbar/Navbar';
 import Loader from '@/components/Loader/Loader';
+import { Agent } from 'http';
+import Agentform from './Agentform';
 
 export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +24,7 @@ export const Home = () => {
         <Loader />
       ) : (
         <>
+        {/* <Agentform/> */}
           <Navbar />
           <div className="w-full flex justify-center items-center my-4">
             <img src="./assets/img/homebanner.png" alt="herobanner" />
