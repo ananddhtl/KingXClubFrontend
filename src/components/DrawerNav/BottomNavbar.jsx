@@ -12,7 +12,7 @@ function BottomNavbar() {
                         <p className='text-xs -mt-2 font-mono text-center'>Games</p>
                     </NavLink>
 
-                    <NavLink className="flex justify-center h-[70px] w-[35px] flex-col hover:text-orange-500" to="/bids">
+                    <NavLink className="flex justify-center h-[70px] w-[35px] flex-col hover:text-orange-500" to="/bid-history">
                         <img className="" src= "./assets/img/bids.png"/>
                         <p className='text-xs -mt-2 font-mono text-center'>Bids</p>
                     </NavLink>

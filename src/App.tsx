@@ -14,6 +14,7 @@ const ProfileContext = createContext(null);
 import { Toaster } from "react-hot-toast";
 import Loader from "./components/Loader/Loader";
 import { getUserDetail } from "./api/api";
+import Agentform from "./pages/Agentform";
 
 export interface IUser {
     amount: number;
@@ -80,6 +81,7 @@ function App() {
                             <Route path={routes.RESULT} element={<Result />} />
                             <Route path={routes.SIGNUP} element={<Signup />} />
                             <Route path={routes.ADMIN} element={<Admin />} />
+                            <Route path={routes.AGENT} element={<Agentform/>} />
                             <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
                         </Routes>
                     </ProfileContext.Provider>
@@ -91,7 +93,7 @@ function App() {
 }
 
 export const useProfileContext = () => {
-    return useContext(ProfileContext);
+    return useContext(ProfileContext);  
 };
 
 export default App;
