@@ -3,7 +3,6 @@ import { cn } from "@/utils/cn";
 import { useState } from "react";
 // import { toast } from "react-toastify";
 import { toast } from "react-hot-toast";
-import { AnimatePresence, motion } from "framer-motion";
 
 const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets, totalAmount }) => {
     const [selectedType, setSelectedType] = useState("single");

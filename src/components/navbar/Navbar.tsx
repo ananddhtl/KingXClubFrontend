@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BiBell } from "react-icons/bi";
 import { FaBars, FaTimes, FaWallet } from "react-icons/fa";
 import { NavLink } from "react-router-dom";

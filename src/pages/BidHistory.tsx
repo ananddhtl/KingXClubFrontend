@@ -7,20 +7,16 @@ import { toast } from "react-hot-toast";
 export const BidHistory = () => {
     const navigate = useNavigate();
     const [bidHistory, setBidHistory] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         (async () => {
             try {
-                setIsLoading(true);
                 const purchased = await getPurchasedTicket();
                 console.log({ purchased });
                 setBidHistory(purchased.data.data);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
                 toast.error(error.response?.data?.message || "Unknown error");
-            } finally {
-                setIsLoading(false);
             }
         })();
     }, []);
