@@ -144,7 +144,7 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets, totalA
     return (
         <>
             {isOpen && (
-                <section className="bg-[#F4F4F4] mt-5 fixed inset-0 z-10 flex flex-col items-center justify-start text-black gap-10 min-h-screen">
+                <section className="bg-[#F4F4F4] pt-5 fixed inset-0 z-10 flex flex-col items-center justify-start text-black gap-10 min-h-screen">
                     <div className="sticky top-1 grid grid-cols-5 justify-center place-items-center w-full">
                         <button
                             onClick={onClose}

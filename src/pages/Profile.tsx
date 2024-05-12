@@ -147,7 +147,7 @@ export const Profile = () => {
                 </div>
                 {user?.role === "user" && (
                     <div className="bg-orange-600 relative flex items-center justify-end w-[75dvw] h-[52px] px-4 rounded-3xl">
-                        <button className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
+                        <NavLink to='/agent' className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                             <svg
                                 width="24"
                                 height="24"
@@ -169,7 +169,7 @@ export const Profile = () => {
                                 />
                             </svg>
                             Apply for Agent
-                        </button>
+                        </NavLink>
                         <svg
                             width="10"
                             height="19"

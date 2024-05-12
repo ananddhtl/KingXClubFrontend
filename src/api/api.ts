@@ -59,6 +59,14 @@ export const buyTicketAPI = (payload: any) => {
     return baseURL.post("/ticket/buy", payload);
 };
 
+export const agentFormAPI = (payload: any) => {
+    return baseURL.post("/user/agent-form", payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+    });
+};
+
 // Configure retry options
 // axiosRetry(iconChainBaseURL, {
 //     retries: 3,
