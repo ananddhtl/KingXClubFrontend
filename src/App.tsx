@@ -33,7 +33,6 @@ function App() {
             try {
                 setIsLoading(true);
                 const user = await getUserDetail();
-                console.log({ user });
                 setUser({
                     amount: user.data.amount,
                     email: user.data.email,

@@ -78,8 +78,8 @@ const Navbar = () => {
                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0khaUcbpblqXKUuxIpxyGB9VqRKmENQZWjbk8uXGEIg&s"
                                         alt="profile image"
                                     />
-                                    <p className="-mb-2">{user?.name}</p>
-                                    <p className="text">{user?.email}</p>
+                                    <p className="-mb-2 text-lg">{user?.name}</p>
+                                    <p className="text-xs">{user?.email}</p>
                                     <div
                                         className="flex gap-4 items-center justify-start w-full"
                                         onClick={toggleSidebar}

@@ -45,7 +45,6 @@ const City = () => {
       (async () => {
           try {
               const status = await getTodayTicketStatus();
-              console.log({ status });
               setEvents((prevItems) =>
                   prevItems.map((item) => {
                       const stat = status.data?.find(({ _id }) => _id === item.place);

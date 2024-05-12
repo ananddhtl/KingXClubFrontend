@@ -89,7 +89,7 @@ export const Result = () => {
             </div>
             <div className="bg-white shadow-sm w-full flex flex-col gap-5 pt-5">
             <span className="text-2xl ml-10">All Results</span>
-                <table className="table table-auto max-w-fit self-center">
+                <table className="table table-auto w-full max-w-[600px] text-center self-center">
                     <thead className="border-b-[#F6571E]">
                         <tr className="active">
                             <th className=" text-sm leading-[14px] text-[#281F1D] font-medium">Date</th>
@@ -142,15 +142,12 @@ export const Result = () => {
                             </>
                         ) : (
                             <tr>
-                                <td />
-                                <td />
-                                <td />
-                                <td />
-                                <td aria-colspan={5} className="bg-white text-orange-500">
-                                    No data found
+                                <td >-</td>
+                                <td >
+                                -
                                 </td>
-                                <td />
-                                <td />
+                                <td >-</td>
+                                <td >-</td>
                             </tr>
                         )}
                     </tbody>

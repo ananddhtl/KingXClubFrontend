@@ -107,8 +107,8 @@ export const Table: FC<ITable> = ({
         <input
           value={globalFilter || ''}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder={'Search over all columns...'}
-          className="border text-base border-primary/20 text-orange-500 bg-gray-200 h-10 px-5 rounded-md focus:outline-none"
+          placeholder={'Search ...'}
+          className="border text-base border-primary/20 text-orange-500 bg-gray-200 h-10  rounded-md focus:outline-none"
         />
       </div>
       <div className="overflow-scroll scrollbar mt-10">
