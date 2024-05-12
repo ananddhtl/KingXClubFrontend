@@ -55,7 +55,6 @@ const Login = () => {
         } catch (error) {
             console.log(`Error logging user: ${error}`);
             toast(error.response?.data?.message || "Unknown error");
-            throw new Error(`Error logging user: ${error}`);
         } finally {
             setIsLoading(false);
         }

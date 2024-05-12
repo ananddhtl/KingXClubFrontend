@@ -5,6 +5,18 @@ import { FaBell } from "react-icons/fa";
 import { agentFormAPI } from "@/api/api";
 import toast from "react-hot-toast";
 
+ const convertToBase64 = (file: File | null) => {
+    if (!file) return null;
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+    });
+  };
+
+  
 const Agentform = () => {
     const navigate = useNavigate();
 
@@ -18,6 +30,7 @@ const Agentform = () => {
 
     // State to track agreement to terms
     const [agreedToTerms, setAgreedToTerms] = useState(false);
+    
 
     // Function to handle form input change
     const handleInputChange = (e) => {
@@ -26,12 +39,14 @@ const Agentform = () => {
     };
 
     // Function to handle file input change
-    const handleFileChange = (e) => {
+    const handleFileChange = async(e) => {
         const file = e.target.files[0];
-        if (file && file.type === "application/pdf") {
-            setFormData({ ...formData, iddentity: file });
+        console.log(file);
+        
+        if (file) {
+            setFormData({ ...formData, iddentity: await convertToBase64(file) });
         } else {
-            alert("Please upload a PDF file.");
+            alert("Please upload a image file.");
         }
     };
 
@@ -40,7 +55,16 @@ const Agentform = () => {
 
     // Function to handle terms agreement
     const handleTermsAgreement = () => {
+        try {
+
         setAgreedToTerms(!agreedToTerms);
+        toast.success('Form successfully submitted')
+        navigate(routes.PROFILE)
+        
+    } catch (error) {
+        console.log(`Error logging user: ${error}`);
+        toast.error(error.response?.data?.message || "Unknown error")
+    }
     };
 
     // Function to handle form submission
@@ -107,8 +131,8 @@ const Agentform = () => {
                             className="cursor-pointer font-bold text-orange-500"
                         >
                             {formData.iddentity
-                                ? formData.iddentity.name
-                                : "+ Add Document (PDF Only)"}
+                                ? 'Uploaded'
+                                : "+ Add Document (Image Only)"}
                         </label>
                         <input
                             type="file"

@@ -60,11 +60,7 @@ export const buyTicketAPI = (payload: any) => {
 };
 
 export const agentFormAPI = (payload: any) => {
-    return baseURL.post("/user/agent-form", payload, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-    });
+    return baseURL.post("/user/submit/agent-form", payload);
 };
 
 // Configure retry options
