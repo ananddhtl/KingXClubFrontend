@@ -56,12 +56,13 @@ const Signup = () => {
                 referCode,
             });
             saveLoginData(res.data?.tokens);
-            toast.success(res.data?.message || "Unknown error");
+            toast.success(res.data?.message || "Success");
             setUser({
                 amount: res.data?.user?.amount,
                 email: res.data?.user?.email,
                 name: res.data?.user?.email.split("@")[0],
                 phone: res.data?.user?.phone,
+                role: res.data?.user?.role,
             });
             return res;
         } catch (error) {
@@ -84,8 +85,8 @@ const Signup = () => {
             <NavLink to="/">
             <img src={Logo} alt="logo" />
             </NavLink>
-            <div>
-                <div className="flex justify-between border max-w-sm border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
+            <div className="flex flex-col justify-center items-center">
+                <div className="flex justify-between border max-w-xs border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
                     <button className="bg-transparent text-white tracking-widest font-semibold py-2 px-10 rounded-full">
                         <NavLink to="/login">Login</NavLink>
                     </button>
@@ -93,7 +94,7 @@ const Signup = () => {
                         Signup
                     </button>
                 </div>
-                <form className="w-full max-w-sm mx-auto rounded-2xl border border-gray-600 shadow-lg p-5 bg-[#0F0F0F]">
+                <div className="w-full max-w-sm mx-auto rounded-2xl border border-gray-600 shadow-lg p-5 bg-[#0F0F0F]">
                     <div className="font-semibold tracking-widest text-white text-xl text-center">
                         Let's Get Started
                     </div>
@@ -170,12 +171,12 @@ const Signup = () => {
                                 onClick={togglePasswordVisibility}
                                 className="p-4 rounded-r-full text-black hover:text-white"
                             >
-                                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                {showPassword ? <AiOutlineEye /> :<AiOutlineEyeInvisible />}
                             </button>
                         </div>
                         <Button isLoading={isLoading} text="Create Account" onAction={registerUser} disabled={isLoading} />
                     </div>
-                </form>
+                </div>
             </div>
         </section>
     );

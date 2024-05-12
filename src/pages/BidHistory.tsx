@@ -1,11 +1,36 @@
+import { getPurchasedTicket } from "@/api/api";
 import { routes } from "@/constants";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 export const BidHistory = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [bidHistory, setBidHistory] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsLoading(true);
+                const purchased = await getPurchasedTicket();
+                console.log({ purchased });
+                setBidHistory(purchased.data.data);
+            } catch (error) {
+                console.log(`Error fetching lucky winner: ${error}`);
+                toast.error(error.response?.data?.message || "Unknown error");
+            } finally {
+                setIsLoading(false);
+            }
+        })();
+    }, []);
     return (
         <section className="bg-[#F4F4F4] flex flex-col items-center justify-start text-black gap-10 min-h-screen p-4">
             <div className="sticky top-1 flex justify-between items-center w-full">
-                <button onClick={() => navigate(routes.PROFILE)} className="p-4 bg-white rounded-lg shadow-sm">
+                <button
+                    onClick={() => navigate(routes.PROFILE)}
+                    className="p-4 bg-white rounded-lg shadow-sm"
+                >
                     <svg
                         width="9"
                         height="16"
@@ -16,9 +41,9 @@ export const BidHistory = () => {
                         <path
                             d="M8 1L1 8L8 15"
                             stroke="black"
-                            stroke-width="1.3125"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="1.3125"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         />
                     </svg>
                 </button>
@@ -56,96 +81,69 @@ export const BidHistory = () => {
                     </svg>
                 </button>
             </div>
-            <div className="flex flex-col w-full items-center gap-8 child:max-w-fit">  
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
-                <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
-                   <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">Pashupatinath</span>
-                   <div className="flex flex-wrap gap-5 px-5 ">
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID ID<p className="text-center">54321</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">GAME TYPE<p className="text-center">Single Digit</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">DIGIT<p className="text-center">5</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID DATE<p className="text-center">50</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">BID TIME<p className="text-center">05:33PM</p></span>
-                    <span className="text-lg text-center font-medium text-[#281F1D]">TRANSACTION<p className="text-center">05/01/2024</p></span>
-                   </div>
-                </div>
+            <div className="flex flex-col w-full items-center gap-8 child:max-w-fit">
+                {bidHistory.length === 0 ? (
+                    <span className="text-xl">No history found</span>
+                ) : (
+                    <>
+                        {bidHistory.map((bid) => (
+                            <div className="bg-white relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
+                                <span className="bg-orange-600 rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">
+                                    {bid.place}
+                                </span>
+                                <div className="flex flex-wrap gap-5 px-5 ">
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        BID ID<p className="text-center text-sm">{bid._id.slice(-5)}</p>
+                                    </span>
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        GAME TYPE
+                                        <p className="text-center text-sm">
+                                            {bid.ticket.toString().length === 1
+                                                ? "SINGLE"
+                                                : bid.ticket.toString().length === 2
+                                                ? "DOUBLE"
+                                                : "TRIPLE"}
+                                        </p>
+                                    </span>
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        DIGIT<p className="text-center text-sm">{bid.ticket}</p>
+                                    </span>
+                                   
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        POSITION<p className="text-center text-sm">{bid.position}</p>
+                                    </span>
+                                    <span className="text-xs text-center font-semibold text-red-500">
+                                        AMOUNT<p className="text-center text-sm">{bid.amount}</p>
+                                    </span>
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        BID DATE
+                                        <p className="text-center text-sm">
+                                            {new Date(bid.time).toLocaleDateString()}
+                                        </p>
+                                    </span>
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        BID TIME
+                                        <p className="text-center text-sm">
+                                            {new Date(bid.time).toLocaleTimeString()}
+                                        </p>
+                                    </span>
+                                    <span className="text-xs text-center font-medium text-[#281F1D]">
+                                        TRANSACTION
+                                        <p className="text-center text-sm">
+                                            {new Date(bid.createdAt).toLocaleString()}
+                                        </p>
+                                    </span>
+                                    {bid.won === true && (
+                                        <span className="text-xs text-center font-semibold text-green-600">
+                                            RETURNS<p className="text-center text-sm">{bid.returns}</p>
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
         </section>
-    );
+    )
 };

@@ -1,14 +1,29 @@
+import { useProfileContext } from "@/App"
 import { Data } from "@/components/data-info/DataInfo"
-import { Hero } from "@/components/hero/Hero"
-import Layout from "@/components/layout"
 import Navbar from "@/components/navbar/Navbar"
 import { Notification } from "@/components/notification/Notification"
 import { UserPopup } from "@/components/user-popup/UserPopup"
+import { routes } from "@/constants"
+import { useEffect } from "react"
 import { HelmetProvider } from "react-helmet-async"
-import { Toaster } from "react-hot-toast"
+import { Toaster, toast } from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 
 export const Admin = () => {
+  const { user } = useProfileContext();
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    console.log({user});
+    
+    if (!user || user?.role !== 'admin') {
+      toast.error("Unauthorized !!! Not Admin", {id: 'not-admin'});
+      navigate(routes.INDEX);
+    }
+}, [navigate, user]);
+
 return (
   // <Layout>
     <HelmetProvider>

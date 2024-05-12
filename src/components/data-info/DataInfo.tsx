@@ -146,7 +146,6 @@ export const Data = () => {
                 setSummary(buyers.data.summary);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
-                toast(error.response?.data?.message || "Unknown error");
             } finally {
                 setDataLoading(false);
             }
@@ -213,26 +212,26 @@ const PublishResult: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const events = [
         {
-            place: "Pokhara",
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            place: "Pashupatinath",
+            time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
         },
         {
-            place: "Kathmandu",
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            place: "Rara",
+            time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
         },
         {
-            place: "Dhangadi",
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            place: "Durbar Square",
+            time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
         },
         {
-            place: "Nepalgunj",
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            place: "Swoyambhunath",
+            time: ["09:00", "12:00", "17:00", "21:00", "23:45"],
         },
     ];
     const [data, setData] = useState({
         leftTicketNumber: null,
         rightTicketNumber: null,
-        place: "Pokhara",
+        place: "Pashupatinath",
         time: null,
     });
     function handleChange(e: any, dataFor: string) {

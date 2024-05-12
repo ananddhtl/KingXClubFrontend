@@ -49,6 +49,7 @@ const Login = () => {
                 email: res.data?.user?.email,
                 name: res.data?.user?.email.split("@")[0],
                 phone: res.data?.user?.phone,
+                role: res.data?.user?.role,
             });
             return res;
         } catch (error) {
@@ -69,8 +70,8 @@ const Login = () => {
             <NavLink to="/">
             <img src={Logo} alt="logo" />
             </NavLink>
-            <div>
-                <div className="flex justify-between max-w-sm border border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
+            <div className="flex flex-col justify-center items-center">
+                <div className="flex justify-between max-w-xs border border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
                     <button className="bg-[#FE480F] text-white tracking-widest font-bold py-2 px-10 rounded-full">
                         Login
                     </button>

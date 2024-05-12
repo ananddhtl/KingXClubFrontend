@@ -3,37 +3,41 @@ import { routes } from "@/constants";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
+import Pashupatinath from '@/assets/image/pashupatinath.jpeg'
+import DurbarSquare from '@/assets/image/durbar_square.jpeg'
+import Rara from '@/assets/image/rara.jpeg'
+import Swyambhunath from '@/assets/image/swyambhunath.jpeg'
 
 const City = () => {
   const navigate = useNavigate()
     const [events, setEvents] = useState([
         {
-            place: "Pokhara",
-            image: "assets/img/pok.jpg",
+            place: "Pashupatinath",
+            image: Pashupatinath,
             totalAmount: 0,
             totalPlayers: 0,
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
         },
         {
-            place: "Kathmandu",
-            image: "assets/img/ktm.jpg",
+            place: "Rara",
+            image: Rara,
             totalAmount: 0,
             totalPlayers: 0,
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
         },
         {
-            place: "Dhangadi",
-            image: "assets/img/Dhangadi.jpeg",
+            place: "Durbar Square",
+            image: DurbarSquare,
             totalAmount: 0,
             totalPlayers: 0,
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
         },
         {
-            place: "Nepalgunj",
-            image: "assets/img/Nepalgunj.jpg",
+            place: "Swoyambhunath",
+            image: Swyambhunath,
             totalAmount: 0,
             totalPlayers: 0,
-            time: ["09:00", "12:00", "15:00", "21:00"],
+            time: ["09:00", "12:00", "17:00", "21:00", "23:45"],
         },
     ]);
 
@@ -63,7 +67,7 @@ const City = () => {
         <div className="flex pb-28 flex-col justify-center items-center w-full min-h-screen">
           {events.map((event) => (
 
-            <div onClick={() => navigate(`${routes.PLACE_BID}/${event.place}`)} role="button" className=" mb-8 w-[340px] h-[180px] bg-[#110400] border rounded-tl-xl rounded-tr-3xl rounded-br-3xl ">
+            <div key={event.place} onClick={() => navigate(`${routes.PLACE_BID}/${event.place}`)} role="button" className=" mb-8 w-[340px] h-[180px] bg-[#110400] border rounded-tl-xl rounded-tr-3xl rounded-br-3xl ">
                 <div className="h-auto flex justify-between p-2">
                     <div className="w-[240px] bg-[#FE480F] rounded-br-3xl  rounded-tr-md rounded-tl-2xl rounded-bl-lg flex items-center pl-2 font-semibold tracking-wider">
                         {event.place}
@@ -80,15 +84,15 @@ const City = () => {
                 <div className="flex text-sm justify-between mt-2 p-4">
                     <div className="gap-y-2 flex flex-col">
                         <p className="text-xs">OPEN BIDS</p>
-                        <p className="text-xs text-start">6:00 AM</p>
+                        <p className="text-xs text-start">{event.time[0]} AM</p>
                     </div>
                     <div className="gap-y-2 flex flex-col">
                         <p className="text-xs">CLOSE BIDS</p>
-                        <p className="text-xs text-start">10:00 PM</p>
+                        <p className="text-xs text-start">{event.time[event.time.length - 1]} PM</p>
                     </div>
 
                     <div className="gap-y-2 flex flex-col">
-                        <p className="text-xs">NUMBER OF PLAYERS</p>
+                        <p className="text-xs">NUMBER OF TICKETS</p>
                         <p className="text-xs text-start">{event.totalPlayers}</p>
                     </div>
                 </div>

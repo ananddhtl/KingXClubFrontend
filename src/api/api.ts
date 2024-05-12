@@ -12,18 +12,26 @@ const baseURL = axios.create({
 });
 
 export const getTodayTicketStatus = () => {
-    return baseURL.get("/ticket/today", {});
+    return baseURL.get("/ticket/today");
 };
 export const getLuckyWinners = () => {
-    return baseURL.get("/ticket/lucky-winners", {});
+    return baseURL.get("/ticket/lucky-winners");
 };
 
 export const getTodaysTicket = () => {
-    return baseURL.get("/ticket/today/all", {});
+    return baseURL.get("/ticket/today/all");
+};
+
+export const getPurchasedTicket = () => {
+    return baseURL.get("/ticket/me");
 };
 
 export const getAllResult = () => {
-    return baseURL.get("/result/all", {});
+    return baseURL.get("/result/all");
+};
+
+export const getUserDetail = () => {
+    return baseURL.get("/user/me");
 };
 
 // export const getTodayTicketStatus = (address: string) => {

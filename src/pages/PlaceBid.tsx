@@ -1,28 +1,29 @@
 import { routes } from "@/constants";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BidModal from "./BidModal";
 // import { useProfileContext } from "@/App";
 import { cn } from "@/utils/cn";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/button/Button";
 import { buyTicketAPI } from "@/api/api";
+import { useProfileContext } from "@/App";
 const places = [
     {
-        place: "Pokhara",
-        time: ["09:00", "12:00", "15:00", "21:00"],
+        place: "Pashupatinath",
+        time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
     },
     {
-        place: "Kathmandu",
-        time: ["09:00", "12:00", "15:00"],
+        place: "Rara",
+        time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
     },
     {
-        place: "Dhangadi",
-        time: ["09:00", "12:00", "15:00", "21:00"],
+        place: "Durbar Square",
+        time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
     },
     {
-        place: "Nepalgunj",
-        time: ["09:00", "12:00", "15:00", "21:00"],
+        place: "Swoyambhunath",
+        time: ["09:00", "12:00", "17:00", "21:00", "23:45"],
     },
 ];
 export const PlaceBid = () => {
@@ -30,10 +31,23 @@ export const PlaceBid = () => {
     const { city } = useParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    // const { user } = useProfileContext();
+    const { user, setUser } = useProfileContext();
     const [selectedTime, setSelectedTime] = useState(null);
     const [position, setPosition] = useState(null);
     const [tickets, setTickets] = useState({});
+
+    const totalAmount = useMemo(
+        () =>
+            Object.values(tickets)
+                .reduce(
+                    (accumulator: number, currentValue: { amount: number }) =>
+                        accumulator + currentValue.amount,
+                    0
+                )
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+        [tickets]
+    );
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -56,7 +70,7 @@ export const PlaceBid = () => {
             console.log(res);
 
             toast(res.data?.message || "Unknown error");
-            // setUser({ ...user, amount: user.amount - res.data?.amount });
+            setUser({ ...user, amount: user.amount - res.data?.amount });
             return res;
         } catch (error) {
             console.log(`Error logging user: ${error}`);
@@ -67,13 +81,14 @@ export const PlaceBid = () => {
             navigate(routes.INDEX);
         }
     };
+    console.log({ tickets });
 
-    // useEffect(() => {
-    //     if (!user) navigate(routes.LOGIN);
-    // }, [navigate, user]);
+    useEffect(() => {
+        if (!user) navigate(routes.LOGIN);
+    }, [navigate, user]);
 
     return (
-        <section className="bg-[#F4F4F4] flex flex-col items-center justify-between py-4 text-black min-h-screen ">
+        <section className="bg-[#F4F4F4] flex flex-col items-center justify-between py-8 text-black min-h-screen ">
             <div className="sticky top-1 px-4 grid grid-cols-5 justify-center place-items-center w-full">
                 <button
                     onClick={() => navigate(routes.INDEX)}
@@ -115,7 +130,9 @@ export const PlaceBid = () => {
                                 return (
                                     <>
                                         <input
-                                            onChange={(e) => setSelectedTime(e.target.value)}
+                                            onChange={(e) =>
+                                                setSelectedTime(Number(e.target.value))
+                                            }
                                             className="btn-check"
                                             type="radio"
                                             name="betDate"
@@ -126,7 +143,7 @@ export const PlaceBid = () => {
                                         />
                                         <label
                                             className={cn(
-                                                "btn py-2 text-lg text-black rounded-full",
+                                                "btn py-2 text-black text-[14px] rounded-full",
                                                 selectedTime == time && "text-white !bg-orange-500"
                                             )}
                                             htmlFor={`betDate${index}`}
@@ -199,7 +216,7 @@ export const PlaceBid = () => {
                             [777]: {
                                 amount: 500,
                                 ticket: 777,
-                                selectedTime,
+                                time: selectedTime,
                                 position,
                             },
                         }))
@@ -225,6 +242,7 @@ export const PlaceBid = () => {
                     onClose={handleCloseModal}
                     time={selectedTime}
                     position={position}
+                    totalAmount={totalAmount}
                 />
                 <table className="table mt-5 table-hover table-auto">
                     <thead className="border-b-[#F6571E]">
@@ -232,6 +250,7 @@ export const PlaceBid = () => {
                             <th className=" text-lg text-[#281F1D] font-medium">Ticket</th>
                             <th className=" text-lg text-[#281F1D] font-medium">Amount</th>
                             <th className=" text-lg text-[#281F1D] font-medium">Type</th>
+                            <th className=" text-lg text-[#281F1D] font-medium">Time</th>
                             <th />
                         </tr>
                     </thead>
@@ -243,10 +262,12 @@ export const PlaceBid = () => {
                                         amount,
                                         ticket,
                                         position,
+                                        time,
                                     }: {
                                         amount: number;
                                         ticket: number;
                                         position: string;
+                                        time: string;
                                     }) => (
                                         <tr>
                                             <td className="text-[#281F1D] text-center leading-[14px]">
@@ -258,6 +279,13 @@ export const PlaceBid = () => {
                                             <td className="text-[#281F1D] text-center leading-[14px]">
                                                 {position}
                                             </td>
+                                            <td className="text-[#281F1D] text-center leading-[14px]">
+                                                {new Date(time).toLocaleString("default", {
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                })}
+                                            </td>
+
                                             <td
                                                 onClick={() => handleDelete(ticket)}
                                                 className="text-[#281F1D] cursor-pointer text-center leading-[14px]"
@@ -282,11 +310,13 @@ export const PlaceBid = () => {
                             <tr>
                                 <td />
                                 <td
-                                    aria-colspan={4}
+                                    aria-colspan={5}
                                     className="bg-white text-center text-orange-500"
                                 >
                                     No data found
                                 </td>
+
+                                <td />
                                 <td />
                             </tr>
                         )}
@@ -306,14 +336,7 @@ export const PlaceBid = () => {
                     Total Amount:{" "}
                     <p className="text-[#FE480F] inline-flex items-center text-2xl font-semibold">
                         Rs
-                        {` ${Object.values(tickets)
-                            .reduce(
-                                (accumulator: number, currentValue: { amount: number }) =>
-                                    accumulator + currentValue.amount,
-                                0
-                            )
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} `}
+                        {totalAmount}
                     </p>
                 </span>
                 <Button
@@ -321,7 +344,7 @@ export const PlaceBid = () => {
                     text="Buy Tickets"
                     className="w-fit"
                     onAction={buyTicket}
-                    disabled={isLoading}
+                    disabled={isLoading || totalAmount > user?.amount}
                 />
             </div>
         </section>
