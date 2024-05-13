@@ -39,7 +39,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div className="w-full sticky top-0 bg-[#0A0706] py-4 shadow-xl">
+        <div className="w-full sticky z-10 top-0 bg-[#0A0706] py-4 shadow-xl">
             <div className="flex justify-between mx-5 items-center rounded-xl h-[50px]">
                 <div
                     className="bg-[#0A0706] cursor-pointer h-[48px] flex items-center justify-center rounded-lg w-[48px]"
@@ -47,14 +47,13 @@ const Navbar = () => {
                 >
                     <FaBars />
                 </div>
-                <NavLink to="/">
+                <NavLink className="w-full ml-4" to="/">
                     <img src={LogoCropped} alt="logo" />
                 </NavLink>
-                <button>
-                    <div className="bg-[#0A0706] h-[48px] flex items-center justify-center rounded-lg w-[48px]">
-                        <BiBell />
-                    </div>
-                </button>
+                <div className=" gap-2 flex">
+                    <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700" to="/login">Login</NavLink>
+                    <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700" to="/signup">Signup</NavLink>
+                </div>
             </div>
             <AnimatePresence>
                 {isSidebarOpen && (
