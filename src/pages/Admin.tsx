@@ -1,5 +1,6 @@
 import { useProfileContext } from "@/App"
 import { Data } from "@/components/data-info/DataInfo"
+import Navbar from "@/components/navbar/Navbar"
 import { routes } from "@/constants"
 import { useEffect } from "react"
 import { toast } from "react-hot-toast"
@@ -21,6 +22,8 @@ export const Admin = () => {
 }, [navigate, user]);
 
 return (
+  <>
+  <Navbar />
     <Data />
-    
+    </>
 )}

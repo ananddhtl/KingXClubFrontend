@@ -50,23 +50,6 @@ const Agentform = () => {
         }
     };
 
-    console.log({formData});
-    
-
-    // Function to handle terms agreement
-    const handleTermsAgreement = () => {
-        try {
-
-        setAgreedToTerms(!agreedToTerms);
-        toast.success('Form successfully submitted')
-        navigate(routes.PROFILE)
-        
-    } catch (error) {
-        console.log(`Error logging user: ${error}`);
-        toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'})
-    }
-    };
-
     // Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -233,7 +216,7 @@ const Agentform = () => {
                                 name="terms"
                                 type="checkbox"
                                 className="focus:ring-red-500 h-4 w-4 text-red-600 border-zinc-300 rounded"
-                                onChange={handleTermsAgreement}
+                                onChange={() => setAgreedToTerms(!agreedToTerms)}
                             />
                         </div>
                         <div className="ml-3 text-sm">

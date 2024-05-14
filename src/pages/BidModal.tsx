@@ -9,6 +9,15 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets, totalA
     const [selectedInitial, setSelectedInitial] = useState(1);
     const { user } = useProfileContext();
 
+    const isIncreasingNumber = (num: number) => {
+        const numberString = num.toString();
+        for (let i = 0; i < numberString.length - 1; i++) {
+          if (numberString.charAt(i) > numberString.charAt(i + 1)) {
+            return false;
+          }
+        }
+        return true;
+      }
     const handlePlaceBid = () => {
         if (Object.values(tickets).length > 0) {
             onClose();
@@ -98,7 +107,11 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets, totalA
                 </div>
             ));
         } else if (selectedType === "triple") {
-            return Array.from({ length: 100 }, (_, i) => i + (100 * selectedInitial)).map((num) => (
+            return Array.from({ length: 100 }, (_, i) => {
+                const num = i + (100 * selectedInitial)
+                if(isIncreasingNumber(num)) return num
+                return
+            }).filter((value) => value).map((num) => (
                 <div
                     key={num}
                     className={cn(
@@ -251,6 +264,7 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets, totalA
                         <div className="grid grid-cols-2 justify-center place-items-center gap-2 scrollbar overflow-y-scroll w-full h-[40dvh]">
                             {renderNumbers()}
                         </div>
+                        <div className="flex flex-col items-center justify-center">
                         <span className="py-2 text-white text-xl font-semibold">
                             Winning Odds:{" "}
                             <p className="text-black/50 inline-flex items-center text-xl font-semibold">
@@ -261,7 +275,6 @@ const BidModal = ({ isOpen, onClose, time, position, tickets, setTickets, totalA
                                     : "x499"}
                             </p>
                         </span>
-                        <div className="flex flex-col items-center justify-center">
                             <span className="py-2 text-white text-lg font-semibold">
                                 Wallet Balance:{" "}
                                 <p className="text-black/50 inline-flex items-center  font-semibold">

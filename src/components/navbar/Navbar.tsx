@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { BiBell } from "react-icons/bi";
-import { FaBars, FaBell, FaTimes, FaWallet } from "react-icons/fa";
+import { FaBars, FaTimes, FaWallet } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProfileContext } from "@/App";
@@ -89,7 +89,8 @@ const Navbar = () => {
                                         onClick={toggleSidebar}
                                     >
                                         <FaWallet className="text-orange-500"/>
-                                        <p>Rs. {user?.amount}</p>
+                                        <p>Rs. {user?.amount.toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                                     </div>
                                 </NavLink>
                             ) : (

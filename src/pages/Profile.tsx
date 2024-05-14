@@ -7,7 +7,19 @@ import { NavLink, useNavigate } from "react-router-dom";
 export const Profile = () => {
     const navigate = useNavigate();
     const { user } = useProfileContext();
+    // var formattedBody = "Dear Sir or Madam, \n\nHere are some useful documents I would like to share with you. http://www.google.co.uk";
 
+    // var a = document.createElement('a');
+    // var linkText = document.createTextNode("Create new email");
+    // a.appendChild(linkText);
+    // a.title = "Create new email";
+    
+    //   var mailToLink = "mailto:oli@spacecadets.co.uk?";
+    //   var mailContent = "Subject=Documents to share&";
+    //   mailContent += "cc=bob@spacecadets.co.uk&";
+    //   mailContent += "body=" + encodeURIComponent(formattedBody);
+    
+    //   a.href = mailToLink + mailContent;
     useEffect(() => {
         if (!user) navigate(routes.LOGIN);
     }, [navigate, user]);
@@ -18,7 +30,7 @@ export const Profile = () => {
                 <b className="text-orange-500">{user?.name}</b>
             </span>
             <NavLink to={routes.INDEX}>
-                <img src={Logo} alt="logo" />
+                <img className="w-28" src={Logo} alt="logo" />
             </NavLink>
 
             <div className="flex flex-col items-center gap-4">

@@ -67,7 +67,7 @@ const Login = () => {
     return (
         <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
             <NavLink to="/">
-            <img src={Logo} alt="logo" />
+            <img className="w-28" src={Logo} alt="logo" />
             </NavLink>
             <div className="flex flex-col justify-center items-center">
                 <div className="flex justify-between max-w-xs border border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
@@ -133,9 +133,11 @@ const Login = () => {
                         />
                     </div>
                     <div className="text-start mt-4">
-                        <a href="#" className="text-[#FE480F] hover:text-[#fe3f0f] text-sm">
+                        <NavLink 
+                        to="https://wa.me/+971563664115"
+                        target="_blank" className="text-[#FE480F] hover:text-[#fe3f0f] text-sm">
                             Forgot password?
-                        </a>
+                        </NavLink>
                     </div>
                 </div>
             </div>
