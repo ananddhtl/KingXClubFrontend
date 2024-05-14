@@ -26,7 +26,7 @@ function BottomNavbar() {
                         <p className='text-xs -mt-2 font-mono text-center'>Result</p>
                     </NavLink>
 
-                    <NavLink className="flex justify-center h-[70px] w-[50px] flex-col  hover:text-orange-500" to="https://wa.me/+971563664115">
+                    <NavLink className="flex justify-center h-[70px] w-[50px] flex-col  hover:text-orange-500" target='_blank' to="https://wa.me/+971563664115">
                         <img className=" w-[35px] justify-center ml-2" src= "./assets/img/support.png"/>
                         <p className='text-xs -mt-2 font-mono text-center'>Support</p>
                     </NavLink>

@@ -58,7 +58,7 @@ const City = () => {
               );
           } catch (error) {
               console.log(`Error logging user: ${error}`);
-              toast(error.response?.data?.message || "Unknown error");
+              toast(error.response?.data?.message || "Unknown error", {id: 'unknown-error'});
           }
       })();
   }, []);

@@ -26,7 +26,7 @@ export const Results: FC<ResultsProps> = ({ className }) => {
                 setResults(results.data);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
-                toast.error(error.response?.data?.message || "Unknown error");
+                toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'});
             }
         })();
     }, []);

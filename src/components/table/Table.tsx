@@ -84,7 +84,7 @@ export const Table: FC<ITable> = ({
   };
 
   return (
-    <div className='mx-10 my-5'>
+    <div className='my-5'>
       <div className="flex items-center justify-between m-2">
         {showPagination && (
           <div className="font-mono">

@@ -69,12 +69,12 @@ export const PlaceBid = () => {
             const res = await buyTicketAPI({ tickets: Object.values(tickets), place: city });
             console.log(res);
 
-            toast(res.data?.message || "Unknown error");
+            toast.success(res.data?.message || "Purchase Successful");
             setUser({ ...user, amount: user.amount - res.data?.amount });
             return res;
         } catch (error) {
             console.log(`Error logging user: ${error}`);
-            toast(error.response?.data?.message || "Unknown error");
+            toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'});
             throw new Error(`Error logging user: ${error}`);
         } finally {
             setIsLoading(false);

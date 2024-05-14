@@ -34,6 +34,10 @@ export const getUserDetail = () => {
     return baseURL.get("/user/me");
 };
 
+export const getAllUser = () => {
+    return baseURL.get("/user/all");
+};
+
 // export const getTodayTicketStatus = (address: string) => {
 //     return baseURL.get("/ticket/today", {
 //         params: { address },
@@ -61,6 +65,10 @@ export const buyTicketAPI = (payload: any) => {
 
 export const agentFormAPI = (payload: any) => {
     return baseURL.post("/user/submit/agent-form", payload);
+};
+
+export const updateBalance = (payload: any) => {
+    return baseURL.post("/user/update-balance", payload);
 };
 
 // Configure retry options

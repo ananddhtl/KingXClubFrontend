@@ -43,7 +43,7 @@ const Login = () => {
             console.log(res);
 
             saveLoginData(res.data?.tokens);
-            toast(res.data?.message || "Unknown error");
+            toast.success(res.data?.message || "Login Successful");
             setUser({
                 amount: res.data?.user?.amount,
                 email: res.data?.user?.email,
@@ -54,7 +54,7 @@ const Login = () => {
             return res;
         } catch (error) {
             console.log(`Error logging user: ${error}`);
-            toast(error.response?.data?.message || "Unknown error");
+            toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'});
         } finally {
             setIsLoading(false);
         }

@@ -3,11 +3,17 @@ import { routes } from "@/constants";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useProfileContext } from "@/App";
 
 export const BidHistory = () => {
     const navigate = useNavigate();
     const [bidHistory, setBidHistory] = useState([]);
+    const { user } = useProfileContext();
 
+    useEffect(() => {
+        if (!user) navigate(routes.LOGIN);
+    }, [navigate, user]);
+    
     useEffect(() => {
         (async () => {
             try {
@@ -16,7 +22,7 @@ export const BidHistory = () => {
                 setBidHistory(purchased.data.data);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
-                toast.error(error.response?.data?.message || "Unknown error");
+                toast.error(error.response?.data?.message || "Unknown error", {id: 'token failed'});
             }
         })();
     }, []);

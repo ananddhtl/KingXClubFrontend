@@ -1,9 +1,10 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, ReactNode, useEffect, useMemo, useState } from "react";
 import { Table } from "../table";
-import { getTodaysTicket, publishResultAPI } from "@/api/api";
+import { getAllUser, getTodaysTicket, publishResultAPI, updateBalance } from "@/api/api";
 import toast from "react-hot-toast";
 import { SelectColumnFilter } from "../table/filters";
 import { Button } from "../button/Button";
+import { cn } from "@/utils/cn";
 
 export const Data = () => {
     const [tickets, setTickets] = useState<any[]>([]);
@@ -153,11 +154,12 @@ export const Data = () => {
     }, []);
 
     return (
-        <section className="bg-neutral-900 min-h-screen -z-20 w-full py-10 px-3 sm:px-10">
+        <section className="bg-neutral-900 min-h-screen w-full py-10 px-3">
+            <DepositAmount />
             <PublishResult />
             {dataLoading ? (
                 <svg
-                    className="spinner animate-spin"
+                    className="spinner text-center animate-spin"
                     id="spinner"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -176,34 +178,38 @@ export const Data = () => {
                     <TopSection
                         text="Today's Ticket Purchase Information"
                         description="* This data has been shown according to purchase from the website"
-                    />
-
-                    <Table columns={columns} data={tickets} />
-                    <TopSection 
-                    text="Today's Ticket Summary Information"
-                    description="* This data has been shown according to purchase from the website"
-                    />
-
-                    <Table columns={summaryColumns} data={summary} />
+                    >
+                        <Table columns={columns} data={tickets} />
+                    </TopSection>
+                    <TopSection
+                        text="Today's Ticket Summary Information"
+                        description="* This data has been shown according to purchase from the website"
+                    >
+                        <Table columns={summaryColumns} data={summary} />
+                    </TopSection>
                 </>
             ) : (
-                <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">No data found</span>
+                <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
+                    No data found
+                </span>
             )}
         </section>
     );
 };
 
 interface ITopSection {
-    text: string,
-    description: string
+    text: string;
+    description: string;
+    children: ReactNode;
 }
 
-const TopSection: FC<ITopSection> = ({ text, description }) => {
+const TopSection: FC<ITopSection> = ({ text, description, children }) => {
     return (
-        <div className="bg-black/40 rounded-xl p-5 my-5 mx-10 relative">
-            <div className="text-rose-400 font-semibold text-lg">{text}</div>
-            {description}
-            <p className="text-gray-500"></p>
+        <div className="bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
+            <div className="text-orange-600 text-center font-semibold text-lg">{text}</div>
+
+            <p className="text-gray-500 my-1">{description}</p>
+            {children}
         </div>
     );
 };
@@ -231,7 +237,7 @@ const PublishResult: FC = () => {
     const [data, setData] = useState({
         leftTicketNumber: null,
         rightTicketNumber: null,
-        place: "Pashupatinath",
+        place: null,
         time: null,
     });
     function handleChange(e: any, dataFor: string) {
@@ -251,11 +257,11 @@ const PublishResult: FC = () => {
             const res = await publishResultAPI(data);
             console.log(res);
 
-            toast(res.data?.message || "Unknown error");
+            toast.success(res.data?.message || "result Published");
             return res;
         } catch (error) {
             console.log(`Error logging user: ${error}`);
-            toast(error.response?.data?.message || "Unknown error");
+            toast.error(error.response?.data?.message || "Unknown error", { id: "unknown-error" });
             throw new Error(`Error logging user: ${error}`);
         } finally {
             setIsLoading(false);
@@ -276,11 +282,15 @@ const PublishResult: FC = () => {
                     <select
                         id="place"
                         onChange={(e) => handleChange(e, "place")}
-                        className="ticket-dropdown my-4 px-4 w-36 border bg-black/40 rounded-md outline-none text-orange-600"
+                        className="ticket-dropdown my-4 px-4 w-52 border bg-black/40 rounded-md outline-none text-orange-600"
                     >
-                        <option value={null}>Select Place</option>
+                        <option hidden value={null}>
+                            Select Place
+                        </option>
                         {events.map(({ place }) => (
-                            <option value={place}>{place}</option>
+                            <option value={place} className="bg-black">
+                                {place}
+                            </option>
                         ))}
                     </select>
                 </div>
@@ -290,16 +300,15 @@ const PublishResult: FC = () => {
                     </label>
 
                     <select
-                        id="place"
+                        id="time"
                         onChange={(e) => handleChange(e, "time")}
-                        className="ticket-dropdown px-4 w-36 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
+                        className="ticket-dropdown px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
                     >
-                        <option value={null} className="text-black/50 ">
-                            Select Date
+                        <option value={null} hidden>
+                            Select Time
                         </option>
-                        {events
-                            .find(({ place }) => place === data.place)
-                            .time.map((timestamp) => {
+                        {(events.find(({ place }) => place === data.place)?.time || []).map(
+                            (timestamp) => {
                                 const time = new Date().setHours(
                                     Number(timestamp.split(":")[0]),
                                     Number(timestamp.split(":")[1]),
@@ -307,7 +316,7 @@ const PublishResult: FC = () => {
                                     0
                                 );
                                 return (
-                                    <option value={time}>
+                                    <option value={time} className="bg-black">
                                         {new Date(time).toLocaleString("default", {
                                             month: "long",
                                             hour: "numeric",
@@ -316,34 +325,35 @@ const PublishResult: FC = () => {
                                         })}
                                     </option>
                                 );
-                            })}
+                            }
+                        )}
                     </select>
                 </div>
                 <div className="flex bg-black/60 p-2 pb-6 rounded-lg flex-col justify-center w-full items-center gap-3">
                     <label className="text-white text-lg ">Ticket Number</label>
                     <div className="flex w-full justify-around">
-                    <input
-                        type="number"
-                        className="form-control w-32 placeholder:opacity-50"
-                        id="betAmount"
-                        name="betAmount"
-                        placeholder="Left Number"
-                        min="100"
-                        max="999"
-                        onChange={(e) => handleChange(e, "leftTicketNumber")}
-                        required
-                    />
-                    <input
-                        type="number"
-                        className="form-control w-32 placeholder:opacity-50"
-                        id="betAmount"
-                        name="betAmount"
-                        placeholder="Right Number"
-                        min="100"
-                        max="999"
-                        onChange={(e) => handleChange(e, "rightTicketNumber")}
-                        required
-                    />
+                        <input
+                            type="number"
+                            className="form-control w-32 placeholder:opacity-50"
+                            id="betAmount"
+                            name="betAmount"
+                            placeholder="Left Number"
+                            min="100"
+                            max="999"
+                            onChange={(e) => handleChange(e, "leftTicketNumber")}
+                            required
+                        />
+                        <input
+                            type="number"
+                            className="form-control w-32 placeholder:opacity-50"
+                            id="betAmount"
+                            name="betAmount"
+                            placeholder="Right Number"
+                            min="100"
+                            max="999"
+                            onChange={(e) => handleChange(e, "rightTicketNumber")}
+                            required
+                        />
                     </div>
                 </div>
                 <Button
@@ -357,6 +367,131 @@ const PublishResult: FC = () => {
                     onAction={publishResult}
                     isLoading={isLoading}
                 />
+            </form>
+        </div>
+    );
+};
+
+const DepositAmount: FC = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [users, setUser] = useState([]);
+
+    const [data, setData] = useState({
+        phone: null,
+        balance: 0
+    });
+    function handleChange(value: number, dataFor: string) {
+        setData({
+            ...data,
+            [dataFor]: value,
+        });
+    }
+
+    const depositBalance = async (): Promise<any> => {
+        if (!data.phone) return toast("Please select phone number");
+        if (!data.balance) return toast("Please enter the balance to deposit");
+        try {
+            setIsLoading(true);
+            const res = await updateBalance(data);
+
+            toast.success(res.data?.message || "Deposit successful");
+            return res;
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Unknown error", { id: "unknown-error" });
+            throw new Error(`Error : ${error}`);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const users = await getAllUser();
+                console.log({ users });
+                setUser(users.data);
+            } catch (error) {
+                console.log(`Error fetching user: ${error}`);
+            }
+        })();
+    }, []);
+    
+    return (
+        <div className="bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
+            <div className="text-orange-600 text-center font-semibold text-lg">Update Balance</div>
+
+            <p className="text-gray-500 my-1">Find the number to deposit amount</p>
+            <form className="flex flex-wrap gap-10">
+                <div className="gap-4 flex flex-col bg-black/60 rounded-lg w-full justify-around p-2">
+                    <div className="flex justify-between items-center">
+                        <label htmlFor="place" className="text-white text-lg mx-2">
+                            Phone
+                        </label>
+
+                        <select
+                            id="phone"
+                            onChange={(e) => handleChange(Number(e.target.value), "phone")}
+                            className="ticket-dropdown px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
+                        >
+                            <option value={null} hidden className="text-black/50 ">
+                                Select Number
+                            </option>
+                            {users.map(({ phone }) => {
+                                return (
+                                    <option value={phone} className="bg-black">
+                                        {phone}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div>
+                    <div className={cn('flex justify-between items-center', data.balance < 0 && 'opacity-25 disabled:cursor-not-allowed')}>
+                        <label className="text-white text-lg ">Deposit</label>
+                        <input
+                         disabled={data.balance < 0}
+                            type="number"
+                            className="form-control w-52 placeholder:opacity-50"
+                            id="betAmount"
+                            name="betAmount"
+                            placeholder="Balance"
+                            min="1"
+                            onChange={(e) => handleChange(Number(e.target.value), "balance")}
+                            required
+                        />
+                    </div>
+                    <div className={cn('flex justify-between items-center', data.balance > 0 && 'opacity-25 disabled:cursor-not-allowed')}>
+                        <label className="text-white text-lg ">Withdraw</label>
+                        <input
+                        disabled={data.balance > 0}
+                            type="number"
+                            className="form-control w-52 placeholder:opacity-50"
+                            id="betAmount"
+                            name="betAmount"
+                            placeholder="Balance"
+                            min="1"
+                            onChange={(e) => handleChange(-Number(e.target.value), "balance")}
+                            required
+                        />
+                    </div>
+                </div>
+                {data.phone && 
+                <div className="flex flex-col p-4 bg-black/60 rounded-lg w-full justify-around">
+                    <span className="text-white pb-3 text-lg self-center">
+                        User Details
+                    </span>
+                    
+                    <span>Email: <p className="inline-flex ">{users.find((user) => user.phone == data.phone)?.email}</p></span>
+                    <span>Current Balance: <p className="inline-flex ">{users.find((user) => user.phone == data.phone)?.amount}</p></span>
+                    <span>Refered By: <p className="inline-flex ">{users.find((user) => user.phone == data.phone)?.referCode}</p></span>
+                    <span>Phone: <p className="inline-flex ">{users.find((user) => user.phone == data.phone)?.phone}</p></span>
+                    <span>Role: <p className="inline-flex ">{users.find((user) => user.phone == data.phone)?.role}</p></span>
+                    <span>Id: <p className="inline-flex ">{users.find((user) => user.phone == data.phone)?._id}</p></span>
+                    
+
+                    
+                </div>}
+
+                <Button disabled={!data.balance || !data.phone} text={`${data.balance > 0 ? 'Deposit' : data.balance < 0  ? 'Withdraw' : 'Update'} Balance`} onAction={depositBalance} isLoading={isLoading} />
             </form>
         </div>
     );

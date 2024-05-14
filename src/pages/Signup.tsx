@@ -67,7 +67,7 @@ const Signup = () => {
             return res;
         } catch (error) {
             console.log(`Error registering user: ${error}`);
-            toast.error(error.response?.data?.message || "Unknown error");
+            toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'});
             throw new Error(`Error registering user: ${error}`);
         } finally {
             setIsLoading(false);

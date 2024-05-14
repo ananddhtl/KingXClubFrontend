@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { BiBell } from "react-icons/bi";
-import { FaBars, FaTimes, FaWallet } from "react-icons/fa";
+import { FaBars, FaBell, FaTimes, FaWallet } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProfileContext } from "@/App";
@@ -40,20 +40,25 @@ const Navbar = () => {
 
     return (
         <div className="w-full sticky z-10 top-0 bg-[#0A0706] py-4 shadow-xl">
-            <div className="flex justify-between mx-5 items-center rounded-xl h-[50px]">
+            <div className="w-full flex justify-between px-5 items-center rounded-xl h-[50px]">
                 <div
-                    className="bg-[#0A0706] cursor-pointer h-[48px] flex items-center justify-center rounded-lg w-[48px]"
+                    className="bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg"
                     onClick={toggleSidebar}
                 >
                     <FaBars />
                 </div>
-                <NavLink className="w-full ml-4" to="/">
+                <NavLink to="/">
                     <img src={LogoCropped} alt="logo" />
                 </NavLink>
-                <div className=" gap-2 flex">
-                    <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700" to="/login">Login</NavLink>
-                    <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700" to="/signup">Signup</NavLink>
-                </div>
+                {user ? 
+                <button>
+                    <div className="text-red-500 bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg">
+                        <BiBell />
+                    </div>
+                </button>
+                :
+                <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700 font-semibold" to="/login">Login</NavLink>
+            }
             </div>
             <AnimatePresence>
                 {isSidebarOpen && (

@@ -63,7 +63,7 @@ const Agentform = () => {
         
     } catch (error) {
         console.log(`Error logging user: ${error}`);
-        toast.error(error.response?.data?.message || "Unknown error")
+        toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'})
     }
     };
 
