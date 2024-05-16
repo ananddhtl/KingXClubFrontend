@@ -1,4 +1,4 @@
-export const routes = { INDEX: '/', PLACE_BID: '/place-bid', RESULT: '/result', BID_HISTORY: '/bid-history', ADMIN: '/admin', PROFILE: '/profile', LOGIN: '/login', SIGNUP: '/signup', AGENT :'/agent' }
+export const routes = { INDEX: '/', PLACE_BID: '/place-bid', RESULT: '/result', BID_HISTORY: '/bid-history', ADMIN: '/admin', PROFILE: '/profile', LOGIN: '/login', SIGNUP: '/signup', AGENT :'/agent', REFERRAL : '/refer' }
 
 export const EXTERNAL_LINKS = {
     TWITTER: 'https://twitter.com/cedro_finance',

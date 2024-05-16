@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import Loader from "./components/Loader/Loader";
 import { getUserDetail } from "./api/api";
 import Agentform from "./pages/Agentform";
+import ReferralCode from "./pages/ReferralCode";
 
 export interface IUser {
     amount: number;
@@ -81,6 +82,7 @@ function App() {
                             <Route path={routes.SIGNUP} element={<Signup />} />
                             <Route path={routes.ADMIN} element={<Admin />} />
                             <Route path={routes.AGENT} element={<Agentform/>} />
+                            <Route path='/refer' element={<ReferralCode/>} />
                             <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
                         </Routes>
                     </ProfileContext.Provider>
