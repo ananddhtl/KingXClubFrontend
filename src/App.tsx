@@ -16,6 +16,7 @@ import Loader from "./components/Loader/Loader";
 import { getUserDetail } from "./api/api";
 import Agentform from "./pages/Agentform";
 import ReferralCode from "./pages/ReferralCode";
+import Notification from "./pages/Notification";
 
 export interface IUser {
     amount: number;
@@ -83,6 +84,7 @@ function App() {
                             <Route path={routes.ADMIN} element={<Admin />} />
                             <Route path={routes.AGENT} element={<Agentform/>} />
                             <Route path='/refer' element={<ReferralCode/>} />
+                            <Route path='/notifications' element={<Notification/>} />
                             <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
                         </Routes>
                     </ProfileContext.Provider>

@@ -51,11 +51,13 @@ const Navbar = () => {
                     <img src={LogoCropped} alt="logo" />
                 </NavLink>
                 {user ? 
-                <button>
+                <NavLink to="/notifications">
+                    <button>
                     <div className="text-red-500 bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg">
                         <BiBell />
                     </div>
                 </button>
+                </NavLink>
                 :
                 <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700 font-semibold" to="/login">Login</NavLink>
             }
