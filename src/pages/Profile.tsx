@@ -126,6 +126,7 @@ export const Profile = () => {
                 </NavLink>
 
                 <div className="bg-orange-600 relative flex items-center justify-end w-[75dvw] h-[52px] px-4 rounded-3xl">
+                    <NavLink to='/refer'>
                     <button className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                         <svg
                             width="22"
@@ -141,6 +142,7 @@ export const Profile = () => {
                         </svg>
                         Referral
                     </button>
+                    </NavLink>
                     <svg
                         width="10"
                         height="19"
