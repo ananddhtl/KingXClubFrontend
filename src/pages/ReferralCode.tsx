@@ -1,4 +1,3 @@
-import React from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 
@@ -25,7 +24,7 @@ const ReferralCode = () => {
         logoWidth={100}
         logoHeight={100}
         eyeRadius={[10, 10, 10, 10]}
-        eyeColor={['orange', 'orange', 'orange', 'orange']}
+        eyeColor={['orange', 'orange', 'orange']}
         qrStyle="dots"
       />
 

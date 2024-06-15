@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, HashRouter, Navigate } from "react-router-dom";
 import "./App.scss";
 import { routes } from "./constants";
 import { Home } from "./pages/Home";
@@ -54,7 +54,7 @@ function App() {
             {isLoading ? (
                 <Loader />
             ) : (
-                <Router>
+                <HashRouter>
                     <Toaster
                         toastOptions={{
                             className: "",
@@ -88,7 +88,7 @@ function App() {
                             <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
                         </Routes>
                     </ProfileContext.Provider>
-                </Router>
+                </HashRouter>
             )}
             
         </>
