@@ -6,6 +6,10 @@ import toast from "react-hot-toast";
 import { cn } from "@/utils/cn";
 
 export const Result = () => {
+
+
+
+
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
     console.log({ results });
@@ -29,14 +33,14 @@ export const Result = () => {
         })();
     }, []);
     return (
-        <section className="bg-[#F4F4F4] flex flex-col items-center justify-start text-black gap-4 min-h-screen">
+        <section className="bg-[#240700] flex flex-col items-center justify-start text-black gap-4 min-h-screen">
             <div className="sticky top-0 flex justify-between items-center w-full  p-4">
                 <button
                     onClick={() => navigate(routes.PROFILE)}
-                    className="p-4 bg-white rounded-lg shadow-sm"
+                    className="p-4 bg-gradient-to-b from-[#FF5F01] to-[#FFD401] rounded-full shadow-sm"
                 >
                     <svg
-                        width="9"
+                        width="16"
                         height="16"
                         viewBox="0 0 9 16"
                         fill="none"
@@ -44,18 +48,18 @@ export const Result = () => {
                     >
                         <path
                             d="M8 1L1 8L8 15"
-                            stroke="black"
-                            stroke-width="1.3125"
+                            stroke="white"
+                            stroke-width="2.3125"
                             stroke-linecap="round"
                             stroke-linejoin="round"
                         />
                     </svg>
                 </button>
-                <span className="text-2xl font-sans font-semibold text-[#281F1D] tracking-wide">
+                <span className="text-2xl font-sans font-semibold text-white italic tracking-wide">
                     Result
                 </span>
-                <button className="p-4 bg-white rounded-lg shadow-sm">
-                    <svg
+                <button className="p-4 rounded-lg ">
+                    {/* <svg
                         width="15"
                         height="18"
                         viewBox="0 0 15 18"
@@ -84,11 +88,72 @@ export const Result = () => {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                         />
-                    </svg>
+                    </svg> */}
                 </button>
             </div>
-            <div className="bg-white shadow-sm w-full flex flex-col gap-5 pt-5">
-            <span className="text-2xl ml-10">All Results</span>
+
+        <div className="p">
+        <div className=" bg-[#300A00] border-2 border-yellow-500 p-3 rounded-lg text-center text-white max-w-lg mx-auto">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center">
+          <img src="assets/img/logo.png" alt="crown icon" className="rounded-full" />
+          <span className="ml-2 text-xl mx-2 font-bold h-12 w-1 bg-gradient-to-b rounded-lg from-yellow-500 to-red-500"></span>
+        </div>
+        <div className="flex space-x-2 text-md font-bold">
+          <span className="text-yellow-500">Rs. 10,000</span>
+          <span className="text-yellow-500">Rs. 50,000</span>
+          <span className="text-yellow-500">Rs. 450,000</span>
+        </div>
+      </div>
+      <div className="flex flex-col items-center space-y-4 text-center">
+  <div className="flex items-center space-x-1">
+    <div className="hours">
+      <span className="block text-sm font-bold">HOURS</span>
+      <div className="flex justify-center space-x-1">
+        <div className="bg-orange-500 w-10 h-10 flex items-center justify-center border border-[#ba3817] rounded-md text-xl">1</div>
+        <div className="bg-orange-500 w-10 h-10 flex items-center justify-center border border-[#ba3817] rounded-md text-xl">1</div>
+      </div>
+    </div>
+    <div className="flex flex-col justify-center mt-4">
+      <div className="text-xl font-bold">:</div>
+    </div>
+    <div className="minutes">
+      <span className="block text-sm font-bold">MINUTES</span>
+      <div className="flex justify-center space-x-1">
+        <div className="bg-orange-500 w-10 h-10 flex items-center justify-center border border-[#ba3817] rounded-md text-xl">4</div>
+        <div className="bg-orange-500 w-10 h-10 flex items-center justify-center border border-[#ba3817] rounded-md text-xl">5</div>
+      </div>
+    </div>
+    <div className="flex flex-col justify-center mt-4">
+      <div className="text-xl font-bold">:</div>
+    </div>
+    <div className="seconds">
+      <span className="block text-sm font-bold">SECONDS</span>
+      <div className="flex justify-center space-x-1">
+        <div className="bg-orange-500 w-10 h-10 flex items-center justify-center border border-[#ba3817] rounded-md text-xl">4</div>
+        <div className="bg-orange-500 w-10 h-10 flex items-center justify-center border border-[#ba3817] rounded-md text-xl">5</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    </div>
+        </div>
+
+
+        <div className="">
+                        <img src="./assets/img/matkaking.png"/>
+        </div>
+
+            <div style={{
+    backgroundImage: `url(https://ibb.co/g7DZyct)`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }}
+  className="shadow-sm w-full flex flex-col gap-5 pt-5">
+            <span className="text-2xl ml-10 text-white text-center">All Results</span>
                 <table className="table table-auto w-full max-w-[600px] text-center self-center">
                     <thead className="border-b-[#F6571E]">
                         <tr className="active">
@@ -156,3 +221,6 @@ export const Result = () => {
         </section>
     );
 };
+
+
+
