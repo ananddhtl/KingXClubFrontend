@@ -5,8 +5,8 @@ function BottomNavbar() {
 
     return (
         <div>
-            <div className="fixed w-full justify-center  bottom-0 z-10 left-0 right-0 bg-transparent backdrop-blur-lg md:hidden">
-                <nav className="flex h-16 w-full justify-around items-center ">
+            <div className="fixed w-full  bottom-0 z-10 left-0 right-0 bg-[rgba(31,7,1,1)] backdrop-blur-lg md:hidden">
+                <nav className="flex h-20 w-full justify-around items-center ">
                 <NavLink className="flex justify-center h-[70px] w-[35px] flex-col hover:text-orange-500" to="/games">
                         <img className="" src= "./assets/img/games.png"/>
                         <p className='text-xs -mt-2 font-mono text-center'>Games</p>

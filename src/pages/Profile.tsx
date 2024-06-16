@@ -25,9 +25,9 @@ export const Profile = () => {
     }, [navigate, user]);
     return (
         <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4 mt-5">
-            <span className="text-[32px] font-sans font-light text-center">
+            <span className="text-[32px] font-sans font-light text-center oleo-script">
                 Welcome <br />
-                <b className="text-orange-500">{user?.name}</b>
+                <b className="text-orange-500 capitalize">{user?.name}</b>
             </span>
             <NavLink to={routes.INDEX}>
                 <img className="w-28" src={Logo} alt="logo" />

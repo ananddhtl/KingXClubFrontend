@@ -17,6 +17,7 @@ import { getUserDetail } from "./api/api";
 import Agentform from "./pages/Agentform";
 import ReferralCode from "./pages/ReferralCode";
 import Notification from "./pages/Notification";
+import BG from '@/assets/image/bg.png'
 
 export interface IUser {
     amount: number;
@@ -33,7 +34,7 @@ function App() {
     useEffect(() => {
         (async () => {
             try {
-                setIsLoading(true);
+                setIsLoading(false);
                 const user = await getUserDetail();
                 setUser({
                     amount: user.data.amount,
@@ -50,7 +51,8 @@ function App() {
         })();
     }, []);
     return (
-        <>
+        <div className="min-h-screen oleo-script">
+            <img className="fixed top-0 pointer-events-none w-screen object-cover" src={BG} />
             {isLoading ? (
                 <Loader />
             ) : (
@@ -91,7 +93,7 @@ function App() {
                 </HashRouter>
             )}
             
-        </>
+        </div>
     );
 }
 

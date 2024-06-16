@@ -218,20 +218,24 @@ const PublishResult: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const events = [
         {
-            place: "Pashupatinath",
+            place: "Club A",
             time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
         },
         {
-            place: "Rara",
+            place: "Club B",
             time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
         },
         {
-            place: "Durbar Square",
+            place: "Club C",
             time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
         },
         {
-            place: "Swoyambhunath",
-            time: ["09:00", "12:00", "17:00", "21:00", "23:45"],
+            place: "Club D",
+            time: ["10:00", "12:00", "17:00", "21:00", "23:45"],
+        },
+        {
+            place: "Club E",
+            time: ["11:00", "12:00", "17:00", "21:00", "23:45"],
         },
     ];
     const [data, setData] = useState({

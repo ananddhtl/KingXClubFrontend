@@ -1,87 +1,46 @@
 import { routes } from "@/constants";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import BidModal from "./BidModal";
-// import { useProfileContext } from "@/App";
 import { cn } from "@/utils/cn";
-import { toast } from "react-hot-toast";
-import { Button } from "@/components/button/Button";
-import { buyTicketAPI } from "@/api/api";
 import { useProfileContext } from "@/App";
+import { DoubleBet, SingleBet, TripleBet } from "@/constants/assets/Icons";
 const places = [
     {
-        place: "Pashupatinath",
+        place: "Club A",
         time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
     },
     {
-        place: "Rara",
+        place: "Club B",
         time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
     },
     {
-        place: "Durbar Square",
+        place: "Club C",
+
         time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
     },
     {
-        place: "Swoyambhunath",
-        time: ["09:00", "12:00", "17:00", "21:00", "23:45"],
+        place: "Club D",
+
+        time: ["10:00", "12:00", "17:00", "21:00", "23:45"],
+    },
+    {
+        place: "Club E",
+
+        time: ["11:00", "12:00", "17:00", "21:00", "23:45"],
     },
 ];
 export const PlaceBid = () => {
     const navigate = useNavigate();
     const { city } = useParams();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const { user, setUser } = useProfileContext();
+    const [isModalOpen, setIsModalOpen] = useState("double");
+    const { user } = useProfileContext();
     const [selectedTime, setSelectedTime] = useState(null);
     const [position, setPosition] = useState(null);
-    const [tickets, setTickets] = useState({});
-
-    const totalAmount = useMemo(
-        () =>
-            Object.values(tickets)
-                .reduce(
-                    (accumulator: number, currentValue: { amount: number }) =>
-                        accumulator + currentValue.amount,
-                    0
-                )
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-        [tickets]
-    );
-
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
 
     const handleCloseModal = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(null);
     };
-
-    const handleDelete = (ticketToDelete) => {
-        const updatedTickets = { ...tickets };
-        delete updatedTickets[ticketToDelete];
-        setTickets(updatedTickets);
-    };
-
-    const buyTicket = async (): Promise<any> => {
-        try {
-            setIsLoading(true);
-            const res = await buyTicketAPI({ tickets: Object.values(tickets), place: city });
-            console.log(res);
-
-            toast.success(res.data?.message || "Purchase Successful");
-            setUser({ ...user, amount: user.amount - res.data?.amount });
-            return res;
-        } catch (error) {
-            console.log(`Error logging user: ${error}`);
-            toast.error(error.response?.data?.message || "Unknown error", { id: "unknown-error" });
-            throw new Error(`Error logging user: ${error}`);
-        } finally {
-            setIsLoading(false);
-            navigate(routes.INDEX);
-        }
-    };
-    console.log({ tickets });
 
     useEffect(() => {
         if (!user) navigate(routes.LOGIN);
@@ -91,44 +50,81 @@ export const PlaceBid = () => {
         <>
             {isModalOpen ? (
                 <BidModal
-                    tickets={tickets}
-                    setTickets={setTickets}
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     time={selectedTime}
                     position={position}
-                    totalAmount={totalAmount}
+                    city={city}
                 />
             ) : (
-                <section className="bg-[#F4F4F4] flex flex-col items-center justify-between py-8 text-black min-h-screen ">
+                <section className="text-white flex flex-col items-center justify-between py-8  min-h-screen ">
                     <div className="sticky top-1 px-4 grid grid-cols-5 justify-center place-items-center w-full">
-                        <button
-                            onClick={() => navigate(routes.INDEX)}
-                            className="p-4 bg-white rounded-lg shadow-sm"
-                        >
+                        <button onClick={() => navigate(routes.INDEX)}>
                             <svg
-                                width="9"
-                                height="16"
-                                viewBox="0 0 9 16"
+                                width="44"
+                                height="44"
+                                viewBox="0 0 44 44"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path
-                                    d="M8 1L1 8L8 15"
-                                    stroke="black"
-                                    stroke-width="1.3125"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                <rect
+                                    x="0.517039"
+                                    y="0.517039"
+                                    width="42.9659"
+                                    height="42.9659"
+                                    rx="21.483"
+                                    fill="url(#paint0_linear_831_6513)"
                                 />
+                                <rect
+                                    x="0.517039"
+                                    y="0.517039"
+                                    width="42.9659"
+                                    height="42.9659"
+                                    rx="21.483"
+                                    stroke="url(#paint1_linear_831_6513)"
+                                    stroke-width="1.03408"
+                                />
+                                <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M24.6379 15.0602C25.0225 15.3679 25.0849 15.9292 24.7772 16.3138L20.4662 21.7026L24.7772 27.0914C25.0849 27.476 25.0225 28.0373 24.6379 28.345C24.2533 28.6527 23.692 28.5904 23.3843 28.2057L18.6275 22.2598C18.3669 21.934 18.3669 21.4712 18.6275 21.1455L23.3843 15.1995C23.692 14.8149 24.2533 14.7525 24.6379 15.0602Z"
+                                    fill="white"
+                                />
+                                <defs>
+                                    <linearGradient
+                                        id="paint0_linear_831_6513"
+                                        x1="21.9999"
+                                        y1="0"
+                                        x2="21.9999"
+                                        y2="41.0667"
+                                        gradientUnits="userSpaceOnUse"
+                                    >
+                                        <stop stop-color="#FF5301" />
+                                        <stop offset="1" stop-color="#FFD901" />
+                                    </linearGradient>
+                                    <linearGradient
+                                        id="paint1_linear_831_6513"
+                                        x1="22"
+                                        y1="0"
+                                        x2="22"
+                                        y2="44"
+                                        gradientUnits="userSpaceOnUse"
+                                    >
+                                        <stop stop-color="#571100" />
+                                        <stop offset="1" stop-color="#CE2800" />
+                                    </linearGradient>
+                                </defs>
                             </svg>
                         </button>
-                        <span className="text-2xl font-sans font-semibold col-span-3">{city}</span>
+                        <span className="text-2xl font-sans font-semibold col-span-3 oleo-script">
+                            {city}
+                        </span>
                         <div />
                     </div>
                     <form className="flex flex-col w-full items-center gap-8 p-4">
-                        <div className="bg-white p-3 w-full rounded-3xl">
+                        <div className="px-3 w-full">
                             <span className="text-xl font-medium">Select time</span>
-                            <div className="flex my-6 justify-between border-2 border-[#eceaea] rounded-full">
+                            <div className="flex my-6 justify-between border-1 border-red-900 rounded-full">
                                 {places
                                     .find((event) => event.place === city)
                                     .time.map((timestamp, index) => {
@@ -155,7 +151,7 @@ export const PlaceBid = () => {
                                                 />
                                                 <label
                                                     className={cn(
-                                                        "btn py-2 text-black text-[14px] rounded-full",
+                                                        "btn py-2 text-white text-[14px] rounded-full",
                                                         selectedTime == time &&
                                                             "text-white !bg-orange-500"
                                                     )}
@@ -171,49 +167,60 @@ export const PlaceBid = () => {
                                     })}
                             </div>
                             <span className="text-xl font-medium">Select Position</span>
-                            <div className="flex mt-6 justify-between w-[60%] border-2 border-[#eceaea] rounded-full">
+                            <div className="flex mt-6 justify-between w-[60%] border-1 border-red-800 rounded-full">
                                 <input
                                     onChange={(e) => setPosition(e.target.value)}
                                     className="btn-check"
                                     type="radio"
                                     name="bet-position"
-                                    id="bet-left"
-                                    value="Left"
+                                    id="bet-open"
+                                    value="Open"
                                     autoComplete="off"
                                     required
                                 />
                                 <label
                                     className={cn(
-                                        "btn py-2 text-lg px-8 text-black rounded-full",
-                                        position === "Left" && "text-white !bg-orange-500"
+                                        "btn py-2 text-lg px-8 text-white rounded-full",
+                                        position === "Open" && "!bg-orange-500"
                                     )}
-                                    htmlFor="bet-left"
+                                    htmlFor="bet-open"
                                 >
-                                    Left
+                                    Open
                                 </label>
                                 <input
                                     onChange={(e) => setPosition(e.target.value)}
                                     className="btn-check"
                                     type="radio"
                                     name="bet-position"
-                                    id="bet-right"
-                                    value="Right"
+                                    id="bet-close"
+                                    value="Close"
                                     autoComplete="off"
                                     required
                                 />
                                 <label
                                     className={cn(
-                                        "btn py-2 px-8 text-lg text-black rounded-full",
-                                        position === "Right" && "text-white !bg-orange-500"
+                                        "btn py-2 px-8 text-lg text-white rounded-full",
+                                        position === "Close" && " !bg-orange-500"
                                     )}
-                                    htmlFor="bet-right"
+                                    htmlFor="bet-close"
                                 >
-                                    Right
+                                    Close
                                 </label>
                             </div>
                         </div>
                     </form>
-                    <div className="bg-white flex flex-col items-center justify-center w-full min-h-full py-10">
+                    <div className="flex flex-wrap justify-center items-center w-full gap-5 my-5 p-5">
+                        <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("single")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                            <SingleBet />
+                        </button>
+                        <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("double")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                            <DoubleBet />
+                        </button>
+                        <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("triple")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                            <TripleBet />
+                        </button>
+                    </div>
+                    {/* <div className="bg-white flex flex-col items-center justify-center w-full min-h-full py-10">
                         <button
                             disabled={!selectedTime || !position}
                             onClick={handleOpenModal}
@@ -318,23 +325,14 @@ export const PlaceBid = () => {
                                     </tr>
                                 )}
                             </tbody>
-                            {/* <tbody>
-                        {tickets}
-                        <tr>
-                            <td className="text-center text-[#281F1D]">123</td>
-                            <td className="text-center text-[#281F1D]">100</td>
-                            <td className="text-center text-[#281F1D]">Right</td>
-                        </tr>
-                    </tbody> */}
+                           
                         </table>
                     </div>
                     <div className="flex flex-col items-center gap-2">
                         <span className="py-2 text-[#281F1D] text-2xl font-semibold">
                             Total Amount:{" "}
                             <p className="text-[#FE480F] inline-flex items-center text-2xl font-semibold">
-                                Rs{' '}
-                                {totalAmount.toString()
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                Rs {totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                             </p>
                         </span>
                         <Button
@@ -344,9 +342,10 @@ export const PlaceBid = () => {
                             onAction={buyTicket}
                             disabled={isLoading || totalAmount > user?.amount}
                         />
-                    </div>
+                    </div> */}
                 </section>
             )}
         </>
     );
 };
+

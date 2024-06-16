@@ -5,15 +5,15 @@ import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
 import { NavLink } from "react-router-dom";
+import Jackpot from "@/assets/image/win-jackpot.png";
+import AllGame from "@/assets/image/all-games.png";
+import Ludo from "@/assets/image/ludo.png";
+import Chess from "@/assets/image/chess.png";
+import Dice from "@/assets/image/dice.png";
+import Cards from "@/assets/image/cards.png";
 
 export const Home = () => {
-    const images = [
-        "/assets/img/c6.jpg",
-        "/assets/img/c2.jpg",
-        "/assets/img/c3.jpg",
-        "/assets/img/c4.jpg",
-        "/assets/img/c1.jpg",
-    ];
+    const images = [Jackpot];
 
     const responsive = {
         superLargeDesktop: {
@@ -40,11 +40,10 @@ export const Home = () => {
             <div className="w-full p-2 my-4">
                 <Carousel
                     responsive={responsive}
-                    autoPlay={true}
+                    autoPlay={false}
                     infinite={true}
                     autoPlaySpeed={2000} // Adjust the speed as needed
                     arrows={false}
-                    showDots={true}
                 >
                     {images.map((image, index) => (
                         <img
@@ -57,7 +56,29 @@ export const Home = () => {
                     ))}
                 </Carousel>
             </div>
-            <div className="bg-white/10 m-4 p-4 rounded-lg grid grid-cols-2 gap-4">
+            <div className="flex flex-wrap justify-around bg-[#240700] m-2 p-2 rounded-xl text-sm">
+                <div className="flex justify-center items-center flex-col">
+                    <img src={AllGame} className="w-10 h-10"/>
+                    AllGame
+                </div>
+                <div className="flex justify-center items-center flex-col">
+                    <img src={Ludo} className="w-10 h-10"/>
+                    Ludo
+                </div>
+                <div className="flex justify-center items-center flex-col">
+                    <img src={Cards} className="w-10 h-10"/>
+                    Cards
+                </div>
+                <div className="flex justify-center items-center flex-col">
+                    <img src={Dice} className="w-10 h-10"/>
+                    Dice
+                </div>
+                <div className="flex justify-center items-center flex-col">
+                    <img src={Chess} className="w-8 h-8"/>
+                    Chess
+                </div>
+            </div>
+            {/* <div className="bg-white/10 m-4 p-4 rounded-lg grid grid-cols-2 gap-4">
                 <NavLink
                     to="https://wa.me/+971563664115"
                     target="_blank"
@@ -104,7 +125,7 @@ export const Home = () => {
                     </svg>
                     Withdraw
                 </NavLink>
-            </div>
+            </div> */}
             <City />
             <BottomNavbar />
         </HelmetProvider>

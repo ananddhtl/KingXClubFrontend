@@ -39,7 +39,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div className="w-full sticky z-10 top-0 bg-[#0A0706] py-4 shadow-xl">
+        <div className="w-full sticky z-10 top-0 bg-[rgba(19,7,4,1)] py-4 shadow-xl">
             <div className="w-full flex justify-between px-5 items-center rounded-xl h-[50px]">
                 <div
                     className="bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg"
@@ -50,17 +50,34 @@ const Navbar = () => {
                 <NavLink to="/">
                     <img src={LogoCropped} alt="logo" />
                 </NavLink>
-                {user ? 
-                <NavLink to="/notifications">
-                    <button>
-                    <div className="text-red-500 bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg">
-                        <BiBell />
-                    </div>
-                </button>
-                </NavLink>
-                :
-                <NavLink className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700 font-semibold" to="/login">Login</NavLink>
-            }
+                {user ? (
+                    <NavLink to="/notifications">
+                        <button>
+                            <div className="text-red-500 bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg">
+                                <BiBell />
+                            </div>
+                        </button>
+                    </NavLink>
+                ) : (
+                    <NavLink
+                        className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700 text-lg oleo-script inline-flex items-center gap-1"
+                        to="/login"
+                    >
+                        <svg
+                            width="21"
+                            height="21"
+                            viewBox="0 0 21 21"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M10.5 1.73633C9.67591 1.73633 8.87033 1.9807 8.18512 2.43854C7.49992 2.89638 6.96587 3.54712 6.6505 4.30848C6.33514 5.06984 6.25262 5.90762 6.41339 6.71587C6.57417 7.52413 6.971 8.26655 7.55372 8.84927C8.13644 9.43199 8.87887 9.82883 9.68712 9.9896C10.4954 10.1504 11.3332 10.0679 12.0945 9.75249C12.8559 9.43713 13.5066 8.90308 13.9645 8.21787C14.4223 7.53267 14.6667 6.72708 14.6667 5.90299C14.6667 4.79793 14.2277 3.73812 13.4463 2.95672C12.6649 2.17531 11.6051 1.73633 10.5 1.73633ZM10.5 8.40299C10.0055 8.40299 9.5222 8.25637 9.11107 7.98167C8.69995 7.70696 8.37952 7.31652 8.1903 6.8597C8.00108 6.40289 7.95157 5.90022 8.04804 5.41527C8.1445 4.93032 8.3826 4.48486 8.73223 4.13523C9.08186 3.7856 9.52732 3.54749 10.0123 3.45103C10.4972 3.35457 10.9999 3.40408 11.4567 3.5933C11.9135 3.78252 12.304 4.10295 12.5787 4.51407C12.8534 4.92519 13 5.40854 13 5.90299C13 6.56604 12.7366 7.20192 12.2678 7.67076C11.7989 8.1396 11.163 8.40299 10.5 8.40299ZM18 17.5697V16.7363C18 15.1892 17.3854 13.7055 16.2915 12.6115C15.1975 11.5176 13.7138 10.903 12.1667 10.903H8.83333C7.28624 10.903 5.80251 11.5176 4.70854 12.6115C3.61458 13.7055 3 15.1892 3 16.7363V17.5697H4.66667V16.7363C4.66667 15.6313 5.10565 14.5715 5.88705 13.79C6.66846 13.0086 7.72826 12.5697 8.83333 12.5697H12.1667C13.2717 12.5697 14.3315 13.0086 15.1129 13.79C15.8943 14.5715 16.3333 15.6313 16.3333 16.7363V17.5697H18Z"
+                                fill="white"
+                            />
+                        </svg>
+                        Login
+                    </NavLink>
+                )}
             </div>
             <AnimatePresence>
                 {isSidebarOpen && (
@@ -70,12 +87,12 @@ const Navbar = () => {
                         animate={{ x: 0 }}
                         exit={{ x: "-100%" }}
                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                        className="fixed z-20 top-0 left-0 h-full w-64 bg-[#110400] rounded-tr-lg rounded-br-lg text-white py-4"
+                        className="fixed z-20 top-0 left-0 h-full w-64 bg-[rgba(31,7,1,1)] rounded-tr-lg rounded-br-lg text-white py-4"
                     >
                         <div className="flex justify-between items-stretch p-5">
                             {user ? (
                                 <NavLink
-                                    className="flex flex-col justify-start w-auto"
+                                    className="flex oleo-script flex-col justify-start w-auto"
                                     to="/profile"
                                     onClick={toggleSidebar}
                                 >
@@ -90,9 +107,13 @@ const Navbar = () => {
                                         className="flex gap-4 items-center justify-start w-full"
                                         onClick={toggleSidebar}
                                     >
-                                        <FaWallet className="text-orange-500"/>
-                                        <p>Rs. {user?.amount.toString()
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                                        <FaWallet className="text-orange-500" />
+                                        <p>
+                                            Rs.{" "}
+                                            {user?.amount
+                                                .toString()
+                                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                        </p>
                                     </div>
                                 </NavLink>
                             ) : (
@@ -104,7 +125,6 @@ const Navbar = () => {
                         </div>
                         <hr className="border-[#410F08] border-2" />
                         <ul className="p-4 child:my-3">
-
                             <li className="group hover:text-orange-700">
                                 <NavLink
                                     className="flex items-center justify-start w-full"
@@ -134,7 +154,7 @@ const Navbar = () => {
                                         />
                                     </svg>
 
-                                    <p>Profile</p>
+                                    <p className="oleo-script">Profile</p>
                                 </NavLink>
                             </li>
                             <li className="group hover:text-orange-700">
@@ -161,7 +181,7 @@ const Navbar = () => {
                                         />
                                     </svg>
 
-                                    <p>Deposit</p>
+                                    <p className="oleo-script">Deposit</p>
                                 </NavLink>
                             </li>
 
@@ -189,7 +209,7 @@ const Navbar = () => {
                                         />
                                     </svg>
 
-                                    <p>Withdraw</p>
+                                    <p className="oleo-script">Withdraw</p>
                                 </NavLink>
                             </li>
                             <li className="group hover:text-orange-700">
@@ -215,7 +235,7 @@ const Navbar = () => {
                                         />
                                     </svg>
 
-                                    <p>Results</p>
+                                    <p className="oleo-script">Results</p>
                                 </NavLink>
                             </li>
                             {user ? (
@@ -257,7 +277,7 @@ const Navbar = () => {
                                                 />
                                             </svg>
 
-                                            <p>Logout</p>
+                                            <p className="oleo-script">Logout</p>
                                         </button>
                                     </li>
                                 </>
@@ -291,7 +311,7 @@ const Navbar = () => {
                                             />
                                         </svg>
 
-                                        <p>Login / Register</p>
+                                        <p className="oleo-script">Login / Register</p>
                                     </NavLink>
                                 </li>
                             )}
