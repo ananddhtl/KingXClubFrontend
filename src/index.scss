@@ -29,6 +29,10 @@ th {
     font-family: "Oleo Script", system-ui;
 }
 
+.scrollable-section {
+    overflow-y: auto; /* Enables vertical scrolling */
+  }
+
 @layer utilities {
     .styled-text {
         font-family: "Oleo Script";

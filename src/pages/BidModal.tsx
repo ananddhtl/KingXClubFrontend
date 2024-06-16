@@ -151,8 +151,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
     return (
         <>
             {isOpen && (
-                <section className=" pt-5 fixed inset-0 z-10 flex flex-col items-center justify-start text-white gap-10 min-h-screen">
-                    <div className="sticky top-1 grid grid-cols-5 justify-center place-items-center w-full">
+                <section className="scrollable-section pt-5 fixed inset-0 z-10 flex flex-col items-center justify-start text-white gap-10 min-h-screen">
+                    <div className="sticky  py-4  grid grid-cols-5 justify-center place-items-center w-full">
                         <button onClick={onClose}>
                             <svg
                                 width="44"

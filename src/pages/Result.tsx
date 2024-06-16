@@ -33,7 +33,7 @@ export const Result = () => {
         })();
     }, []);
     return (
-        <section className="bg-[#240700] flex flex-col items-center justify-start text-black gap-4 min-h-screen">
+        <section className="bg-[#240700] scrollable-section flex flex-col items-center justify-start text-black gap-4 min-h-screen">
             <div className="sticky top-0 flex justify-between items-center w-full  p-4">
                 <button
                     onClick={() => navigate(routes.PROFILE)}
