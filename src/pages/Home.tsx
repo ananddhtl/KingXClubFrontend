@@ -4,8 +4,10 @@ import "react-multi-carousel/lib/styles.css";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import Jackpot from "@/assets/image/win-jackpot.png";
+import Jackpot2 from "@/assets/image/jackpot.jpeg";
+import DepoBonus from "@/assets/image/depo-bonus.jpeg";
 import AllGame from "@/assets/image/all-games.png";
 import Ludo from "@/assets/image/ludo.png";
 import Chess from "@/assets/image/chess.png";
@@ -13,7 +15,7 @@ import Dice from "@/assets/image/dice.png";
 import Cards from "@/assets/image/cards.png";
 
 export const Home = () => {
-    const images = [Jackpot];
+    const images = [Jackpot, Jackpot2, DepoBonus];
 
     const responsive = {
         superLargeDesktop: {
@@ -40,10 +42,11 @@ export const Home = () => {
             <div className="w-full p-2 my-4">
                 <Carousel
                     responsive={responsive}
-                    autoPlay={false}
+                    autoPlay={true}
                     infinite={true}
                     autoPlaySpeed={2000} // Adjust the speed as needed
                     arrows={false}
+                    // showDots={true}
                 >
                     {images.map((image, index) => (
                         <img

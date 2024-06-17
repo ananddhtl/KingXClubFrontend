@@ -27,13 +27,14 @@ const places = [
     {
         place: "Club E",
 
-        time: ["11:00", "12:00", "17:00", "21:00", "23:45"],
+        time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
+
     },
 ];
 export const PlaceBid = () => {
     const navigate = useNavigate();
     const { city } = useParams();
-    const [isModalOpen, setIsModalOpen] = useState("double");
+    const [isModalOpen, setIsModalOpen] = useState(null);
     const { user } = useProfileContext();
     const [selectedTime, setSelectedTime] = useState(null);
     const [position, setPosition] = useState(null);
@@ -148,8 +149,10 @@ export const PlaceBid = () => {
                                                     value={time}
                                                     autoComplete="off"
                                                     required
+                                                    disabled={time < Date.now()}
                                                 />
                                                 <label
+                                                aria-disabled
                                                     className={cn(
                                                         "btn py-2 text-white text-[14px] rounded-full",
                                                         selectedTime == time &&
@@ -177,6 +180,7 @@ export const PlaceBid = () => {
                                     value="Open"
                                     autoComplete="off"
                                     required
+                                    disabled={!selectedTime}
                                 />
                                 <label
                                     className={cn(
@@ -196,6 +200,7 @@ export const PlaceBid = () => {
                                     value="Close"
                                     autoComplete="off"
                                     required
+                                    disabled={!selectedTime}
                                 />
                                 <label
                                     className={cn(

@@ -49,7 +49,12 @@ export const logIn = (payload: any) => {
 };
 
 export const publishResultAPI = (payload: any) => {
-    return baseURL.post("/result/publish", payload);
+    return baseURL.post("/result/publish", payload, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}` || "",
+        }
+    });
 };
 export const register = (payload: any) => {
     return baseURL.post("/auth/register", payload);

@@ -1,6 +1,6 @@
 // import { getTodayTicketStatus } from "@/api/api";
 import { routes } from "@/constants";
-import { ClubA, ClubB, ClubC, ClubD, ClubE } from "@/constants/assets/Icons";
+import { ClubA, ClubB, ClubC, ClubD, ClubE, Jackpot } from "@/constants/assets/Icons";
 // import { useEffect, useState } from "react";
 // import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
@@ -32,7 +32,7 @@ const events = [
         place: "Club E",
         icon: <ClubE />,
 
-        time: ["11:00", "12:00", "17:00", "21:00", "23:45"],
+        time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
     },
 ];
 const City = () => {
@@ -85,7 +85,7 @@ const City = () => {
     //       })();
     //   }, []);
     return (
-        <div className="flex flex-wrap justify-center items-center w-full gap-5 my-5">
+        <div className="flex flex-wrap justify-center items-center w-full gap-5 pb-[8rem]">
             {events.map((event) => (
                 <NavLink
                     to={`${routes.PLACE_BID}/${event.place}`}
@@ -95,6 +95,7 @@ const City = () => {
                     {event.icon}
                 </NavLink>
             ))}
+            <Jackpot />
         </div>
     );
 };

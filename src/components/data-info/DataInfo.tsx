@@ -235,7 +235,7 @@ const PublishResult: FC = () => {
         },
         {
             place: "Club E",
-            time: ["11:00", "12:00", "17:00", "21:00", "23:45"],
+            time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
         },
     ];
     const [data, setData] = useState({

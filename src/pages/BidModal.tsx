@@ -75,7 +75,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         setTickets((prev) => ({
                             ...prev,
                             [num]: {
-                                amount: 100,
+                                amount: 10,
                                 ticket: num,
                                 time,
                                 position,
@@ -100,7 +100,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         setTickets((prev) => ({
                             ...prev,
                             [num]: {
-                                amount: 100,
+                                amount: 10,
                                 ticket: num,
                                 time,
                                 position,
@@ -131,7 +131,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             setTickets((prev) => ({
                                 ...prev,
                                 [num]: {
-                                    amount: 100,
+                                    amount: 10,
                                     ticket: num,
                                     time,
                                     position,
@@ -151,7 +151,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
     return (
         <>
             {isOpen && (
-                <section className="scrollable-section pt-5 fixed inset-0 z-10 flex flex-col items-center justify-start text-white gap-10 min-h-screen">
+                <section className="pt-5 z-10 flex flex-col items-center justify-start text-white gap-10 min-h-screen">
                     <div className="sticky  py-4  grid grid-cols-5 justify-center place-items-center w-full">
                         <button onClick={onClose}>
                             <svg
@@ -238,7 +238,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             </div>
                         </div>
                         <div className="p-3 w-full">
-                            <div className="bg-[url('assets/image/border-image.png')] bg-cover p-6 flex flex-col justify-center items-center bg-no-repeat h-auto">
+                            <div className="bg-[url('assets/image/border-image.png')] bg-cover p-6 flex flex-col justify-center items-center bg-no-repeat max-w-full">
                                 <p className="styled-text mt-5">Your Bidding Summary</p>
                                 <div className="w-full mt-5 border-1  rounded-xl border-red-800 bg-transparent ">
                                     <table className="w-full table-sm">
@@ -276,14 +276,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                         type="number"
                                                                         id={`input-${ticket}`}
                                                                         onChange={(e) => {
-                                                                            if (
-                                                                                Number(
-                                                                                    e.target.value
-                                                                                ) < 100
-                                                                            )
-                                                                                handleDelete(
-                                                                                    ticket
-                                                                                );
                                                                             setTickets((prev) => ({
                                                                                 ...prev,
                                                                                 [ticket]: {
@@ -298,7 +290,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                             }));
                                                                         }}
                                                                         defaultValue={amount}
-                                                                        min={100}
+                                                                        min={10}
                                                                         placeholder="Amount"
                                                                         className={cn(
                                                                             "px-3 py-2 outline-none bg-transparent rounded-full text-center w-28 text-orange-500 font-semibold placeholder:font-medium text-lg"
@@ -365,8 +357,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                             {isOpen === "single"
                                                 ? totalAmount * 9
                                                 : isOpen === "double"
-                                                ? totalAmount * 99
-                                                : totalAmount * 499}
+                                                ? totalAmount * 90
+                                                : totalAmount * 490}
                                         </p>
                                     </div>
                                 </div>
@@ -380,8 +372,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                     {isOpen === "single"
                                         ? "x9"
                                         : isOpen === "double"
-                                        ? "x99"
-                                        : "x499"}
+                                        ? "x90"
+                                        : "x490"}
                                 </p>
                             </span>
                             <span className="py-2 text-white text-lg font-semibold">
@@ -403,7 +395,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                     totalAmount > user?.amount ||
                                     Object.values(tickets).length === 0 ||
                                     Object.values(tickets).some(
-                                        ({ amount }: { amount: number }) => amount < 100
+                                        ({ amount }: { amount: number }) => amount < 10
                                     )
                                 }
                             />
