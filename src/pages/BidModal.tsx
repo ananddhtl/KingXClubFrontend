@@ -4,7 +4,6 @@ import { Button } from "@/components/button/Button";
 import { routes } from "@/constants";
 import { cn } from "@/utils/cn";
 import { useMemo, useState } from "react";
-// import { toast } from "react-toastify";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

@@ -30,7 +30,6 @@ const events = [
         place: "Club E",
 
         time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
-
     },
 ];
 
@@ -133,131 +132,135 @@ export const Result = () => {
                 </button>
             </div>
 
-                <div className=" border-2 border-yellow-500 p-3 rounded-lg text-center text-white max-w-lg mx-auto">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center">
-                            <img
-                                src="assets/img/logo.png"
-                                alt="crown icon"
-                                className="rounded-full"
-                            />
-                            <span className="ml-2 text-xl mx-2 font-bold h-12 w-1 bg-gradient-to-b rounded-lg from-yellow-500 to-red-500"></span>
-                        </div>
-                        <div className="flex space-x-2 text-md font-bold">
-                            <span className="text-yellow-500">Rs. 10,000</span>
-                            <span className="text-yellow-500">Rs. 50,000</span>
-                            <span className="text-yellow-500">Rs. 450,000</span>
-                        </div>
-                    </div>
+            <div className=" border-2 w-[90dvw] border-yellow-500 p-3 rounded-lg text-center text-white max-w-lg mx-auto">
+                <div className="flex items-center justify-around mb-4">
+                    <img src="assets/img/logo.png" alt="crown icon" className="rounded-ful w-16" />
+                    <span className="ml-2 text-xl mx-2 font-bold h-12 w-1 bg-gradient-to-b rounded-lg from-yellow-500 to-red-500"></span>
+
                     <div className="flex flex-col items-center space-y-4 text-center">
                         <span className="text-xl">Next result in : </span>
-                        <Countdown date={time} autoStart className="text-xl styled-text" />
+                        <Countdown
+                            date={time}
+                            renderer={({ days, hours, minutes, seconds }) => (
+                                <span>
+                                    {days > 0 && `${days} d `}
+                                    {hours < 10 ? "0" + hours : hours} hr{" "}
+                                    {minutes < 10 ? "0" + minutes : minutes} min{" "}
+                                    {seconds < 10 ? "0" + seconds : seconds} sec
+                                </span>
+                            )}
+                            autoStart
+                            className="text-xl styled-text"
+                        />
                     </div>
                 </div>
+            </div>
 
             <div className="">
                 <img src="./assets/img/matkaking.png" />
             </div>
 
-                <div className="p-3 mb-[5rem] w-full">
-                    <div className="bg-[url('assets/image/border-image.png')] bg-cover p-6 flex flex-col justify-center items-center bg-no-repeat max-w-full">
-                        <p className="styled-text mt-5">All Result</p>
-                        <div className="w-full mt-5 border-1  rounded-xl border-red-800 bg-transparent ">
-                            <table className="w-full table-sm">
-                                <thead className="text-white py-5">
-                                    <tr className="active">
-                                        <th className="text-lg text-center leading-[14px] font-medium">
-                                            Date
-                                        </th>
-                                        <th className="text-lg text-center leading-[14px] font-medium">
-                                            Time
-                                        </th>
-                                        <th className="text-lg text-center leading-[14px] font-medium">
-                                            Club
-                                        </th>
-                                        <th className="text-lg text-center leading-[14px] font-medium">
-                                            Ticket
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-white text-center text-xl">
-                                    {results.length > 0 ? (
-                                        <>
-                                            {results.map((result, index) => (
-                                                <tr>
-                                                    <td className="text-white text-sm leading-[14px]">
-                                                        {new Date(result.time)
-                                                            .toLocaleDateString("default", {
+            <div className="p-3 mb-[5rem] w-full">
+                <div className="bg-[url('assets/image/border-image.png')] bg-cover p-6 flex flex-col justify-center items-center bg-no-repeat max-w-full">
+                    <p className="styled-text mt-5">All Result</p>
+                    <div className="w-full mt-5 border-1  rounded-xl border-red-800 bg-transparent ">
+                        <table className="w-full table-sm">
+                            <thead className="text-white py-5">
+                                <tr className="active">
+                                    <th className="text-lg text-center leading-[14px] font-medium">
+                                        Date
+                                    </th>
+                                    <th className="text-lg text-center leading-[14px] font-medium">
+                                        Time
+                                    </th>
+                                    <th className="text-lg text-center leading-[14px] font-medium">
+                                        Club
+                                    </th>
+                                    <th className="text-lg text-center leading-[14px] font-medium">
+                                        Ticket
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-white text-center text-xl">
+                                {results.length > 0 ? (
+                                    <>
+                                        {results.map((result, index) => (
+                                            <tr>
+                                                <td className="text-white text-sm leading-[14px]">
+                                                    {
+                                                        new Date(result.time).toLocaleDateString(
+                                                            "default",
+                                                            {
                                                                 // year: "numeric",
                                                                 month: "2-digit",
                                                                 day: "2-digit",
-                                                            })
-                                                            // .replace("/", "-")
-                                                            // .replace("/", "-")
                                                             }
-                                                    </td>
-                                                    <td className="text-white text-sm leading-[14px]">
-                                                        {new Date(result.time).toLocaleTimeString(
-                                                            "default",
-                                                            {
-                                                                hour: "numeric",
-                                                                minute: "numeric",
-                                                            }
-                                                        )}
-                                                    </td>
-                                                    <td className="text-white text-sm leading-[14px]">
-                                                        {result.place}
-                                                    </td>
-                                                    <td
-                                                        className={cn(
-                                                            "text-white text-sm leading-[14px]",
-                                                            index === 0 && "!text-[#F6571E]"
-                                                        )}
-                                                    >
-                                                        {`${
-                                                            result?.leftTicketNumber
-                                                                ? `${result.leftTicketNumber} - ${
+                                                        )
+                                                        // .replace("/", "-")
+                                                        // .replace("/", "-")
+                                                    }
+                                                </td>
+                                                <td className="text-white text-sm leading-[14px]">
+                                                    {new Date(result.time).toLocaleTimeString(
+                                                        "default",
+                                                        {
+                                                            hour: "numeric",
+                                                            minute: "numeric",
+                                                        }
+                                                    )}
+                                                </td>
+                                                <td className="text-white text-sm leading-[14px]">
+                                                    {result.place}
+                                                </td>
+                                                <td
+                                                    className={cn(
+                                                        "text-white text-sm leading-[14px]",
+                                                        index === 0 && "!text-[#F6571E]"
+                                                    )}
+                                                >
+                                                    {`${
+                                                        result?.leftTicketNumber
+                                                            ? `${result.leftTicketNumber} - ${
+                                                                  sumOfDigits(
+                                                                      result.leftTicketNumber
+                                                                  ).toString()[
                                                                       sumOfDigits(
                                                                           result.leftTicketNumber
-                                                                      ).toString()[
-                                                                          sumOfDigits(
-                                                                              result.leftTicketNumber
-                                                                          ).toString().length - 1
-                                                                      ]
-                                                                  }`
-                                                                : "*** - *"
-                                                        }${
-                                                            result?.rightTicketNumber
-                                                                ? `${
+                                                                      ).toString().length - 1
+                                                                  ]
+                                                              }`
+                                                            : "*** - *"
+                                                    }${
+                                                        result?.rightTicketNumber
+                                                            ? `${
+                                                                  sumOfDigits(
+                                                                      result.rightTicketNumber
+                                                                  ).toString()[
                                                                       sumOfDigits(
                                                                           result.rightTicketNumber
-                                                                      ).toString()[
-                                                                          sumOfDigits(
-                                                                              result.rightTicketNumber
-                                                                          ).toString().length - 1
-                                                                      ]
-                                                                  } - ${result.rightTicketNumber}`
-                                                                : "* - ***"
-                                                        }`}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </>
-                                    ) : (
-                                        <tr>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                                                                      ).toString().length - 1
+                                                                  ]
+                                                              } - ${result.rightTicketNumber}`
+                                                            : "* - ***"
+                                                    }`}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
             <BottomNavbar />
-
         </section>
     );
 };
