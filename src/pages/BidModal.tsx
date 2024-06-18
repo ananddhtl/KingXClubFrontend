@@ -9,24 +9,12 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const BidModal = ({ isOpen, onClose, time, position, city }) => {
-    // const [isOpen, setisOpen] = useState("single");
-    console.log({ isOpen });
-
     const [selectedInitial, setSelectedInitial] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const { user, setUser } = useProfileContext();
     const [tickets, setTickets] = useState({});
     const navigate = useNavigate();
 
-    const totalAmount = useMemo(
-        () =>
-            Object.values(tickets).reduce(
-                (accumulator: number, currentValue: { amount: number }) =>
-                    accumulator + currentValue.amount,
-                0
-            ),
-        [tickets]
-    ) as number;
     const handleDelete = (ticketToDelete) => {
         const updatedTickets = { ...tickets };
         delete updatedTickets[ticketToDelete];
@@ -51,7 +39,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
             navigate(routes.INDEX);
         }
     };
-    console.log({ tickets });
     const isIncreasingNumber = (num: number) => {
         const numberString = num.toString();
         for (let i = 0; i < numberString.length - 1; i++) {
@@ -61,6 +48,54 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
         }
         return true;
     };
+
+    const findPana = (num: number) => {
+        const numberString = num.toString();
+        // Create an object to store digit counts
+        const digitCounts = {};
+
+        // Iterate through each digit in the string
+        for (const digit of numberString) {
+            // Check if the digit is already present in the object
+            if (digitCounts[digit]) {
+                digitCounts[digit]++; // Increment the count if found
+            } else {
+                digitCounts[digit] = 1; // Initialize the count to 1 if not found
+            }
+        }
+        return Math.max(...(Object.values(digitCounts) as number[]));
+    };
+
+    const totalAmount = useMemo(
+        () =>
+            Object.values(tickets).reduce(
+                (accumulator: number, currentValue: { amount: number }) =>
+                    accumulator + currentValue.amount,
+                0
+            ),
+        [tickets]
+    ) as number;
+
+    const totalReturnAmount = useMemo(
+        () =>
+            Object.values(tickets).reduce(
+                (accumulator: number, currentValue: { amount: number; ticket: number }) => {
+                    const currentReturn =
+                        isOpen === "single"
+                            ? currentValue.amount * 9
+                            : isOpen === "double"
+                            ? currentValue.amount * 90
+                            : findPana(currentValue.ticket) === 1
+                            ? currentValue.amount * 150
+                            : findPana(currentValue.ticket) === 2
+                            ? currentValue.amount * 250
+                            : currentValue.amount * 490;
+                    return accumulator + currentReturn;
+                },
+                0
+            ),
+        [isOpen, tickets]
+    ) as number;
 
     const renderNumbers = () => {
         if (isOpen === "single") {
@@ -82,7 +117,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             },
                         }));
                         setTimeout(() => document.getElementById(`input-${num}`).focus(), 1000);
-
                     }}
                 >
                     <p className="font-medium text-xl">{num}</p>
@@ -107,7 +141,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             },
                         }));
                         setTimeout(() => document.getElementById(`input-${num}`).focus(), 1000);
-
                     }}
                 >
                     <p className="font-medium text-xl">{num}</p>
@@ -246,8 +279,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                             <tr className="active text-center">
                                                 <th className="text-lg  font-medium">Ticket</th>
                                                 <th className=" text-lg  font-medium">Amount</th>
-                                                {/* <th className=" text-lg  font-medium">Type</th>
-                                                <th className=" text-lg  font-medium">Time</th> */}
+                                                <th className=" text-lg  font-medium">Odds</th>
                                                 <th className=" text-lg  font-medium">Returns</th>
                                                 <th />
                                             </tr>
@@ -293,31 +325,34 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                         min={10}
                                                                         placeholder="Amount"
                                                                         className={cn(
-                                                                            "px-3 py-2 outline-none bg-transparent rounded-full text-center w-28 text-orange-500 font-semibold placeholder:font-medium text-lg"
+                                                                            "py-2 outline-none bg-transparent rounded-full text-center w-20 text-orange-500 font-semibold placeholder:font-medium text-lg"
                                                                         )}
                                                                     />
                                                                 </td>
-                                                                {/* <td className=" text-center leading-[14px]">
-                                                                    {position}
+                                                                <td className="text-center leading-[14px]">
+                                                                    {isOpen === "single"
+                                                                        ? "x9"
+                                                                        : isOpen === "double"
+                                                                        ? "x90"
+                                                                        : findPana(ticket) === 1
+                                                                        ? "x150"
+                                                                        : findPana(ticket) === 2
+                                                                        ? "x250"
+                                                                        : "x490"}
                                                                 </td>
-                                                                <td className=" text-center leading-[14px]">
-                                                                    {new Date(time).toLocaleString(
-                                                                        "default",
-                                                                        {
-                                                                            hour: "numeric",
-                                                                            minute: "numeric",
-                                                                        }
-                                                                    )}
-                                                                </td> */}
-
                                                                 <td className="text-center leading-[14px]">
                                                                     Rs.{" "}
                                                                     {isOpen === "single"
                                                                         ? amount * 9
                                                                         : isOpen === "double"
                                                                         ? amount * 99
-                                                                        : amount * 499}
+                                                                        : findPana(ticket) === 1
+                                                                        ? amount * 150
+                                                                        : findPana(ticket) === 2
+                                                                        ? amount * 250
+                                                                        : amount * 490}
                                                                 </td>
+
                                                                 <td
                                                                     onClick={() =>
                                                                         handleDelete(ticket)
@@ -353,13 +388,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                     </div>{" "}
                                     <div className="text-xl p-2 mx-auto w-full flex justify-between">
                                         <p>Total Winning Amount</p>
-                                        <p>
-                                            {isOpen === "single"
-                                                ? totalAmount * 9
-                                                : isOpen === "double"
-                                                ? totalAmount * 90
-                                                : totalAmount * 490}
-                                        </p>
+                                        <p>{totalReturnAmount}</p>
                                     </div>
                                 </div>
                             </div>
@@ -373,7 +402,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                         ? "x9"
                                         : isOpen === "double"
                                         ? "x90"
-                                        : "x490"}
+                                        : "x150, x250, x490"}
                                 </p>
                             </span>
                             <span className="py-2 text-white text-lg font-semibold">
