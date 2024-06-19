@@ -133,7 +133,7 @@ export const Home = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                className="w-full h-auto"
+                className="w-full h-auto rounded-2xl"
                 
             ></iframe>
             </div>
