@@ -17,7 +17,7 @@ import { getUserDetail } from "./api/api";
 import Agentform from "./pages/Agentform";
 import ReferralCode from "./pages/ReferralCode";
 import Notification from "./pages/Notification";
-import BG from '@/assets/image/bg.png'
+// import BG from '@/assets/image/bg.png'
 
 export interface IUser {
     amount: number;
