@@ -34,7 +34,7 @@ function App() {
     useEffect(() => {
         (async () => {
             try {
-                setIsLoading(false);
+                setIsLoading(true);
                 const user = await getUserDetail();
                 setUser({
                     amount: user.data.amount,
@@ -51,54 +51,55 @@ function App() {
         })();
     }, []);
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#0D0101] to-[#240700] oleo-script">
-            {/* <img className="fixed top-0 pointer-events-none w-screen object-cover" src={BG} /> */}
-            {isLoading ? (
-                <Loader />
-            ) : (
-                <HashRouter>
-                    <Toaster
-                        toastOptions={{
-                            className: "",
-                            style: {
-                                border: "1px solid #fff",
-                                padding: "16px",
-                                color: "#fff",
-                                background: "#cb6b23",
-                            },
-                        }}
-                        containerStyle={{
-                            top: 20,
-                            left: 20,
-                            bottom: 20,
-                            right: 20,
-                        }}
-                    />
-                    <ProfileContext.Provider value={{ user, setUser }}>
-                        <Routes>
-                            <Route path={routes.INDEX} element={<Home />} />
-                            <Route path={routes.LOGIN} element={<Login />} />
-                            <Route path={routes.PROFILE} element={<Profile />} />
-                            <Route path={routes.BID_HISTORY} element={<BidHistory />} />
-                            <Route path={`${routes.PLACE_BID}/:city`} element={<PlaceBid />} />
-                            <Route path={routes.RESULT} element={<Result />} />
-                            <Route path={routes.SIGNUP} element={<Signup />} />
-                            <Route path={routes.ADMIN} element={<Admin />} />
-                            <Route path={routes.AGENT} element={<Agentform/>} />
-                            <Route path='/refer' element={<ReferralCode/>} />
-                            <Route path='/notifications' element={<Notification/>} />
-                            <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
-                        </Routes>
-                    </ProfileContext.Provider>
-                </HashRouter>
-            )}
-            
+        <div className="relative flex bg-[#000101] justify-center items-center">
+            <div className="min-h-screen w-full max-w-md bg-gradient-to-br from-[#0D0101] to-[#240700] oleo-script">
+                {/* <img className="fixed top-0 pointer-events-none w-screen object-cover" src={BG} /> */}
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <HashRouter>
+                        <Toaster
+                            toastOptions={{
+                                className: "",
+                                style: {
+                                    border: "1px solid #fff",
+                                    padding: "16px",
+                                    color: "#fff",
+                                    background: "#cb6b23",
+                                },
+                            }}
+                            containerStyle={{
+                                top: 20,
+                                left: 20,
+                                bottom: 20,
+                                right: 20,
+                            }}
+                        />
+                        <ProfileContext.Provider value={{ user, setUser }}>
+                            <Routes>
+                                <Route path={routes.INDEX} element={<Home />} />
+                                <Route path={routes.LOGIN} element={<Login />} />
+                                <Route path={routes.PROFILE} element={<Profile />} />
+                                <Route path={routes.BID_HISTORY} element={<BidHistory />} />
+                                <Route path={`${routes.PLACE_BID}/:city`} element={<PlaceBid />} />
+                                <Route path={routes.RESULT} element={<Result />} />
+                                <Route path={routes.SIGNUP} element={<Signup />} />
+                                <Route path={routes.ADMIN} element={<Admin />} />
+                                <Route path={routes.AGENT} element={<Agentform />} />
+                                <Route path="/refer" element={<ReferralCode />} />
+                                <Route path="/notifications" element={<Notification />} />
+                                <Route path="*" element={<Navigate to={routes.INDEX} replace />} />
+                            </Routes>
+                        </ProfileContext.Provider>
+                    </HashRouter>
+                )}
+            </div>
         </div>
     );
 }
 
 export const useProfileContext = () => {
-    return useContext(ProfileContext);  
+    return useContext(ProfileContext);
 };
 
 export default App;

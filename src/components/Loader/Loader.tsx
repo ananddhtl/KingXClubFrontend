@@ -9,7 +9,7 @@ const Loader = () => {
         {/* Rotating border */}
         <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-orange-700"></div>
         {/* Image */}
-        <img src="./assets/img/loader.png" alt="loader" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16" />
+        <img src="./assets/img/loader.png" alt="loader" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-auto" />
       </div>
 
       <div className='my-8'>

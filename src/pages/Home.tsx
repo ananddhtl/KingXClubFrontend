@@ -4,8 +4,6 @@ import "react-multi-carousel/lib/styles.css";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
-// import { NavLink } from "react-router-dom";
-import Jackpot from "@/assets/image/win-jackpot.png";
 import Jackpot2 from "@/assets/image/jackpot.jpeg";
 import DepoBonus from "@/assets/image/depo-bonus.jpeg";
 import AllGame from "@/assets/image/all-games.png";
@@ -15,23 +13,23 @@ import Dice from "@/assets/image/dice.png";
 import Cards from "@/assets/image/cards.png";
 
 export const Home = () => {
-    const images = [Jackpot, Jackpot2, DepoBonus];
+    const images = [Jackpot2, DepoBonus];
 
     const responsive = {
-        superLargeDesktop: {
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5,
-        },
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 4,
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2,
-        },
+        // superLargeDesktop: {
+        //     breakpoint: { max: 4000, min: 3000 },
+        //     items: 5,
+        // },
+        // desktop: {
+        //     breakpoint: { max: 3000, min: 1024 },
+        //     items: 4,
+        // },
+        // tablet: {
+        //     breakpoint: { max: 1024, min: 464 },
+        //     items: 2,
+        // },
         mobile: {
-            breakpoint: { max: 464, min: 0 },
+            breakpoint: { max: 4000, min: 0 },
             items: 1,
         },
     };
@@ -50,34 +48,33 @@ export const Home = () => {
                 >
                     {images.map((image, index) => (
                         <img
-                            className="rounded-xl"
+                            className="rounded-xl w-full h-auto"
                             key={index}
                             src={image}
                             alt={`image-${index}`}
-                            style={{ width: "100%", height: "180px" }}
                         />
                     ))}
                 </Carousel>
             </div>
             <div className="flex flex-wrap justify-around bg-[#240700] m-2 p-2 rounded-xl text-sm">
                 <div className="flex justify-center items-center flex-col">
-                    <img src={AllGame} className="w-10 h-10"/>
+                    <img src={AllGame} className="w-10 h-10" />
                     AllGame
                 </div>
                 <div className="flex justify-center items-center flex-col">
-                    <img src={Ludo} className="w-10 h-10"/>
+                    <img src={Ludo} className="w-10 h-10" />
                     Ludo
                 </div>
                 <div className="flex justify-center items-center flex-col">
-                    <img src={Cards} className="w-10 h-10"/>
+                    <img src={Cards} className="w-10 h-10" />
                     Cards
                 </div>
                 <div className="flex justify-center items-center flex-col">
-                    <img src={Dice} className="w-10 h-10"/>
+                    <img src={Dice} className="w-10 h-10" />
                     Dice
                 </div>
                 <div className="flex justify-center items-center flex-col">
-                    <img src={Chess} className="w-8 h-8"/>
+                    <img src={Chess} className="w-8 h-8" />
                     Chess
                 </div>
             </div>
@@ -129,6 +126,17 @@ export const Home = () => {
                     Withdraw
                 </NavLink>
             </div> */}
+            <div className="flex justify-center gap-5 m-5 rounded-xl">
+            <iframe
+                src="https://www.youtube.com/embed/_sGZ9UX3ke0?si=eVJNvxU2yvaHkFDx"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full h-auto"
+                
+            ></iframe>
+            </div>
             <City />
             <BottomNavbar />
         </HelmetProvider>

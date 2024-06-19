@@ -124,14 +124,15 @@ export const PlaceBid = () => {
                                                     value={time}
                                                     autoComplete="off"
                                                     required
-                                                    disabled={time < Date.now()}
+                                                    disabled={new Date().setMinutes(new Date(new Date(time).setHours(new Date(time).getHours() + 2)).getMinutes() - 15) < Date.now()}
                                                 />
                                                 <label
                                                 aria-disabled
                                                     className={cn(
                                                         "btn py-2 text-white text-[14px] rounded-full",
                                                         selectedTime == time &&
-                                                            "text-white !bg-orange-500"
+                                                            "text-white !bg-orange-500",
+                                                        (new Date(time).setMinutes(new Date(time).getMinutes() - 15) < Date.now() && new Date().setMinutes(new Date(new Date(time).setHours(new Date(time).getHours() + 2)).getMinutes() - 15) > Date.now()) && "text-yellow-400",
                                                     )}
                                                     htmlFor={`betDate${index}`}
                                                 >
@@ -155,7 +156,7 @@ export const PlaceBid = () => {
                                     value="Open"
                                     autoComplete="off"
                                     required
-                                    disabled={!selectedTime}
+                                    disabled={!selectedTime || new Date(selectedTime).setMinutes(new Date(selectedTime).getMinutes() - 15) < Date.now()}
                                 />
                                 <label
                                     className={cn(

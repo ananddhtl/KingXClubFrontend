@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function BottomNavbar() {
     return (
-        <div className="fixed w-full bottom-0 z-10 left-0 right-0 bg-[rgba(31,7,1,1)] backdrop-blur-lg md:hidden">
+        <div className="fixed w-full bottom-0 z-10 left-0 right-0 bg-[rgba(31,7,1,1)] backdrop-blur-lg sm:hidden">
             <nav className="flex h-20 w-full justify-around items-center ">
                 <NavLink
                     className="flex justify-center h-[70px] w-[35px] flex-col hover:text-orange-500"

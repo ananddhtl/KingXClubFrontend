@@ -42,13 +42,13 @@ const Navbar = () => {
         <div className="w-full sticky z-10 top-0 bg-[rgba(19,7,4,1)] py-4 shadow-xl">
             <div className="w-full flex justify-between px-5 items-center rounded-xl h-[50px]">
                 <div
-                    className="bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-lg"
+                    className="bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-full"
                     onClick={toggleSidebar}
                 >
                     <FaBars />
                 </div>
                 <NavLink to="/">
-                    <img src={LogoCropped} alt="logo" />
+                    <img src={LogoCropped} alt="logo" className="w-12 h-auto"/>
                 </NavLink>
                 {user ? (
                     <NavLink to="/notifications">
@@ -87,7 +87,7 @@ const Navbar = () => {
                         animate={{ x: 0 }}
                         exit={{ x: "-100%" }}
                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                        className="fixed z-20 top-0 left-0 h-full w-64 bg-[rgba(31,7,1,1)] rounded-tr-lg rounded-br-lg text-white py-4"
+                        className="absolute z-20 -top-3 left-0 w-64 h-screen bg-[rgba(31,7,1,1)] rounded-tr-lg rounded-br-lg text-white py-4"
                     >
                         <div className="flex justify-between items-stretch p-5">
                             {user ? (
@@ -123,8 +123,7 @@ const Navbar = () => {
                                 <FaTimes />
                             </button>
                         </div>
-                        <hr className="border-[#410F08] border-2" />
-                        <ul className="p-4 child:my-3">
+                        <ul className="p-4 space-y-7">
                             <li className="group hover:text-orange-700">
                                 <NavLink
                                     className="flex items-center justify-start w-full"
