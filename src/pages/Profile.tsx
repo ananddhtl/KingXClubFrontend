@@ -24,7 +24,7 @@ export const Profile = () => {
         if (!user) navigate(routes.LOGIN);
     }, [navigate, user]);
     return (
-        <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4 mt-5">
+        <section className=" flex flex-col items-center justify-start gap-10 min-h-screen p-4 mt-5">
             <span className="text-[32px] font-sans font-light text-center oleo-script">
                 Welcome <br />
                 <b className="text-orange-500 capitalize">{user?.name}</b>

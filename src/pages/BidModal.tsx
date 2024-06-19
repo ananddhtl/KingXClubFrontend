@@ -270,9 +270,11 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             </div>
                         </div>
                         <div className="p-3 w-full">
-                            <div className="bg-[url('assets/image/border-image.png')] bg-cover p-6 flex flex-col justify-center items-center bg-no-repeat max-w-full">
-                                <p className="styled-text mt-5">Your Bidding Summary</p>
-                                <div className="w-full mt-5 border-1  rounded-xl border-red-800 bg-transparent ">
+                            <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
+                                <div className="bg-[#240601] w-[85dvw]">
+                                <p className="styled-text pt-5 ">Your Bidding Summary</p>
+
+                                <div className="w-full mt-5 border-1 rounded-xl border-red-800">
                                     <table className="w-full table-sm">
                                         <thead className=" text-white ">
                                             <tr className="active text-center">
@@ -390,6 +392,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                         <p>{totalReturnAmount}</p>
                                     </div>
                                 </div>
+                                </div>
+
                             </div>
                         </div>
 

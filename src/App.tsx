@@ -51,8 +51,8 @@ function App() {
         })();
     }, []);
     return (
-        <div className="min-h-screen oleo-script">
-            <img className="fixed top-0 pointer-events-none w-screen object-cover" src={BG} />
+        <div className="min-h-screen bg-gradient-to-br from-[#0D0101] to-[#240700] oleo-script">
+            {/* <img className="fixed top-0 pointer-events-none w-screen object-cover" src={BG} /> */}
             {isLoading ? (
                 <Loader />
             ) : (

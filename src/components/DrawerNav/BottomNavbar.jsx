@@ -10,7 +10,7 @@ function BottomNavbar() {
                     to="/games"
                 >
                     <img className="" src="./assets/img/games.png" />
-                    <p className="text-xs -mt-2 font-mono text-center">Games</p>
+                    <p className="text-xs -mt-2 font-mono text-center oleo-script ">Games</p>
                 </NavLink>
 
                 <NavLink
@@ -18,7 +18,7 @@ function BottomNavbar() {
                     to="/bid-history"
                 >
                     <img className="" src="./assets/img/bids.png" />
-                    <p className="text-xs -mt-2 font-mono text-center">Bids</p>
+                    <p className="text-xs -mt-2 font-mono text-center oleo-script ">Bids</p>
                 </NavLink>
 
                 <NavLink
@@ -33,7 +33,7 @@ function BottomNavbar() {
                     to="/result"
                 >
                     <img className="" src="./assets/img/result.png" />
-                    <p className="text-xs -mt-2 font-mono text-center">Result</p>
+                    <p className="text-xs -mt-2 font-mono text-center oleo-script ">Result</p>
                 </NavLink>
 
                 <NavLink
@@ -42,7 +42,7 @@ function BottomNavbar() {
                     to="https://wa.me/+971563664115"
                 >
                     <img className=" w-[35px] justify-center ml-2" src="./assets/img/support.png" />
-                    <p className="text-xs -mt-2 font-mono text-center">Support</p>
+                    <p className="text-xs -mt-2 font-mono text-center oleo-script ">Support</p>
                 </NavLink>
             </nav>
         </div>

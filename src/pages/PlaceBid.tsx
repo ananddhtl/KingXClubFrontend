@@ -1,36 +1,11 @@
-import { routes } from "@/constants";
+import { CLUBS, routes } from "@/constants";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BidModal from "./BidModal";
 import { cn } from "@/utils/cn";
 import { useProfileContext } from "@/App";
-import { DoubleBet, SingleBet, TripleBet } from "@/constants/assets/Icons";
-const places = [
-    {
-        place: "Club A",
-        time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
-    },
-    {
-        place: "Club B",
-        time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
-    },
-    {
-        place: "Club C",
+import { DoubleBet, FullKing, HalfKing, SingleBet, TripleBet } from "@/constants/assets/Icons";
 
-        time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
-    },
-    {
-        place: "Club D",
-
-        time: ["10:00", "12:00", "17:00", "21:00", "23:45"],
-    },
-    {
-        place: "Club E",
-
-        time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
-
-    },
-];
 export const PlaceBid = () => {
     const navigate = useNavigate();
     const { city } = useParams();
@@ -58,7 +33,7 @@ export const PlaceBid = () => {
                     city={city}
                 />
             ) : (
-                <section className="text-white flex flex-col items-center justify-between py-8  min-h-screen ">
+                <section className="text-white flex flex-col items-center py-8 min-h-screen ">
                     <div className="sticky top-1 px-4 grid grid-cols-5 justify-center place-items-center w-full">
                         <button onClick={() => navigate(routes.INDEX)}>
                             <svg
@@ -126,7 +101,7 @@ export const PlaceBid = () => {
                         <div className="px-3 w-full">
                             <span className="text-xl font-medium">Select time</span>
                             <div className="flex my-6 justify-between border-1 border-red-900 rounded-full">
-                                {places
+                                {CLUBS
                                     .find((event) => event.place === city)
                                     .time.map((timestamp, index) => {
                                         const time = new Date().setHours(
@@ -224,130 +199,13 @@ export const PlaceBid = () => {
                         <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("triple")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
                             <TripleBet />
                         </button>
-                    </div>
-                    {/* <div className="bg-white flex flex-col items-center justify-center w-full min-h-full py-10">
-                        <button
-                            disabled={!selectedTime || !position}
-                            onClick={handleOpenModal}
-                            className="bg-orange-500 py-2 px-12 text-xl font-semibold rounded-full flex justify-center text-white w-[60%] disabled:opacity-45 disabled:cursor-not-allowed"
-                        >
-                            + Add Tickets
+                        <button disabled={true} onClick={() => setIsModalOpen(null)} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                            <HalfKing />
                         </button>
-                        <button
-                            disabled={!selectedTime || !position}
-                            onClick={() =>
-                                setTickets((prev) => ({
-                                    ...prev,
-                                    [777]: {
-                                        amount: 500,
-                                        ticket: 777,
-                                        time: selectedTime,
-                                        position,
-                                    },
-                                }))
-                            }
-                            className="bg-gradient-to-b from-sky-400 to-teal-600 my-4 py-2 px-12 text-xl font-semibold rounded-full flex justify-center text-white disabled:opacity-45 disabled:cursor-not-allowed"
-                        >
-                            Jackpot (777)
-                            <br />
-                            Win upto 10 Lakh
+                        <button disabled={true} onClick={() => setIsModalOpen(null)} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                            <FullKing />
                         </button>
-
-                        <table className="table mt-5 table-hover table-auto">
-                            <thead className="border-b-[#F6571E]">
-                                <tr className="active">
-                                    <th className=" text-lg text-[#281F1D] font-medium">Ticket</th>
-                                    <th className=" text-lg text-[#281F1D] font-medium">Amount</th>
-                                    <th className=" text-lg text-[#281F1D] font-medium">Type</th>
-                                    <th className=" text-lg text-[#281F1D] font-medium">Time</th>
-                                    <th />
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.values(tickets).length > 0 ? (
-                                    <>
-                                        {Object.values(tickets).map(
-                                            ({
-                                                amount,
-                                                ticket,
-                                                position,
-                                                time,
-                                            }: {
-                                                amount: number;
-                                                ticket: number;
-                                                position: string;
-                                                time: string;
-                                            }) => (
-                                                <tr>
-                                                    <td className="text-[#281F1D] text-center leading-[14px]">
-                                                        {ticket}
-                                                    </td>
-                                                    <td className="text-[#281F1D] text-center leading-[14px]">
-                                                        {amount}
-                                                    </td>
-                                                    <td className="text-[#281F1D] text-center leading-[14px]">
-                                                        {position}
-                                                    </td>
-                                                    <td className="text-[#281F1D] text-center leading-[14px]">
-                                                        {new Date(time).toLocaleString("default", {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                        })}
-                                                    </td>
-
-                                                    <td
-                                                        onClick={() => handleDelete(ticket)}
-                                                        className="text-[#281F1D] cursor-pointer text-center leading-[14px]"
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="16"
-                                                            height="16"
-                                                            fill="currentColor"
-                                                            className="bi bi-trash"
-                                                            viewBox="0 0 16 16"
-                                                        >
-                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                        </svg>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        )}
-                                    </>
-                                ) : (
-                                    <tr>
-                                        <td />
-                                        <td
-                                            aria-colspan={5}
-                                            className="bg-white text-center text-orange-500"
-                                        >
-                                            No data found
-                                        </td>
-
-                                        <td />
-                                        <td />
-                                    </tr>
-                                )}
-                            </tbody>
-                           
-                        </table>
                     </div>
-                    <div className="flex flex-col items-center gap-2">
-                        <span className="py-2 text-[#281F1D] text-2xl font-semibold">
-                            Total Amount:{" "}
-                            <p className="text-[#FE480F] inline-flex items-center text-2xl font-semibold">
-                                Rs {totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                            </p>
-                        </span>
-                        <Button
-                            isLoading={isLoading}
-                            text="Buy Tickets"
-                            className="w-fit"
-                            onAction={buyTicket}
-                            disabled={isLoading || totalAmount > user?.amount}
-                        />
-                    </div> */}
                 </section>
             )}
         </>

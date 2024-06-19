@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { SelectColumnFilter } from "../table/filters";
 import { Button } from "../button/Button";
 import { cn } from "@/utils/cn";
+import { CLUBS } from "@/constants";
 
 export const Data = () => {
     const [tickets, setTickets] = useState<any[]>([]);
@@ -216,28 +217,6 @@ const TopSection: FC<ITopSection> = ({ text, description, children }) => {
 
 const PublishResult: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const events = [
-        {
-            place: "Club A",
-            time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
-        },
-        {
-            place: "Club B",
-            time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
-        },
-        {
-            place: "Club C",
-            time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
-        },
-        {
-            place: "Club D",
-            time: ["10:00", "12:00", "17:00", "21:00", "23:45"],
-        },
-        {
-            place: "Club E",
-            time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
-        },
-    ];
     const [data, setData] = useState({
         leftTicketNumber: null,
         rightTicketNumber: null,
@@ -291,7 +270,7 @@ const PublishResult: FC = () => {
                         <option hidden value={null}>
                             Select Place
                         </option>
-                        {events.map(({ place }) => (
+                        {CLUBS.map(({ place }) => (
                             <option value={place} className="bg-black">
                                 {place}
                             </option>
@@ -311,7 +290,7 @@ const PublishResult: FC = () => {
                         <option value={null} hidden>
                             Select Time
                         </option>
-                        {(events.find(({ place }) => place === data.place)?.time || []).map(
+                        {(CLUBS.find(({ place }) => place === data.place)?.time || []).map(
                             (timestamp) => {
                                 const time = new Date().setHours(
                                     Number(timestamp.split(":")[0]),

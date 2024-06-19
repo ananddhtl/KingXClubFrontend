@@ -49,6 +49,11 @@ th {
         background-clip: text;
     }
 
+    .custom-border-image{
+        border: 50px solid;
+        border-image: url('assets/image/border-image.png') 50 round;
+    }
+
     .oleo-script {
         font-family: "Oleo Script", system-ui;
     }

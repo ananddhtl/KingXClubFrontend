@@ -1,40 +1,14 @@
-import { routes } from "@/constants";
+import { CLUBS, routes } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { getAllResult } from "@/api/api";
 import { useEffect, useState } from "react";
-// import toast from "react-hot-toast";
 import { cn } from "@/utils/cn";
 import Countdown from "react-countdown";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 
-const events = [
-    {
-        place: "Club A",
-        time: ["07:00", "11:00", "15:00", "18:00", "23:00"],
-    },
-    {
-        place: "Club B",
-        time: ["08:00", "11:00", "16:00", "19:00", "23:00"],
-    },
-    {
-        place: "Club C",
-
-        time: ["09:00", "12:00", "17:00", "20:00", "23:30"],
-    },
-    {
-        place: "Club D",
-
-        time: ["10:00", "12:00", "17:00", "21:00", "23:45"],
-    },
-    {
-        place: "Club E",
-
-        time: ["11:00", "13:00", "15:00", "18:00", "22:00"],
-    },
-];
 
 export const Result = () => {
-    const time = events
+    const time = CLUBS
         .map(({ time }) =>
             time.map((timestamp) =>
                 new Date().setHours(
@@ -98,38 +72,7 @@ export const Result = () => {
                 <span className="text-2xl oleo-script font-semibold text-white italic tracking-wide">
                     Result
                 </span>
-                <button className="p-4 rounded-lg ">
-                    {/* <svg
-                        width="15"
-                        height="18"
-                        viewBox="0 0 15 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M9.26131 14.3008C9.26131 14.7586 8.96109 15.3588 8.57842 15.5914L7.52051 16.2742C6.53756 16.882 5.17191 16.1992 5.17191 14.9837V10.9693C5.17191 10.4366 4.87177 9.75376 4.56413 9.37859L1.68279 6.34721C1.30011 5.96453 1 5.28923 1 4.83152V3.09072C1 2.1828 1.68283 1.5 2.51571 1.5H12.5252C13.3581 1.5 14.041 2.1828 14.041 3.01569V4.68145C14.041 5.28922 13.6583 6.04708 13.2831 6.42225"
-                            stroke="black"
-                            strokeWidth="1.5"
-                            strokeMiterlimit="10"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        <path
-                            d="M10.5744 12.3875C11.9005 12.3875 12.9755 11.3124 12.9755 9.98636C12.9755 8.66028 11.9005 7.58527 10.5744 7.58527C9.24836 7.58527 8.17334 8.66028 8.17334 9.98636C8.17334 11.3124 9.24836 12.3875 10.5744 12.3875Z"
-                            stroke="black"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        <path
-                            d="M13.4256 12.8376L12.6753 12.0873"
-                            stroke="black"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg> */}
-                </button>
+                <div/>
             </div>
 
             <div className=" border-2 w-[90dvw] border-yellow-500 p-3 rounded-lg text-center text-white max-w-lg mx-auto">
@@ -161,9 +104,10 @@ export const Result = () => {
             </div>
 
             <div className="p-3 mb-[5rem] w-full">
-                <div className="bg-[url('assets/image/border-image.png')] bg-cover p-6 flex flex-col justify-center items-center bg-no-repeat max-w-full">
+                <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
+                <div className="bg-[#240601] w-[85dvw]">
                     <p className="styled-text mt-5">All Result</p>
-                    <div className="w-full mt-5 border-1  rounded-xl border-red-800 bg-transparent ">
+                    <div className="w-full mt-5 border-1  rounded-xl border-red-800">
                         <table className="w-full table-sm">
                             <thead className="text-white py-5">
                                 <tr className="active">
@@ -258,6 +202,7 @@ export const Result = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
                 </div>
             </div>
             <BottomNavbar />
