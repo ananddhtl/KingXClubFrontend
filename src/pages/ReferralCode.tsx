@@ -86,7 +86,7 @@ useEffect(() => {
                                 </defs>
                             </svg>
                 </button>
-                <span className="text-2xl font-sans font-semibold  oleo-script">Refer</span>
+                <span className="text-2xl font-sans font-semibold  oleo-script">Refer & Earn</span>
                 <div />
             </div>
         <div className=" w-full h-screen flex flex-col items-center justify-center">

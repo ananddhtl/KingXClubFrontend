@@ -23,7 +23,7 @@ function BottomNavbar() {
 
                 <NavLink
                     className=" flex justify-center h-[75px] items-center"
-                    to="https://wa.me/+971563664115"
+                    to="https://wa.me/+971563664115?text=I%27m%20interested%20in%20your%20games"
                 >
                     <img className="h-[60px] w-[60px]" src="./assets/img/contact.png" />
                 </NavLink>
