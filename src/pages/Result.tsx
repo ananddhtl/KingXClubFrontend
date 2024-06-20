@@ -165,6 +165,7 @@ export const Result = () => {
                                                     {`${
                                                         result?.leftTicketNumber
                                                             ? `${result.leftTicketNumber} - ${
+                                                                new Date(result.time).setMinutes(new Date(result.time).getMinutes() + 15) < Date.now() ?
                                                                   sumOfDigits(
                                                                       result.leftTicketNumber
                                                                   ).toString()[
@@ -172,11 +173,14 @@ export const Result = () => {
                                                                           result.leftTicketNumber
                                                                       ).toString().length - 1
                                                                   ]
+                                                                  : '*'
                                                               }`
                                                             : "*** - *"
                                                     }${
                                                         result?.rightTicketNumber
                                                             ? `${
+                                                                new Date(result.time).setMinutes(new Date(result.time).getMinutes() + (2 * 60 + 15)) > Date.now() ?
+
                                                                   sumOfDigits(
                                                                       result.rightTicketNumber
                                                                   ).toString()[
@@ -184,6 +188,7 @@ export const Result = () => {
                                                                           result.rightTicketNumber
                                                                       ).toString().length - 1
                                                                   ]
+                                                                  : '*'
                                                               } - ${result.rightTicketNumber}`
                                                             : "* - ***"
                                                     }`}
