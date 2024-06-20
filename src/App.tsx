@@ -30,6 +30,10 @@ export interface IUser {
 function App() {
     const [user, setUser] = useState<null | IUser>(null);
     const [isLoading, setIsLoading] = useState(true);
+    //for Production
+    console.log = () => {};
+    console.error = () => {};
+    console.debug = () => {};
 
     useEffect(() => {
         (async () => {
@@ -84,6 +88,7 @@ function App() {
                                 <Route path={`${routes.PLACE_BID}/:city`} element={<PlaceBid />} />
                                 <Route path={routes.RESULT} element={<Result />} />
                                 <Route path={routes.SIGNUP} element={<Signup />} />
+                                <Route path={`${routes.SIGNUP}/:referCode`} element={<Signup />} />
                                 <Route path={routes.ADMIN} element={<Admin />} />
                                 <Route path={routes.AGENT} element={<Agentform />} />
                                 <Route path="/refer" element={<ReferralCode />} />

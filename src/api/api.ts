@@ -56,6 +56,16 @@ export const publishResultAPI = (payload: any) => {
         }
     });
 };
+
+export const getMyActivity = () => {
+    return baseURL.get("/activity/me", {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}` || "",
+        }
+    });
+};
+
 export const register = (payload: any) => {
     return baseURL.post("/auth/register", payload);
 };

@@ -80,7 +80,9 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
             Object.values(tickets).reduce(
                 (accumulator: number, currentValue: { amount: number; ticket: number }) => {
                     const currentReturn =
-                        isOpen === "single"
+                        currentValue.ticket === 777
+                            ? 1000000
+                            : isOpen === "single"
                             ? currentValue.amount * 9
                             : isOpen === "double"
                             ? currentValue.amount * 90
@@ -263,8 +265,28 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                 ))}
                             </div>
                         )}
-                        <div className="text-center pt-5">
+                        <div className="text-center flex items-center flex-col gap-5 pt-5">
                             <span className="text-xl">Try Your Luck</span>
+                            <Button
+                                isLoading={false}
+                                text="Jackpot"
+                                className="w-fit"
+                                onAction={() => {
+                                    setTickets((prev) => ({
+                                        ...prev,
+                                        [777]: {
+                                            amount: 500,
+                                            ticket: 777,
+                                            time,
+                                            position,
+                                        },
+                                    }));
+                                    setTimeout(
+                                        () => document.getElementById(`input-${777}`).focus(),
+                                        1000
+                                    );
+                                }}
+                            />
                             <div className="p-5 flex justify-around items-center flex-wrap gap-5 w-full">
                                 {renderNumbers()}
                             </div>
@@ -272,128 +294,141 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         <div className="p-3 w-full">
                             <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
                                 <div className="bg-[#240601] w-[85dvw]">
-                                <p className="styled-text pt-5 ">Your Bidding Summary</p>
+                                    <p className="styled-text pt-5 ">Your Bidding Summary</p>
 
-                                <div className="w-full mt-5 border-1 rounded-xl border-red-800">
-                                    <table className="w-full table-sm">
-                                        <thead className=" text-white ">
-                                            <tr className="active text-center">
-                                                <th className="text-lg  font-medium">Ticket</th>
-                                                <th className=" text-lg  font-medium">Amount</th>
-                                                <th className=" text-lg  font-medium">Odds</th>
-                                                <th className=" text-lg  font-medium">Returns</th>
-                                                <th />
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {Object.values(tickets).length > 0 && (
-                                                <>
-                                                    {Object.values(tickets).map(
-                                                        ({
-                                                            amount,
-                                                            ticket,
-                                                            position,
-                                                            time,
-                                                        }: {
-                                                            amount: number;
-                                                            ticket: number;
-                                                            position: string;
-                                                            time: string;
-                                                        }) => (
-                                                            <tr className="border-t-[1px] border-t-[#F6571E]">
-                                                                <td className=" text-center leading-[14px]">
-                                                                    {ticket}
-                                                                </td>
-                                                                <td className=" text-center leading-[14px]">
-                                                                    <input
-                                                                        type="number"
-                                                                        id={`input-${ticket}`}
-                                                                        onChange={(e) => {
-                                                                            setTickets((prev) => ({
-                                                                                ...prev,
-                                                                                [ticket]: {
-                                                                                    amount: Number(
-                                                                                        e.target
-                                                                                            .value
-                                                                                    ),
-                                                                                    ticket,
-                                                                                    time,
-                                                                                    position,
-                                                                                },
-                                                                            }));
-                                                                        }}
-                                                                        defaultValue={amount}
-                                                                        min={10}
-                                                                        placeholder="Amount"
-                                                                        className={cn(
-                                                                            "py-2 outline-none bg-transparent rounded-full text-center w-20 text-orange-500 font-semibold placeholder:font-medium text-lg"
-                                                                        )}
-                                                                    />
-                                                                </td>
-                                                                <td className="text-center leading-[14px]">
-                                                                    {isOpen === "single"
-                                                                        ? "x9"
-                                                                        : isOpen === "double"
-                                                                        ? "x90"
-                                                                        : findPana(ticket) === 1
-                                                                        ? "x150"
-                                                                        : findPana(ticket) === 2
-                                                                        ? "x250"
-                                                                        : "x490"}
-                                                                </td>
-                                                                <td className="text-center leading-[14px]">
-                                                                    Rs.{" "}
-                                                                    {isOpen === "single"
-                                                                        ? amount * 9
-                                                                        : isOpen === "double"
-                                                                        ? amount * 99
-                                                                        : findPana(ticket) === 1
-                                                                        ? amount * 150
-                                                                        : findPana(ticket) === 2
-                                                                        ? amount * 250
-                                                                        : amount * 490}
-                                                                </td>
+                                    <div className="w-full mt-5 border-1 rounded-xl border-red-800">
+                                        <table className="w-full table-sm">
+                                            <thead className=" text-white ">
+                                                <tr className="active text-center">
+                                                    <th className="text-lg  font-medium">Ticket</th>
+                                                    <th className=" text-lg  font-medium">
+                                                        Amount
+                                                    </th>
+                                                    <th className=" text-lg  font-medium">Odds</th>
+                                                    <th className=" text-lg  font-medium">
+                                                        Returns
+                                                    </th>
+                                                    <th />
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {Object.values(tickets).length > 0 && (
+                                                    <>
+                                                        {Object.values(tickets).map(
+                                                            ({
+                                                                amount,
+                                                                ticket,
+                                                                position,
+                                                                time,
+                                                            }: {
+                                                                amount: number;
+                                                                ticket: number;
+                                                                position: string;
+                                                                time: string;
+                                                            }) => (
+                                                                <tr className="border-t-[1px] border-t-[#F6571E]">
+                                                                    <td className=" text-center leading-[14px]">
+                                                                        {ticket}
+                                                                    </td>
+                                                                    <td className=" text-center leading-[14px]">
+                                                                        <input
+                                                                            type="number"
+                                                                            id={`input-${ticket}`}
+                                                                            onChange={(e) => {
+                                                                                setTickets(
+                                                                                    (prev) => ({
+                                                                                        ...prev,
+                                                                                        [ticket]: {
+                                                                                            amount: Number(
+                                                                                                e
+                                                                                                    .target
+                                                                                                    .value
+                                                                                            ),
+                                                                                            ticket,
+                                                                                            time,
+                                                                                            position,
+                                                                                        },
+                                                                                    })
+                                                                                );
+                                                                            }}
+                                                                            defaultValue={amount}
+                                                                            disabled={
+                                                                                ticket === 777
+                                                                            }
+                                                                            min={10}
+                                                                            placeholder="Amount"
+                                                                            className={cn(
+                                                                                "py-2 outline-none bg-transparent rounded-full text-center w-20 text-orange-500 font-semibold placeholder:font-medium text-lg"
+                                                                            )}
+                                                                        />
+                                                                    </td>
+                                                                    <td className="text-center leading-[14px]">
+                                                                        {ticket === 777
+                                                                            ? 2000
+                                                                            : isOpen === "single"
+                                                                            ? "x9"
+                                                                            : isOpen === "double"
+                                                                            ? "x90"
+                                                                            : findPana(ticket) === 1
+                                                                            ? "x150"
+                                                                            : findPana(ticket) === 2
+                                                                            ? "x250"
+                                                                            : "x490"}
+                                                                    </td>
+                                                                    <td className="text-center leading-[14px]">
+                                                                        Rs.{" "}
+                                                                        {ticket === 777
+                                                                            ? 1000000
+                                                                            : isOpen === "single"
+                                                                            ? amount * 9
+                                                                            : isOpen === "double"
+                                                                            ? amount * 99
+                                                                            : findPana(ticket) === 1
+                                                                            ? amount * 150
+                                                                            : findPana(ticket) === 2
+                                                                            ? amount * 250
+                                                                            : amount * 490}
+                                                                    </td>
 
-                                                                <td
-                                                                    onClick={() =>
-                                                                        handleDelete(ticket)
-                                                                    }
-                                                                    className="text-orange-500 scale-110 rounded-full !px-4  cursor-pointer"
-                                                                >
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        width="16"
-                                                                        height="16"
-                                                                        fill="currentColor"
-                                                                        className="bi bi-trash"
-                                                                        viewBox="0 0 16 16"
+                                                                    <td
+                                                                        onClick={() =>
+                                                                            handleDelete(ticket)
+                                                                        }
+                                                                        className="text-orange-500 scale-110 rounded-full !px-4  cursor-pointer"
                                                                     >
-                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                                    </svg>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    )}
-                                                </>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                    <div className="text-xl border-t-[1px] border-t-[#F6571E] p-2 mx-auto w-full flex justify-between">
-                                        <p>Total Bids</p>
-                                        <p>{Object.values(tickets).length}</p>
-                                    </div>
-                                    <div className="text-xl p-2 mx-auto w-full flex justify-between">
-                                        <p>Total Bid Amount</p>
-                                        <p>{totalAmount}</p>
-                                    </div>{" "}
-                                    <div className="text-xl p-2 mx-auto w-full flex justify-between">
-                                        <p>Total Winning Amount</p>
-                                        <p>{totalReturnAmount}</p>
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16"
+                                                                            height="16"
+                                                                            fill="currentColor"
+                                                                            className="bi bi-trash"
+                                                                            viewBox="0 0 16 16"
+                                                                        >
+                                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                        </svg>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        )}
+                                                    </>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                        <div className="text-xl border-t-[1px] border-t-[#F6571E] p-2 mx-auto w-full flex justify-between">
+                                            <p>Total Bids</p>
+                                            <p>{Object.values(tickets).length}</p>
+                                        </div>
+                                        <div className="text-xl p-2 mx-auto w-full flex justify-between">
+                                            <p>Total Bid Amount</p>
+                                            <p>{totalAmount}</p>
+                                        </div>{" "}
+                                        <div className="text-xl p-2 mx-auto w-full flex justify-between">
+                                            <p>Total Winning Amount</p>
+                                            <p>{totalReturnAmount}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
-
                             </div>
                         </div>
 

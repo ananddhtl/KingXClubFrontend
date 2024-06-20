@@ -124,7 +124,7 @@ export const PlaceBid = () => {
                                                     value={time}
                                                     autoComplete="off"
                                                     required
-                                                    disabled={new Date().setMinutes(new Date(new Date(time).setHours(new Date(time).getHours() + 2)).getMinutes() - 15) < Date.now()}
+                                                    disabled={new Date(time).setMinutes(new Date(time).getMinutes() + (2 * 60 - 15)) < Date.now()}
                                                 />
                                                 <label
                                                 aria-disabled
@@ -132,7 +132,7 @@ export const PlaceBid = () => {
                                                         "btn py-2 text-white text-[14px] rounded-full",
                                                         selectedTime == time &&
                                                             "text-white !bg-orange-500",
-                                                        (new Date(time).setMinutes(new Date(time).getMinutes() - 15) < Date.now() && new Date().setMinutes(new Date(new Date(time).setHours(new Date(time).getHours() + 2)).getMinutes() - 15) > Date.now()) && "text-yellow-400",
+                                                        (new Date(time).setMinutes(new Date(time).getMinutes() - 15) < Date.now() && new Date(time).setMinutes(new Date(time).getMinutes() + (2 * 60 - 15)) > Date.now()) && "text-yellow-400",
                                                     )}
                                                     htmlFor={`betDate${index}`}
                                                 >

@@ -39,7 +39,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div className="w-full sticky z-10 top-0 bg-[rgba(19,7,4,1)] py-4 shadow-xl">
+        <div className="w-full sticky z-10 top-0 bg-[rgba(19,7,4,1)] pt-10 pb-5 shadow-xl">
             <div className="w-full flex justify-between px-5 items-center rounded-xl h-[50px]">
                 <div
                     className="bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-full"

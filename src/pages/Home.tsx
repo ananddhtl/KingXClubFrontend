@@ -6,11 +6,11 @@ import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
 import Jackpot2 from "@/assets/image/jackpot.jpeg";
 import DepoBonus from "@/assets/image/depo-bonus.jpeg";
-import AllGame from "@/assets/image/all-games.png";
-import Ludo from "@/assets/image/ludo.png";
-import Chess from "@/assets/image/chess.png";
-import Dice from "@/assets/image/dice.png";
-import Cards from "@/assets/image/cards.png";
+// import AllGame from "@/assets/image/all-games.png";
+// import Ludo from "@/assets/image/ludo.png";
+// import Chess from "@/assets/image/chess.png";
+// import Dice from "@/assets/image/dice.png";
+// import Cards from "@/assets/image/cards.png";
 
 export const Home = () => {
     const images = [Jackpot2, DepoBonus];
@@ -56,7 +56,7 @@ export const Home = () => {
                     ))}
                 </Carousel>
             </div>
-            <div className="flex flex-wrap justify-around bg-[#240700] m-2 p-2 rounded-xl text-sm">
+            {/* <div className="flex flex-wrap justify-around bg-[#240700] m-2 p-2 rounded-xl text-sm">
                 <div className="flex justify-center items-center flex-col">
                     <img src={AllGame} className="w-10 h-10" />
                     AllGame
@@ -77,7 +77,7 @@ export const Home = () => {
                     <img src={Chess} className="w-8 h-8" />
                     Chess
                 </div>
-            </div>
+            </div> */}
             {/* <div className="bg-white/10 m-4 p-4 rounded-lg grid grid-cols-2 gap-4">
                 <NavLink
                     to="https://wa.me/+971563664115"
@@ -126,14 +126,14 @@ export const Home = () => {
                     Withdraw
                 </NavLink>
             </div> */}
-            <div className="flex justify-center gap-5 m-5 rounded-xl">
+            <div className="flex justify-center gap-5 m-5 py-10 rounded-xl ">
             <iframe
                 src="https://www.youtube.com/embed/_sGZ9UX3ke0?si=eVJNvxU2yvaHkFDx"
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                className="w-full h-auto rounded-2xl"
+                className="w-full h-full rounded-2xl"
                 
             ></iframe>
             </div>

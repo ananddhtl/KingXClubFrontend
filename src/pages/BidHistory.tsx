@@ -28,7 +28,7 @@ export const BidHistory = () => {
     }, []);
     return (
         <section className="flex flex-col items-center justify-start text-white gap-10 min-h-screen p-4">
-            <div className="sticky top-1 flex justify-between items-center w-full">
+            <div className="sticky top-5 flex justify-between items-center w-full">
                 <button
                     onClick={() => navigate(routes.PROFILE)}
                 >

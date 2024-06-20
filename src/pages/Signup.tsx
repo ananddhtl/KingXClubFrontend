@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Logo from "@/assets/image/logo.png";
 import { register } from "@/api/api";
 import toast from "react-hot-toast";
@@ -9,6 +9,7 @@ import { Button } from "@/components/button/Button";
 import { routes } from "@/constants";
 
 const Signup = () => {
+    const refer = useParams()
     const {user, setUser} = useProfileContext()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
@@ -146,6 +147,7 @@ const Signup = () => {
                                 onChange={(e) => handleChange(e, "referCode")}
                                 type="text"
                                 id="referCode"
+                                defaultValue={refer?.referCode || ''}
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
                                 placeholder="Enter your Refer Code"
                             />

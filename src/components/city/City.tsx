@@ -14,7 +14,7 @@ const City = () => {
                     {event.icon}
                 </NavLink>
             ))}
-            <Jackpot />
+            <Jackpot className="w-full" />
         </div>
     );
 };
