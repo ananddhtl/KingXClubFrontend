@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    width: 100dvw;
+    height: 100dvh;
+}
+.btnprofile{
+    width: 100px !important;
+}
+button {
+    cursor: pointer;
+}
+
+a,
+label,
+button,
+div,
+span,
+p,
+td,
+th {
+    font-family: "Oleo Script", system-ui;
+}
+
+.scrollable-section {
+    overflow-y: auto; /* Enables vertical scrolling */
+  }
+
+@layer utilities {
+    .styled-text {
+        font-family: "Oleo Script";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 20px;
+        /* identical to box height, or 100% */
+        text-align: center;
+
+        background: linear-gradient(104.76deg, #ffd800 22.11%, #fe480f 95.03%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .custom-border-image{
+        border: 50px solid;
+        border-image: url('assets/image/border-image.png') 50 round;
+    }
+
+    .oleo-script {
+        font-family: "Oleo Script", system-ui;
+    }
+
+    .scrollbar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        border-radius: 100vh;
+        background: #fff;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #ddb0b0;
+        border-radius: 100vh;
+        border: 3px solid #fff;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #000;
+        cursor: pointer;
+    }
+}
+

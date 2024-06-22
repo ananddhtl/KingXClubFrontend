@@ -1,0 +1,8 @@
+@import './assets/sass/animations';
+@import './assets/sass/modal';
+
+.scrollable-section {
+  overflow-y: auto; /* Enables vertical scrolling */
+  // scroll-behavior: smooth; /* Adds smooth scrolling */
+}
+

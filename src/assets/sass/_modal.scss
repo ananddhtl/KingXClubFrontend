@@ -1,0 +1,59 @@
+
+.btn-text-orange {
+    color: #F76D1F; /* Dims the color on hover */
+    background-color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    border: none;
+    padding-inline: 10px;
+    padding-block: 5px;
+  }
+  .btn-text-orange:hover {
+    color: #b64808; /* Dims the color on hover */
+  }
+   .orange-modal-content {
+    background-color: #F76D1F;
+    padding: 20px;
+  }
+  .orange-modal-title {
+    color: #fff;
+  }
+  .orange-modal-body input[type="email"],
+  .orange-modal-body input[type="tel"],
+  .orange-modal-body input[type="password"] {
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  
+  /* Optionally, you can add additional styling to make the input look more appealing */
+  input[type="number"] {
+      padding-right: 1rem; /* Add some padding to compensate for the hidden arrows */
+  }
+  
+  input:focus,
+  input:active {
+      outline: none !important;
+      box-shadow: none !important;
+      border: none !important;
+  }
+  
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+    background-color: white;
+  }
+  
+  /* Center the numbers */
+  select option {
+    text-align: center;
+  }
+  
