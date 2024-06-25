@@ -7,6 +7,7 @@ import Countdown from "react-countdown";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 
 export const Result = () => {
+    
     const time = CLUBS.map(({ time }) =>
         time.map((timestamp) =>
             new Date().setHours(
@@ -24,6 +25,8 @@ export const Result = () => {
 
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
+    const [selectedClub, setSelectedClub] = useState('All');
+
     console.log({ results });
 
     const sumOfDigits = (number) => {
@@ -44,6 +47,14 @@ export const Result = () => {
             }
         })();
     }, []);
+
+
+    const handleClubClick = (club) => {
+        setSelectedClub(club);
+    };
+
+    const filteredResults = selectedClub === 'All' ? results : results.filter(result => result.place === selectedClub);
+
     return (
         <section className=" flex flex-col items-center justify-start text-black gap-4 min-h-screen">
             <div className="sticky top-0 flex justify-between items-center w-full  p-4">
@@ -103,113 +114,71 @@ export const Result = () => {
 
             <div className="p-3 mb-[5rem] w-full">
                 <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
-                    <div className="bg-[#240601] w-[85dvw]">
-                        <p className="styled-text mt-5">All Result</p>
-                        <div className="w-full mt-5 border-1  rounded-xl border-red-800">
-                            <table className="w-full table-sm">
-                                <thead className="text-white py-5">
-                                    <tr className="active">
-                                        <th className="text-xl p-3 text-center leading-[14px] font-medium">
-                                            Date
-                                        </th>
-                                        <th className="text-xl p-3 text-center leading-[14px] font-medium">
-                                            Time
-                                        </th>
-                                        <th className="text-xl p-3 text-center leading-[14px] font-medium">
-                                            Club
-                                        </th>
-                                        <th className="text-xl p-3 text-center leading-[14px] font-medium">
-                                            Ticket
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-white text-center text-xl border-t">
-                                    {results.length > 0 ? (
-                                        <>
-                                            {results.map((result, index) => (
-                                                <tr>
-                                                    <td className="text-white text-sm leading-[14px]">
-                                                        {
-                                                            new Date(
-                                                                result.time
-                                                            ).toLocaleDateString("default", {
-                                                                // year: "numeric",
-                                                                month: "2-digit",
-                                                                day: "2-digit",
-                                                            })
-                                                            // .replace("/", "-")
-                                                            // .replace("/", "-")
-                                                        }
-                                                    </td>
-                                                    <td className="text-white text-sm leading-[14px]">
-                                                        {new Date(result.time).toLocaleTimeString(
-                                                            "default",
-                                                            {
-                                                                hour: "numeric",
-                                                                minute: "numeric",
-                                                            }
-                                                        )}
-                                                    </td>
-                                                    <td className="text-white text-sm leading-[14px]">
-                                                        {result.place}
-                                                    </td>
-                                                    <td
-                                                        className={cn(
-                                                            "text-white text-sm leading-[14px]",
-                                                            index === 0 && "!text-[#F6571E]"
-                                                        )}
-                                                    >
-                                                        <div className="flex gap-4 items-center justify-center">
-                                                        {result?.leftTicketNumber && showVerticleNumber(result.leftTicketNumber.toString())}
-                                                        <div className="flex">
-                                                        {(result?.leftTicketNumber &&  new Date(
-                                                                          result.time
-                                                                      ).setMinutes(
-                                                                          new Date(
-                                                                              result.time
-                                                                          ).getMinutes() + 15
-                                                                      )) ? showVerticleNumber(sumOfDigits(
-                                                                        result.leftTicketNumber
-                                                                    ).toString()[
-                                                                        sumOfDigits(
-                                                                            result.leftTicketNumber
-                                                                        ).toString()
-                                                                            .length - 1
-                                                                    ].toString()) : showVerticleNumber('*')}
-                                                        {(result?.rightTicketNumber &&  new Date(
-                                                                          result.time
-                                                                      ).setMinutes(
-                                                                          new Date(
-                                                                              result.time
-                                                                          ).getMinutes() + (2 * 60 + 15)
-                                                                      )) ? showVerticleNumber(sumOfDigits(
-                                                                        result.rightTicketNumber
-                                                                    ).toString()[
-                                                                        sumOfDigits(
-                                                                            result.rightTicketNumber
-                                                                        ).toString()
-                                                                            .length - 1
-                                                                    ].toString()) : showVerticleNumber('*')}
-                                                                    </div>
-                                            {result?.rightTicketNumber ? showVerticleNumber(result.rightTicketNumber.toString()) : showVerticleNumber('***')}
+                <div className="bg-[#240601] w-[85dvw]">
+            <p className="styled-text mt-5">All Result</p>
+            <div className="flex flex-wrap justify-center mt-5 gap-2">
+    {['All', 'Club Lion', 'Club Tiger', 'Club Cobra', 'Club Puma'].map((club) => (
+        <button
+            key={club}
+            className={`mx-1 px-2 py-1 rounded-lg text-sm ${selectedClub === club ? 'bg-red-800 text-white' : 'bg-white text-black'}`}
+            onClick={() => handleClubClick(club)}
+        >
+            {club}
+        </button>
+    ))}
+</div>
 
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </>
-                                    ) : (
-                                        <tr>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <div className="w-full mt-5 border-1 rounded-xl border-red-800">
+                <table className="w-full table-sm">
+                    <thead className="text-white py-5">
+                        <tr className="active">
+                            <th className="text-xl p-3 text-center leading-[14px] font-medium">Date</th>
+                            <th className="text-xl p-3 text-center leading-[14px] font-medium">Time</th>
+                            <th className="text-xl p-3 text-center leading-[14px] font-medium">Club</th>
+                            <th className="text-xl p-3 text-center leading-[14px] font-medium">Ticket</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-white text-center text-xl border-t">
+                        {filteredResults.length > 0 ? (
+                            filteredResults.map((result, index) => (
+                                <tr key={index}>
+                                    <td className="text-white text-sm leading-[14px]">
+                                        {new Date(result.time).toLocaleDateString("default", {
+                                            month: "2-digit",
+                                            day: "2-digit",
+                                        })}
+                                    </td>
+                                    <td className="text-white text-sm leading-[14px]">
+                                        {new Date(result.time).toLocaleTimeString("default", {
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                        })}
+                                    </td>
+                                    <td className="text-white text-sm leading-[14px]">{result.place}</td>
+                                    <td className={`text-white text-sm leading-[14px] ${index === 0 && '!text-[#F6571E]'}`}>
+                                        <div className="flex gap-4 items-center justify-center">
+                                            {result?.leftTicketNumber && showVerticleNumber(result.leftTicketNumber.toString())}
+                                            <div className="flex">
+                                                {(result?.leftTicketNumber && new Date(result.time).setMinutes(new Date(result.time).getMinutes() + 15)) ? showVerticleNumber(sumOfDigits(result.leftTicketNumber).toString()[sumOfDigits(result.leftTicketNumber).toString().length - 1].toString()) : showVerticleNumber('*')}
+                                                {(result?.rightTicketNumber && new Date(result.time).setMinutes(new Date(result.time).getMinutes() + (2 * 60 + 15))) ? showVerticleNumber(sumOfDigits(result.rightTicketNumber).toString()[sumOfDigits(result.rightTicketNumber).toString().length - 1].toString()) : showVerticleNumber('*')}
+                                            </div>
+                                            {result?.rightTicketNumber ? showVerticleNumber(result.rightTicketNumber.toString()) : showVerticleNumber('***')}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </div>
                 </div>
             </div>
             <BottomNavbar />
