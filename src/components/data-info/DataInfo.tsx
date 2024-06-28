@@ -79,6 +79,10 @@ export const Data = () => {
                 accessor: "place" || "",
             },
             {
+                Header: "Won",
+                accessor: "won" || "",
+            },
+            {
                 Header: "User",
                 accessor: "user" || "",
             },

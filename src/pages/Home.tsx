@@ -6,6 +6,7 @@ import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
 import Jackpot2 from "@/assets/image/jackpot.jpeg";
 import DepoBonus from "@/assets/image/depo-bonus.jpeg";
+import SlotVideo from "@/assets/slot-machine.mp4";
 import { NavLink } from "react-router-dom";
 // import AllGame from "@/assets/image/all-games.png";
 // import Ludo from "@/assets/image/ludo.png";
@@ -184,8 +185,8 @@ export const Home = () => {
                                 </NavLink>
                             </div   >
             </div>
-            <div className="flex justify-center gap-5 py-10 rounded-xl ">
-            <iframe
+            <div className="flex justify-center px-4 py-10 gap-2 flex-col ">
+            {/* <iframe
                 src="https://www.youtube.com/embed/_sGZ9UX3ke0?si=eVJNvxU2yvaHkFDx"
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -193,8 +194,11 @@ export const Home = () => {
                 allowFullScreen
                 className="w-full h-full rounded-2xl"
                 
-            ></iframe>
+            ></iframe> */}
+            <span className="text-center text-2xl styled-text">Win Jackpot !!! Buy ticket worth Rs 500 and won upto 10 Lakh.</span>
+            <video src={SlotVideo} autoPlay loop className="w-full h-full rounded-3xl" />
             </div>
+                
             <City />
             <BottomNavbar />
         </HelmetProvider>
