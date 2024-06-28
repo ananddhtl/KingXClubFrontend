@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const BidModal = ({ isOpen, onClose, time, position, city }) => {
-    const [selectedInitial, setSelectedInitial] = useState(1);
+    const [selectedInitial, setSelectedInitial] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const { user, setUser } = useProfileContext();
     const [tickets, setTickets] = useState({});
