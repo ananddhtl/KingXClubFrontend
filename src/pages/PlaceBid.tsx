@@ -101,9 +101,8 @@ export const PlaceBid = () => {
                         <div className="px-3 w-full">
                             <span className="text-xl font-medium">Select time</span>
                             <div className="flex my-6 justify-between border-1 border-red-900 rounded-full">
-                                {CLUBS
-                                    .find((event) => event.place === city)
-                                    .time.map((timestamp, index) => {
+                                {CLUBS.find((event) => event.place === city).time.map(
+                                    (timestamp, index) => {
                                         const time = new Date().setHours(
                                             Number(timestamp.split(":")[0]),
                                             Number(timestamp.split(":")[1]),
@@ -124,15 +123,27 @@ export const PlaceBid = () => {
                                                     value={time}
                                                     autoComplete="off"
                                                     required
-                                                    disabled={new Date(time).setMinutes(new Date(time).getMinutes() + (2 * 60 - 15)) < Date.now()}
+                                                    disabled={
+                                                        new Date(time).setMinutes(
+                                                            new Date(time).getMinutes() +
+                                                                (2 * 60 - 15)
+                                                        ) < Date.now()
+                                                    }
                                                 />
                                                 <label
-                                                aria-disabled
+                                                    aria-disabled
                                                     className={cn(
                                                         "btn py-2 text-white text-[14px] rounded-full",
                                                         selectedTime == time &&
                                                             "text-white !bg-orange-500",
-                                                        (new Date(time).setMinutes(new Date(time).getMinutes() - 15) < Date.now() && new Date(time).setMinutes(new Date(time).getMinutes() + (2 * 60 - 15)) > Date.now()) && "text-yellow-400",
+                                                        new Date(time).setMinutes(
+                                                            new Date(time).getMinutes() - 15
+                                                        ) < Date.now() &&
+                                                            new Date(time).setMinutes(
+                                                                new Date(time).getMinutes() +
+                                                                    (2 * 60 - 15)
+                                                            ) > Date.now() &&
+                                                            "text-yellow-400"
                                                     )}
                                                     htmlFor={`betDate${index}`}
                                                 >
@@ -143,7 +154,8 @@ export const PlaceBid = () => {
                                                 </label>
                                             </>
                                         );
-                                    })}
+                                    }
+                                )}
                             </div>
                             <span className="text-xl font-medium">Select Position</span>
                             <div className="flex mt-6 justify-between w-[60%] border-1 border-red-800 rounded-full">
@@ -156,7 +168,12 @@ export const PlaceBid = () => {
                                     value="Open"
                                     autoComplete="off"
                                     required
-                                    disabled={!selectedTime || new Date(selectedTime).setMinutes(new Date(selectedTime).getMinutes() - 15) < Date.now()}
+                                    disabled={
+                                        !selectedTime ||
+                                        new Date(selectedTime).setMinutes(
+                                            new Date(selectedTime).getMinutes() - 15
+                                        ) < Date.now()
+                                    }
                                 />
                                 <label
                                     className={cn(
@@ -191,19 +208,39 @@ export const PlaceBid = () => {
                         </div>
                     </form>
                     <div className="flex flex-wrap justify-center items-center w-full gap-5 my-5 p-5">
-                        <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("single")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        <button
+                            disabled={!selectedTime || !position}
+                            onClick={() => setIsModalOpen("single")}
+                            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
                             <SingleBet />
                         </button>
-                        <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("double")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        <button
+                            disabled={!selectedTime || !position || position === "Close"}
+                            onClick={() => setIsModalOpen("double")}
+                            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
                             <DoubleBet />
                         </button>
-                        <button disabled={!selectedTime || !position} onClick={() => setIsModalOpen("triple")} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        <button
+                            disabled={!selectedTime || !position}
+                            onClick={() => setIsModalOpen("triple")}
+                            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
                             <TripleBet />
                         </button>
-                        <button disabled={true} onClick={() => setIsModalOpen(null)} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        <button
+                            disabled={true}
+                            onClick={() => setIsModalOpen(null)}
+                            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
                             <HalfKing />
                         </button>
-                        <button disabled={true} onClick={() => setIsModalOpen(null)} className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        <button
+                            disabled={true}
+                            onClick={() => setIsModalOpen(null)}
+                            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
                             <FullKing />
                         </button>
                     </div>
@@ -212,4 +249,3 @@ export const PlaceBid = () => {
         </>
     );
 };
-
