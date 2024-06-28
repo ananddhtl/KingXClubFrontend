@@ -98,8 +98,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
         [isOpen, tickets]
     ) as number;
 
-    console.log({tickets});
-    
+    console.log({ tickets });
 
     const renderNumbers = () => {
         if (isOpen === "single") {
@@ -120,7 +119,10 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                 position,
                             },
                         }));
-                        setTimeout(() => document.getElementById(`input-${num.toString()}`).focus(), 1000);
+                        setTimeout(
+                            () => document.getElementById(`input-${num.toString()}`).focus(),
+                            1000
+                        );
                     }}
                 >
                     <p className="font-medium text-xl">{num.toString()}</p>
@@ -131,23 +133,37 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                 <button
                     className={cn(
                         " w-12 h-12 outline-none flex justify-center items-center text-white border-1 border-orange-500 rounded-full",
-                        Object.prototype.hasOwnProperty.call(tickets, num.toLocaleString('en-US', { minimumIntegerDigits: 2 })) &&
-                            "bg-orange-400 text-white"
+                        Object.prototype.hasOwnProperty.call(
+                            tickets,
+                            num.toLocaleString("en-US", { minimumIntegerDigits: 2 })
+                        ) && "bg-orange-400 text-white"
                     )}
                     onClick={() => {
                         setTickets((prev) => ({
                             ...prev,
-                            [num.toLocaleString('en-US', { minimumIntegerDigits: 2 })]: {
+                            [num.toLocaleString("en-US", { minimumIntegerDigits: 2 })]: {
                                 amount: 10,
-                                ticket: num.toLocaleString('en-US', { minimumIntegerDigits: 2 }),
+                                ticket: num.toLocaleString("en-US", { minimumIntegerDigits: 2 }),
                                 time,
                                 position,
                             },
                         }));
-                        setTimeout(() => document.getElementById(`input-${num.toLocaleString('en-US', { minimumIntegerDigits: 2 })}`).focus(), 1000);
+                        setTimeout(
+                            () =>
+                                document
+                                    .getElementById(
+                                        `input-${num.toLocaleString("en-US", {
+                                            minimumIntegerDigits: 2,
+                                        })}`
+                                    )
+                                    .focus(),
+                            1000
+                        );
                     }}
                 >
-                    <p className="font-medium text-xl">{num.toLocaleString('en-US', { minimumIntegerDigits: 2 })}</p>
+                    <p className="font-medium text-xl">
+                        {num.toLocaleString("en-US", { minimumIntegerDigits: 2 })}
+                    </p>
                 </button>
             ));
         } else if (isOpen === "triple") {
@@ -161,23 +177,39 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                     <button
                         className={cn(
                             " w-12 h-12 outline-none flex justify-center items-center text-white border-1 border-orange-500 rounded-full",
-                            Object.prototype.hasOwnProperty.call(tickets, num.toLocaleString('en-US', { minimumIntegerDigits: 3 })) &&
-                                "bg-orange-400 text-white"
+                            Object.prototype.hasOwnProperty.call(
+                                tickets,
+                                num.toLocaleString("en-US", { minimumIntegerDigits: 3 })
+                            ) && "bg-orange-400 text-white"
                         )}
                         onClick={() => {
                             setTickets((prev) => ({
                                 ...prev,
-                                [num.toLocaleString('en-US', { minimumIntegerDigits: 3 })]: {
+                                [num.toLocaleString("en-US", { minimumIntegerDigits: 3 })]: {
                                     amount: 10,
-                                    ticket: num.toLocaleString('en-US', { minimumIntegerDigits: 3 }),
+                                    ticket: num.toLocaleString("en-US", {
+                                        minimumIntegerDigits: 3,
+                                    }),
                                     time,
                                     position,
                                 },
                             }));
-                            setTimeout(() => document.getElementById(`input-${num.toLocaleString('en-US', { minimumIntegerDigits: 3 })}`).focus(), 1000);
+                            setTimeout(
+                                () =>
+                                    document
+                                        .getElementById(
+                                            `input-${num.toLocaleString("en-US", {
+                                                minimumIntegerDigits: 3,
+                                            })}`
+                                        )
+                                        .focus(),
+                                1000
+                            );
                         }}
                     >
-                        <p className="font-medium text-xl">{num.toLocaleString('en-US', { minimumIntegerDigits: 3 })}</p>
+                        <p className="font-medium text-xl">
+                            {num.toLocaleString("en-US", { minimumIntegerDigits: 3 })}
+                        </p>
                     </button>
                 ));
         } else {
@@ -449,15 +481,17 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             <span className="py-2 text-white text-lg font-semibold">
                                 Wallet Balance:{" "}
                                 <p className="styled-text inline-flex items-center font-semibold">
-    {user?.amount ? (
-        <>
-            Rs {user.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </>
-    ) : (
-        'Insufficient Balance'
-    )}
-</p>
-
+                                    {user?.amount ? (
+                                        <>
+                                            Rs{" "}
+                                            {user.amount
+                                                .toString()
+                                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                        </>
+                                    ) : (
+                                        "Insufficient Balance"
+                                    )}
+                                </p>
                             </span>
                             <Button
                                 isLoading={isLoading}

@@ -100,7 +100,6 @@ export const Result = () => {
 
             <video src={SlotVideo} autoPlay loop className="w-full h-full rounded-3xl p-4" />
 
-
             <div className="p-3 mb-[5rem] w-full">
                 <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
                     <div className="bg-[#240601] w-[85dvw]">
@@ -160,39 +159,56 @@ export const Result = () => {
                                                         )}
                                                     >
                                                         <div className="flex gap-4 items-center justify-center">
-                                                        {result?.leftTicketNumber && showVerticleNumber(result.leftTicketNumber.toString())}
-                                                        <div className="flex">
-                                                        {(result?.leftTicketNumber &&  new Date(
-                                                                          result.time
-                                                                      ).setMinutes(
-                                                                          new Date(
-                                                                              result.time
-                                                                          ).getMinutes() + 15
-                                                                      )) ? showVerticleNumber(sumOfDigits(
-                                                                        result.leftTicketNumber
-                                                                    ).toString()[
-                                                                        sumOfDigits(
-                                                                            result.leftTicketNumber
-                                                                        ).toString()
-                                                                            .length - 1
-                                                                    ].toString()) : showVerticleNumber('*')}
-                                                        {(result?.rightTicketNumber &&  new Date(
-                                                                          result.time
-                                                                      ).setMinutes(
-                                                                          new Date(
-                                                                              result.time
-                                                                          ).getMinutes() + (2 * 60 + 15)
-                                                                      )) ? showVerticleNumber(sumOfDigits(
-                                                                        result.rightTicketNumber
-                                                                    ).toString()[
-                                                                        sumOfDigits(
-                                                                            result.rightTicketNumber
-                                                                        ).toString()
-                                                                            .length - 1
-                                                                    ].toString()) : showVerticleNumber('*')}
-                                                                    </div>
-                                            {result?.rightTicketNumber ? showVerticleNumber(result.rightTicketNumber.toString()) : showVerticleNumber('***')}
-
+                                                            {result?.leftTicketNumber &&
+                                                                showVerticleNumber(
+                                                                    result.leftTicketNumber.toString()
+                                                                )}
+                                                            <div className="flex">
+                                                                {result?.leftTicketNumber &&
+                                                                new Date(result.time).setMinutes(
+                                                                    new Date(
+                                                                        result.time
+                                                                    ).getMinutes() + 15
+                                                                )
+                                                                    ? showVerticleNumber(
+                                                                          sumOfDigits(
+                                                                              result.leftTicketNumber
+                                                                          )
+                                                                              .toString()
+                                                                              [
+                                                                                  sumOfDigits(
+                                                                                      result.leftTicketNumber
+                                                                                  ).toString()
+                                                                                      .length - 1
+                                                                              ].toString()
+                                                                      )
+                                                                    : showVerticleNumber("*")}
+                                                                {result?.rightTicketNumber &&
+                                                                new Date(result.time).setMinutes(
+                                                                    new Date(
+                                                                        result.time
+                                                                    ).getMinutes() +
+                                                                        (2 * 60 + 15)
+                                                                )
+                                                                    ? showVerticleNumber(
+                                                                          sumOfDigits(
+                                                                              result.rightTicketNumber
+                                                                          )
+                                                                              .toString()
+                                                                              [
+                                                                                  sumOfDigits(
+                                                                                      result.rightTicketNumber
+                                                                                  ).toString()
+                                                                                      .length - 1
+                                                                              ].toString()
+                                                                      )
+                                                                    : showVerticleNumber("*")}
+                                                            </div>
+                                                            {result?.rightTicketNumber
+                                                                ? showVerticleNumber(
+                                                                      result.rightTicketNumber.toString()
+                                                                  )
+                                                                : showVerticleNumber("***")}
                                                         </div>
                                                     </td>
                                                 </tr>
