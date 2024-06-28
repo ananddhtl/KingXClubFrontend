@@ -228,7 +228,7 @@ const PublishResult: FC = () => {
     function handleChange(e: any, dataFor: string) {
         setData({
             ...data,
-            [dataFor]: dataFor === "place" ? e.target.value : Number(e.target.value),
+            [dataFor]: dataFor === "time" ? Number(e.target.value) : e.target.value,
         });
     }
 
@@ -318,24 +318,20 @@ const PublishResult: FC = () => {
                     <label className="text-white text-lg ">Ticket Number</label>
                     <div className="flex w-full justify-around">
                         <input
-                            type="number"
+                            type="text"
                             className="form-control w-32 placeholder:opacity-50"
                             id="betAmount"
                             name="betAmount"
                             placeholder="Left Number"
-                            min="100"
-                            max="999"
                             onChange={(e) => handleChange(e, "leftTicketNumber")}
                             required
                         />
                         <input
-                            type="number"
+                            type="text"
                             className="form-control w-32 placeholder:opacity-50"
                             id="betAmount"
                             name="betAmount"
                             placeholder="Right Number"
-                            min="100"
-                            max="999"
                             onChange={(e) => handleChange(e, "rightTicketNumber")}
                             required
                         />

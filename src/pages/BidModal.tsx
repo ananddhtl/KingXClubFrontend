@@ -98,29 +98,32 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
         [isOpen, tickets]
     ) as number;
 
+    console.log({tickets});
+    
+
     const renderNumbers = () => {
         if (isOpen === "single") {
             return Array.from({ length: 10 }, (_, i) => i).map((num) => (
                 <button
                     className={cn(
                         " w-12 h-12 outline-none flex justify-center items-center text-white border-1 border-orange-500 rounded-full",
-                        Object.prototype.hasOwnProperty.call(tickets, num) &&
+                        Object.prototype.hasOwnProperty.call(tickets, num.toString()) &&
                             "bg-orange-400 text-white"
                     )}
                     onClick={() => {
                         setTickets((prev) => ({
                             ...prev,
-                            [num]: {
-                                amount: 10,
-                                ticket: num,
+                            [num.toString()]: {
+                                amount: 100,
+                                ticket: num.toString(),
                                 time,
                                 position,
                             },
                         }));
-                        setTimeout(() => document.getElementById(`input-${num}`).focus(), 1000);
+                        setTimeout(() => document.getElementById(`input-${num.toString()}`).focus(), 1000);
                     }}
                 >
-                    <p className="font-medium text-xl">{num}</p>
+                    <p className="font-medium text-xl">{num.toString()}</p>
                 </button>
             ));
         } else if (isOpen === "double") {
@@ -128,23 +131,23 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                 <button
                     className={cn(
                         " w-12 h-12 outline-none flex justify-center items-center text-white border-1 border-orange-500 rounded-full",
-                        Object.prototype.hasOwnProperty.call(tickets, num) &&
+                        Object.prototype.hasOwnProperty.call(tickets, num.toLocaleString('en-US', { minimumIntegerDigits: 2 })) &&
                             "bg-orange-400 text-white"
                     )}
                     onClick={() => {
                         setTickets((prev) => ({
                             ...prev,
-                            [num]: {
+                            [num.toLocaleString('en-US', { minimumIntegerDigits: 2 })]: {
                                 amount: 10,
-                                ticket: num,
+                                ticket: num.toLocaleString('en-US', { minimumIntegerDigits: 2 }),
                                 time,
                                 position,
                             },
                         }));
-                        setTimeout(() => document.getElementById(`input-${num}`).focus(), 1000);
+                        setTimeout(() => document.getElementById(`input-${num.toLocaleString('en-US', { minimumIntegerDigits: 2 })}`).focus(), 1000);
                     }}
                 >
-                    <p className="font-medium text-xl">{num}</p>
+                    <p className="font-medium text-xl">{num.toLocaleString('en-US', { minimumIntegerDigits: 2 })}</p>
                 </button>
             ));
         } else if (isOpen === "triple") {
@@ -158,23 +161,23 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                     <button
                         className={cn(
                             " w-12 h-12 outline-none flex justify-center items-center text-white border-1 border-orange-500 rounded-full",
-                            Object.prototype.hasOwnProperty.call(tickets, num) &&
+                            Object.prototype.hasOwnProperty.call(tickets, num.toLocaleString('en-US', { minimumIntegerDigits: 3 })) &&
                                 "bg-orange-400 text-white"
                         )}
                         onClick={() => {
                             setTickets((prev) => ({
                                 ...prev,
-                                [num]: {
+                                [num.toLocaleString('en-US', { minimumIntegerDigits: 3 })]: {
                                     amount: 10,
-                                    ticket: num,
+                                    ticket: num.toLocaleString('en-US', { minimumIntegerDigits: 3 }),
                                     time,
                                     position,
                                 },
                             }));
-                            setTimeout(() => document.getElementById(`input-${num}`).focus(), 1000);
+                            setTimeout(() => document.getElementById(`input-${num.toLocaleString('en-US', { minimumIntegerDigits: 3 })}`).focus(), 1000);
                         }}
                     >
-                        <p className="font-medium text-xl">{num}</p>
+                        <p className="font-medium text-xl">{num.toLocaleString('en-US', { minimumIntegerDigits: 3 })}</p>
                     </button>
                 ));
         } else {
@@ -252,7 +255,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                     <div className="flex flex-col items-center justify-between pb-20 w-full h-full">
                         {isOpen !== "single" && (
                             <div className="flex gap-2 border-1 border-red-800 p-2 rounded-2xl">
-                                {Array.from({ length: 9 }, (_, i) => i + 1).map((num) => (
+                                {Array.from({ length: 9 }, (_, i) => i).map((num) => (
                                     <p
                                         onClick={() => setSelectedInitial(num)}
                                         className={cn(
