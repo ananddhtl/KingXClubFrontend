@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
 import Countdown from "react-countdown";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
-import SlotVideo from "@/assets/slot-machine.mp4";
+import CoinGif from "@/assets/coins-flow-transparent.gif";
 
 export const Result = () => {
     const time = CLUBS.map(({ time }) =>
@@ -98,7 +98,7 @@ export const Result = () => {
                 </div>
             </div>
 
-            <video src={SlotVideo} autoPlay loop className="w-full h-full rounded-3xl p-4" />
+            <img src={CoinGif} className="w-full h-full rounded-3xl p-4" />
 
             <div className="p-3 mb-[5rem] w-full">
                 <div className="custom-border-image flex flex-col justify-center items-center max-w-full">

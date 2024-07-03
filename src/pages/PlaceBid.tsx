@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import BidModal from "./BidModal";
 import { cn } from "@/utils/cn";
 import { useProfileContext } from "@/App";
-import { DoubleBet, FullKing, HalfKing, SingleBet, TripleBet } from "@/constants/assets/Icons";
+import {
+    DoubleBet,
+    FullKing,
+    HalfKing,
+    JackpotPlay,
+    SingleBet,
+    TripleBet,
+} from "@/constants/assets/Icons";
 
 export const PlaceBid = () => {
     const navigate = useNavigate();
@@ -210,6 +217,13 @@ export const PlaceBid = () => {
                     <div className="flex flex-wrap justify-center items-center w-full gap-5 my-5 p-5">
                         <button
                             disabled={!selectedTime || !position}
+                            onClick={() => setIsModalOpen("jackpot")}
+                            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
+                            <JackpotPlay />
+                        </button>
+                        <button
+                            disabled={!selectedTime || !position}
                             onClick={() => setIsModalOpen("single")}
                             className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
@@ -229,6 +243,7 @@ export const PlaceBid = () => {
                         >
                             <TripleBet />
                         </button>
+
                         <button
                             disabled={true}
                             onClick={() => setIsModalOpen(null)}

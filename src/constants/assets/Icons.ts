@@ -9,5 +9,6 @@ import DoubleBet from "@/assets/svg/double-bet.svg?react";
 import TripleBet from "@/assets/svg/triple-bet.svg?react";
 import HalfKing from "@/assets/svg/half-king.svg?react";
 import FullKing from "@/assets/svg/full-king.svg?react";
+import JackpotPlay from "@/assets/svg/jackpot-play.svg?react";
 
-export { ClubPanther, ClubTiger, ClubLion, ClubPuma, ClubCobra, SingleBet, Jackpot, DoubleBet, TripleBet, HalfKing, FullKing };
+export { JackpotPlay, ClubPanther, ClubTiger, ClubLion, ClubPuma, ClubCobra, SingleBet, Jackpot, DoubleBet, TripleBet, HalfKing, FullKing };

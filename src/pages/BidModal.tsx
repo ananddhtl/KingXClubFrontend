@@ -11,7 +11,14 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
     const [selectedInitial, setSelectedInitial] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const { user, setUser } = useProfileContext();
-    const [tickets, setTickets] = useState({});
+    const [tickets, setTickets] = useState(isOpen === "jackpot" ? {
+        [777]: {
+            amount: 500,
+            ticket: 777,
+            time,
+            position,
+        },
+    } : {});
     const navigate = useNavigate();
 
     const handleDelete = (ticketToDelete) => {
@@ -285,7 +292,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         <div />
                     </div>
                     <div className="flex flex-col items-center justify-between pb-20 w-full h-full">
-                        {isOpen !== "single" && (
+                        {!(isOpen === "single" || isOpen === "jackpot") && (
                             <div className="flex gap-2 border-1 border-red-800 p-2 rounded-2xl">
                                 {Array.from({ length: 9 }, (_, i) => i).map((num) => (
                                     <p
@@ -302,29 +309,10 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         )}
                         <div className="text-center flex items-center flex-col gap-5 pt-5">
                             <span className="text-xl">Try Your Luck</span>
-                            <Button
-                                isLoading={false}
-                                text="Jackpot"
-                                className="w-fit"
-                                onAction={() => {
-                                    setTickets((prev) => ({
-                                        ...prev,
-                                        [777]: {
-                                            amount: 500,
-                                            ticket: 777,
-                                            time,
-                                            position,
-                                        },
-                                    }));
-                                    setTimeout(
-                                        () => document.getElementById(`input-${777}`).focus(),
-                                        1000
-                                    );
-                                }}
-                            />
+                            {isOpen !== "jackpot" &&
                             <div className="p-5 flex justify-around items-center flex-wrap gap-5 w-full">
                                 {renderNumbers()}
-                            </div>
+                            </div>}
                         </div>
                         <div className="p-3 w-full">
                             <div className="custom-border-image flex flex-col justify-center items-center max-w-full">

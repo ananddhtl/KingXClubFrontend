@@ -61,7 +61,7 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (user) navigate(routes.PROFILE);
+        if (user) navigate(routes.INDEX);
     }, [navigate, user]);
 
     return (
