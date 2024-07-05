@@ -1,5 +1,4 @@
 import { CLUBS, routes } from "@/constants";
-import { Jackpot } from "@/constants/assets/Icons";
 import { NavLink } from "react-router-dom";
 
 const City = () => {
@@ -14,7 +13,6 @@ const City = () => {
                     {event.icon}
                 </NavLink>
             ))}
-            <NavLink className="w-full p-4" to="place-bid/Club%20Panther"><Jackpot className="w-full" /></NavLink>
         </div>
     );
 };

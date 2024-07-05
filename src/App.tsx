@@ -31,9 +31,9 @@ function App() {
     const [user, setUser] = useState<null | IUser>(null);
     const [isLoading, setIsLoading] = useState(true);
     //for Production
-    console.log = () => {};
-    console.error = () => {};
-    console.debug = () => {};
+    // console.log = () => {};
+    // console.error = () => {};
+    // console.debug = () => {};
 
     useEffect(() => {
         (async () => {
@@ -56,8 +56,7 @@ function App() {
     }, []);
     return (
         <div className="relative flex bg-[#000101] justify-center items-center">
-            <div className="min-h-screen w-full max-w-md bg-gradient-to-br from-[#0D0101] to-[#240700] oleo-script">
-                {/* <img className="fixed top-0 pointer-events-none w-screen object-cover" src={BG} /> */}
+            <div className="min-h-screen w-full bg-gradient-to-br from-[#0D0101] to-[#240700] oleo-script">
                 {isLoading ? (
                     <Loader />
                 ) : (

@@ -33,14 +33,14 @@ export const Profile = () => {
                 <img className="w-28" src={Logo} alt="logo" />
             </NavLink>
 
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col max-w-full items-center gap-4">
                 <span className="text-xl text-orange-500 font-semibold">
                     Wallat Balance: Rs{" "}
                     {user?.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </span>
                 <NavLink
                     to={routes.INDEX}
-                    className="bg-orange-600  relative flex items-center  justify-end w-[75dvw] lg:w-[20dvw] xl::w-[20dvw] h-[52px] px-4 rounded-3xl"
+                    className="bg-orange-600  relative flex items-center  justify-end w-96 h-[52px] px-4 rounded-3xl"
                 >
                     <button className="absolute flex items-center justify-start h-full w-[85%]  top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                         <svg
@@ -89,7 +89,7 @@ export const Profile = () => {
                 </NavLink>
                 <NavLink
                     to={routes.BID_HISTORY}
-                    className=" bg-orange-600 relative flex items-center justify-end w-[75dvw] lg:w-[20dvw] xl::w-[20dvw] h-[52px] px-4 rounded-3xl"
+                    className=" bg-orange-600 relative flex items-center justify-end w-96 h-[52px] px-4 rounded-3xl"
                 >
                     <button className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                         <svg
@@ -125,7 +125,7 @@ export const Profile = () => {
                     </svg>
                 </NavLink>
 
-                <div className="bg-orange-600 relative flex items-center justify-end w-[75dvw] lg:w-[20dvw] xl::w-[20dvw] h-[52px] px-4 rounded-3xl">
+                <div className="bg-orange-600 relative flex items-center justify-end w-96 h-[52px] px-4 rounded-3xl">
                     <NavLink to="/refer">
                         <button className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                             <svg
@@ -160,7 +160,7 @@ export const Profile = () => {
                     </svg>
                 </div>
                 {user?.role === "user" && (
-                    <div className="bg-orange-600 relative flex items-center justify-end w-[75dvw] lg:w-[20dvw] xl::w-[20dvw] h-[52px] px-4 rounded-3xl">
+                    <div className="bg-orange-600 relative flex items-center justify-end w-96 h-[52px] px-4 rounded-3xl">
                         <NavLink
                             to="/agent"
                             className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black"
@@ -207,7 +207,7 @@ export const Profile = () => {
                 {user?.role === "admin" && (
                     <NavLink
                         to="/admin"
-                        className="bg-orange-600 relative flex items-center justify-end w-[75dvw] lg:w-[20dvw] xl::w-[20dvw] h-[52px] px-4 rounded-3xl"
+                        className="bg-orange-600 relative flex items-center justify-end w-96 h-[52px] px-4 rounded-3xl"
                     >
                         <button className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                             <svg
@@ -253,7 +253,7 @@ export const Profile = () => {
                 <NavLink
                     to="https://t.me/rahulshah63"
                     target="_blank"
-                    className="bg-orange-600 relative flex items-center justify-end w-[75dvw] lg:w-[20dvw] xl::w-[20dvw] h-[52px] px-4 rounded-3xl"
+                    className="bg-orange-600 relative flex items-center justify-end w-96 h-[52px] px-4 rounded-3xl"
                 >
                     <button className="absolute flex items-center justify-start h-full w-[85%] top-0 left-0 rounded-3xl bg-white px-8 py-3 text-black">
                         <svg

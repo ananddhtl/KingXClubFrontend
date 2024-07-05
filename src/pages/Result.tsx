@@ -5,23 +5,22 @@ import { useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
 import Countdown from "react-countdown";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
-import CoinGif from "@/assets/coins-flow-transparent.gif";
+import minuteCountdown from "@/assets/minute-countdown.mp4";
 
 export const Result = () => {
-    const time = CLUBS.map(({ time }) =>
-        time.map((timestamp) =>
-            new Date().setHours(
+    const next = CLUBS.map(({ time, place }) =>
+        time.map((timestamp) => {
+            return{place, time: new Date().setHours(
                 Number(timestamp.split(":")[0]),
                 Number(timestamp.split(":")[1]),
                 0,
                 0
-            )
+            )}}
         )
     )
         .flat()
-        .sort()
-        .find((time) => time > Date.now());
-    console.log({ time });
+        .sort((a, b) => a.time - b.time)
+        .find(({time}) => time > Date.now());
 
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
@@ -73,8 +72,8 @@ export const Result = () => {
                 </span>
                 <div />
             </div>
-
-            <div className=" border-2 w-[90dvw] border-yellow-500 p-3 rounded-lg text-center text-white max-w-lg mx-auto">
+            <div className="px-4  max-w-full w-[90dvw]">
+            <div className="border-2  border-yellow-500 rounded-lg text-center text-white">
                 <div className="flex items-center justify-around mb-4">
                     <img src="assets/img/logo.png" alt="crown icon" className="rounded-ful w-16" />
                     <span className="ml-2 text-xl mx-2 font-bold h-12 w-1 bg-gradient-to-b rounded-lg from-yellow-500 to-red-500"></span>
@@ -82,7 +81,7 @@ export const Result = () => {
                     <div className="flex flex-col items-center space-y-4 text-center">
                         <span className="text-xl">Next result in : </span>
                         <Countdown
-                            date={time}
+                            date={next.time}
                             renderer={({ days, hours, minutes, seconds }) => (
                                 <span>
                                     {days > 0 && `${days} d `}
@@ -94,15 +93,18 @@ export const Result = () => {
                             autoStart
                             className="text-xl styled-text"
                         />
+                        <span className="text-xl styled-text">{next.place} </span>
+
                     </div>
                 </div>
             </div>
+            </div>
 
-            <img src={CoinGif} className="w-full h-full rounded-3xl p-4" />
+            <video src={minuteCountdown} loop autoPlay className="w-full max-w-[40rem] h-full rounded-3xl p-4" />
 
             <div className="p-3 mb-[5rem] w-full">
                 <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
-                    <div className="bg-[#240601] w-[85dvw]">
+                    <div className="bg-[#240601] w-full">
                         <p className="styled-text mt-5">All Result</p>
                         <div className="w-full mt-5 border-1  rounded-xl border-red-800">
                             <table className="w-full table-sm">
@@ -174,8 +176,7 @@ export const Result = () => {
                                                                           sumOfDigits(
                                                                               result.leftTicketNumber
                                                                           )
-                                                                              .toString()
-                                                                              [
+                                                                              .toString()[
                                                                                   sumOfDigits(
                                                                                       result.leftTicketNumber
                                                                                   ).toString()
@@ -194,8 +195,7 @@ export const Result = () => {
                                                                           sumOfDigits(
                                                                               result.rightTicketNumber
                                                                           )
-                                                                              .toString()
-                                                                              [
+                                                                              .toString()[
                                                                                   sumOfDigits(
                                                                                       result.rightTicketNumber
                                                                                   ).toString()

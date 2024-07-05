@@ -294,7 +294,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                     <div className="flex flex-col items-center justify-between pb-20 w-full h-full">
                         {!(isOpen === "single" || isOpen === "jackpot") && (
                             <div className="flex gap-2 border-1 border-red-800 p-2 rounded-2xl">
-                                {Array.from({ length: 9 }, (_, i) => i).map((num) => (
+                                {Array.from({ length: 10 }, (_, i) => i).map((num) => (
                                     <p
                                         onClick={() => setSelectedInitial(num)}
                                         className={cn(
@@ -316,7 +316,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         </div>
                         <div className="p-3 w-full">
                             <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
-                                <div className="bg-[#240601] w-[85dvw]">
+                                <div className="bg-[#240601] w-[85dvw] max-w-full">
                                     <p className="styled-text pt-5 ">Your Bidding Summary</p>
 
                                     <div className="w-full mt-5 border-1 rounded-xl border-red-800">

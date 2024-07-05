@@ -4,13 +4,13 @@ import "react-multi-carousel/lib/styles.css";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
-import Jackpot2 from "@/assets/image/jackpot.jpeg";
-import DepoBonus from "@/assets/image/depo-bonus.jpeg";
+// import Jackpot2 from "@/assets/image/jackpot.jpeg";
+// import DepoBonus from "@/assets/image/depo-bonus.jpeg";
 import SlotGif from "@/assets/slot-machine-transparent.gif";
 import { NavLink } from "react-router-dom";
 import SlotVideo from "@/assets/slot-machine.mp4";
 import CoinFlow from "@/assets/coins-flow.mp4";
-import Countdown from "@/assets/countdown.mp4";
+// import Countdown from "@/assets/countdown.mp4";
 import MinuteCountdown from "@/assets/minute-countdown.mp4";
 
 // import AllGame from "@/assets/image/all-games.png";
@@ -20,24 +20,24 @@ import MinuteCountdown from "@/assets/minute-countdown.mp4";
 // import Cards from "@/assets/image/cards.png";
 
 export const Home = () => {
-    const images = [Jackpot2, DepoBonus];
-    const videos = [SlotVideo, CoinFlow, Countdown, MinuteCountdown];
+    // const images = [Jackpot2, DepoBonus];
+    const videos = [SlotVideo, CoinFlow, MinuteCountdown];
 
     const responsive = {
-        // superLargeDesktop: {
-        //     breakpoint: { max: 4000, min: 3000 },
-        //     items: 5,
-        // },
-        // desktop: {
-        //     breakpoint: { max: 3000, min: 1024 },
-        //     items: 4,
-        // },
-        // tablet: {
-        //     breakpoint: { max: 1024, min: 464 },
-        //     items: 2,
-        // },
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 3,
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 2,
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 1,
+        },
         mobile: {
-            breakpoint: { max: 4000, min: 0 },
+            breakpoint: { max: 464, min: 0 },
             items: 1,
         },
     };
@@ -45,12 +45,12 @@ export const Home = () => {
     return (
         <HelmetProvider>
             <Navbar />
-            <div className="w-full p-2 my-4">
+            <div className="w-full  p-2 my-4">
                 <Carousel
                     responsive={responsive}
                     autoPlay={true}
                     infinite={true}
-                    autoPlaySpeed={5000} // Adjust the speed as needed
+                    autoPlaySpeed={3000} // Adjust the speed as needed
                     arrows={false}
                     // showDots={true}
                 >
@@ -63,7 +63,7 @@ export const Home = () => {
                         />
                     ))} */}
                     {videos.map((video, index) => (
-                        <video src={video} autoPlay loop key={index} className="rounded-xl w-full h-auto" />
+                        <video src={video} autoPlay loop key={index} className="rounded-xl max-w-[40rem] w-full h-auto" />
                     ))}
                 </Carousel>
             </div>
@@ -207,7 +207,7 @@ export const Home = () => {
                 <span className="text-center text-2xl styled-text">
                     Win Jackpot !!! Buy ticket worth Rs 500 and won upto 10 Lakh.
                 </span>
-                <img src={SlotGif} className="w-full h-full rounded-3xl" />
+                {/* <img src={SlotGif} className="w-full h-full rounded-3xl" /> */}
             </div>
 
             <City />
