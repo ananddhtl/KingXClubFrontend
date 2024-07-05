@@ -50,18 +50,18 @@ export const Home = () => {
                     responsive={responsive}
                     autoPlay={true}
                     infinite={true}
-                    autoPlaySpeed={2000} // Adjust the speed as needed
+                    autoPlaySpeed={5000} // Adjust the speed as needed
                     arrows={false}
                     // showDots={true}
                 >
-                    {images.map((image, index) => (
+                    {/* {images.map((image, index) => (
                         <img
                             className="rounded-xl w-full h-auto"
                             key={index}
                             src={image}
                             alt={`image-${index}`}
                         />
-                    ))}
+                    ))} */}
                     {videos.map((video, index) => (
                         <video src={video} autoPlay loop key={index} className="rounded-xl w-full h-auto" />
                     ))}
