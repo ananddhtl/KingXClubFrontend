@@ -385,7 +385,7 @@ const DepositAmount: FC = () => {
     };
 
     const filteredUsers = users.filter(({ phone }) => phone.toString().includes(search));
-    function handleChange(value: number, dataFor: string) {
+    function handleChange(value: number | string, dataFor: string) {
         setData({
             ...data,
             [dataFor]: value,
@@ -443,7 +443,7 @@ const DepositAmount: FC = () => {
                             />
                             <select
                                 id="phone"
-                                onChange={(e) => handleChange(Number(e.target.value), "phone")}
+                                onChange={(e) => handleChange(String(e.target.value), "phone")}
                                 className="ticket-dropdown px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
                             >
                                 <option value={null} hidden className="text-black/50">
