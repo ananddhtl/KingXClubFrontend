@@ -133,7 +133,7 @@ export const PlaceBid = () => {
                                                     disabled={
                                                         new Date(time).setMinutes(
                                                             new Date(time).getMinutes() +
-                                                                (2 * 60 - 15)
+                                                                (1 * 60 - 15)
                                                         ) < Date.now()
                                                     }
                                                 />
@@ -148,7 +148,7 @@ export const PlaceBid = () => {
                                                         ) < Date.now() &&
                                                             new Date(time).setMinutes(
                                                                 new Date(time).getMinutes() +
-                                                                    (2 * 60 - 15)
+                                                                    (1 * 60 - 15)
                                                             ) > Date.now() &&
                                                             "text-yellow-400"
                                                     )}

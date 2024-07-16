@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const City = () => {
     return (
-        <div className="flex flex-wrap justify-center items-center w-full gap-5 pb-[8rem]">
+        <div className="flex flex-wrap justify-center items-center w-full gap-5 py-5">
             {CLUBS.map((event) => (
                 <NavLink
                     to={`${routes.PLACE_BID}/${event.place}`}

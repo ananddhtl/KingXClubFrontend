@@ -6,7 +6,7 @@ import City from "../components/city/City";
 import Navbar from "@/components/navbar/Navbar";
 // import Jackpot2 from "@/assets/image/jackpot.jpeg";
 // import DepoBonus from "@/assets/image/depo-bonus.jpeg";
-import SlotGif from "@/assets/slot-machine-transparent.gif";
+// import SlotGif from "@/assets/slot-machine-transparent.gif";
 import { NavLink } from "react-router-dom";
 import SlotVideo from "@/assets/slot-machine.mp4";
 import CoinFlow from "@/assets/coins-flow.mp4";
@@ -54,14 +54,6 @@ export const Home = () => {
                     arrows={false}
                     // showDots={true}
                 >
-                    {/* {images.map((image, index) => (
-                        <img
-                            className="rounded-xl w-full h-auto"
-                            key={index}
-                            src={image}
-                            alt={`image-${index}`}
-                        />
-                    ))} */}
                     {videos.map((video, index) => (
                         <video
                             src={video}
@@ -200,132 +192,173 @@ export const Home = () => {
                     </NavLink>
                 </div>
             </div>
-            <div className="flex justify-center gap-10 my-20  items-center flex-col ">
+            <div className="flex justify-center gap-10 my-10  items-center flex-col ">
                 <iframe
-                src="https://www.youtube.com/embed/mQs9_xZPLW4?si=CDuSv73r9hIVVa-g"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className=" rounded-2xl"
-                
-            ></iframe>
-                <span className="text-center text-2xl styled-text">
+                    src="https://www.youtube.com/embed/mQs9_xZPLW4?si=CDuSv73r9hIVVa-g"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="h-[50dvw] w-[90dvw] rounded-2xl"
+                ></iframe>
+                <span className="text-center text-2xl styled-text px-2">
                     Win Jackpot !!! Buy ticket worth Rs 500 and won upto 10 Lakh.
                 </span>
                 {/* <img src={SlotGif} className="w-full h-full rounded-3xl" /> */}
             </div>
 
+            <div className="my-5 text-2xl text-center px-5 italic">
+                तपाईंले सपनामा सेतो सर्प देख्नु भएको छ भने, र त्यसमा सेतो रंग लै नी हामि ले ७ नम्बर
+                बुझछुम, त्यसको आधारमा तपाईले ७ नम्बरमा पैसा लगाउनु हुन्छ। ७ नम्बरबाट आउने सबै डबल,
+                ट्रिपल नम्बरमा पनि पैसा लगाउनु हुन्छ जस्तै: ७०, ७१, ७२, ७३, १२४, ११५, ०१६, ०२५, ४५८,
+                ७७० आदि.... यसरी अन्य डेटा हेरेर पनि लगानी गर्न सकिन्छ।
+                <br /> थोरै जोखिम त हुन्छ नै, तर तपाईको भाग्यले साथ दिए पछि तपाई राजा बन्न सक्नु
+                हुन्छ। सपना र भाग्यको खेलमा सफलता प्राप्त गर्न शुभकामना।
+            </div>
+
             <City />
-            <div className="text-center w-full py-8">
-                <h3 className="my-5 text-lg styled-text">21 औं शताब्दीको सट्टा मटका खेल</h3>
+            <div className="text-center w-full p-8">
+                <h3 className="my-5 text-lg styled-text"> Kingxclub के हो?</h3>
                 <p>
-                    यो 21 औं शताब्दीको सट्टा मटका खेल विश्वभरका सबैभन्दा लोकप्रिय जुवाहरू मध्ये एक
-                    हो। हाम्रो विश्वासयोग्य सट्टा मटका वेबसाइटले तपाईलाई थप पैसा जित्न मद्दत
-                    पुर्याउने सुझावहरू, चालहरू र रणनीतिहरू प्रदान गर्दछ। सफल खेलाडी बन्ने सबै भन्दा
-                    राम्रो सल्लाह र जानकारीको लागि हाम्रो वेबसाइटमा जानुहोस्।
+                    <b className="styled-text">Kingxclub.com</b> एउटा अनलाइन प्लेटफर्म हो जहाँ थोरै
+                    लगानी गरेर धेरै पैसा कमाउन सकिन्छ भनिएको छ। यसमा विभिन्न प्रकारका खेलहरू हुन्छन्
+                    जसमा लगानी गरेर ठुलो नाफा कमाउन सकिन्छ। यसमा तपाईले १० रुपैयाँको लगानी गरेर
+                    १,००,००० रुपैयाँसम्म सजिलै कमाउन सक्नुहुन्छ, त्यो पनि २-३ घण्टामा।
                 </p>
-                <h3 className="mt-5 text-lg styled-text">सट्टा मटका</h3>
+
+                <h3 className="my-5 text-lg styled-text">Kingxclub मा कसरी जोडिने?</h3>
                 <p>
-                    मटका एक साधारण खेल हो जहाँ तपाईंलाई 0 देखि 9 सम्मका संख्याहरू अनुमान गर्न आवश्यक
-                    छ। थोरै अभ्यासले, जोकोही पनि सट्टा मटका मास्टर हुन सक्छ। भारतमा मटका लटरी खेलको
-                    नाम हो। मटका एउटा अड्कल खेल हो जसमा अंकहरू अड्कलको रेकर्डबाट निकालिन्छ र
-                    सट्टामटका मा उपलब्ध अन्य सबै जानकारी पनि।
+                    Google मा गएर kingxclub.com खोज्नुपर्छ। या त हामीले पठाएको लिङ्क खोल्नुपर्छ र
+                    दर्ता गर्नुपर्छ।
                 </p>
-                <h3 className="mt-5 text-lg styled-text">सट्टा मटका - छिटो कल्याण मटका नतिजाहरू जाँच गर्नुहोस्</h3>
+                <h3 className="my-5 text-lg styled-text">Kingxclub मा लगानी कसरी गर्ने?</h3>
                 <p>
-                    सट्टा मटका नतिजा, मटका टिप्स, मटका अनुमान, मटका चार्टहरू, मटका सट्टा, कल्याण
-                    मटका सट्टा, कल्याण चार्ट, कल्याण प्यानल चार्ट, मुम्बई चार्ट, कल्याण सट्टा, सट्टा
-                    बट्टा, सट्टा मट्टा मटका, कल्याण नतिजा, कल्याण सट्टा मटका, सट्टा बजार, डिपबोस
-                    मटका कल्याण सट्टा नम्बर SattaMatka777.IN मा पाउनुहोस्।
+                    Kingxclub मा ६ वटा प्लेटफर्महरू छन्:
+                    <ul>
+                        <li>
+                            <b className="styled-text">Single Digit:</b> 0-9 को बीचमा नम्बर छनोट
+                            गर्न सकिन्छ। नम्बर परेमा लगानीको 9x नाफा पाइन्छ।
+                        </li>
+                        <li>
+                            <b className="styled-text"> Double Digit:</b> 00-99 को बीचमा नम्बर छनोट
+                            गर्न सकिन्छ। नम्बर परेमा लगानीको 90x नाफा पाइन्छ।
+                        </li>
+                        <li>
+                            <b className="styled-text"> Triple Digit:</b> 000-999 को बीचमा नम्बर
+                            छनोट गर्न सकिन्छ। Single, Double, र Triple तीन प्रकारका खेलहरू हुन्छन्।
+                            नाफा क्रमशः 150x, 250x, र 490x हुन्छ।
+                        </li>
+                        <li>
+                            <b className="styled-text"> Jackpot:</b> टिकटको मूल्य 500 रुपैयाँ हो र
+                            जितको राशि 10,00,000 रुपैयाँ हुन्छ।
+                        </li>
+                    </ul>
                 </p>
+                <h3 className="my-5 text-lg styled-text">Kingxclub को नियमहरू:</h3>
                 <p>
-                    खेलाडीहरूले सट्टामटका खेल्न सुरु गर्न पहिलो तीन अंक 0 देखि 9 बीच चयन गर्न
-                    सक्छन्। उदाहरणका लागि, 1, 5 र 7 लाई जोड्दा 13 हुन्छ। पहिलो अंकलाई हटाएर '3'
-                    मात्र रहन्छ। यो अंक चयन गरिएका अंकहरूसँग 1, 5 र 7*3 रूपमा जोडिन्छ। यही प्रक्रिया
-                    दोस्रो सेटका अंकहरूको लागि पनि लागू हुन्छ। कल्याण मटका, सट्टा बट्टा, राजधानी
-                    मटका र मिलान मटका जस्ता धेरै बजारहरू उपलब्ध छन्। पहिलो खेलाडीले कुन खेल खेल्ने
-                    निर्णय गर्नुपर्छ त्यसपछि बाजीको विकल्पहरू अन्वेषण गर्नुपर्छ। त्यसपछि उनीहरूले
-                    आफ्नो भाग्यशाली अंक(हरू) चयन गरेर यसमा बाजी लगाउनुपर्छ र अन्तिम नतिजा
-                    जाँच्नुपर्छ।
+                    <ul>
+                        <li>सब क्लबमा निश्चित समय हुन्छ।</li>
+                        <li>Club Panther मा 7am, 11am, 3pm, र 7pm मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>रिजल्ट समयभन्दा १५ मिनेट अघि तपाईले शर्त लगाइसक्नुपर्छ</li>
+                    </ul>
                 </p>
-                <h3 className="mt-5 text-lg styled-text">सट्टा मटका बजार अनलाइन खेल्नु अघि के जान्नुपर्छ</h3>
+
+                <h3 className="my-5 text-lg styled-text">Kingxclub मा खेल कसरी खेल्ने?</h3>
                 <p>
-                    सट्टा मटका बजार अनलाइन खेल्नु अघि, कल्याणमटका, सट्टा बट्टा, र कल्याण सट्टा जस्ता
-                    विभिन्न प्रकारका खेलहरू बुझ्नु महत्त्वपूर्ण छ। हाम्रा अनुभवी विशेषज्ञहरूले छिटो
-                    सट्टा समाचार, कल्याण मटका खेल, कल्याण मटका बजार, मटका सट्टा कल्याण, मटका सट्टा
-                    चार्ट, मिलान मटका चार्ट, राजधानी मटका चार्ट र धेरै अरूको बारेमा भरपर्दो जानकारी
-                    प्रदान गर्न सक्छन्। हाम्रो वेबसाइटले भारतीय सट्टा मटका खेल्नको लागि सुरक्षित
-                    प्लेटफर्म प्रदान गर्दछ। साथै, हामी सट्टामट्टा, साप्ताहिक जोडी र सट्टा किङ नतिजा
-                    सहित नि:शुल्क सुझावहरू र सल्लाहहरू प्रदान गर्दछौं।
+                    <ul>
+                        <li>क्लबमा गएर समय चयन गर्ने।</li>
+                        <li>Position चयन गर्ने।</li>
+                        <li>नम्बर मिलाएमा तपाईँले जित्न सक्नुहुन्छ।</li>
+                        <li>पोजिसन ओपन र क्लोज हुन्छ। उदाहरणका लागि, (234 - 90 - 550):</li>
+                        <li className="text-left pl-16">
+                            <br /> ओपन अंक: 234 - 9
+                            <br /> क्लोज अंक: 0 - 550
+                            <br /> आधा किंग जित्नको लागि ओपनको ट्रिपल अंक र क्लोजको सिंगल अंक
+                            मिल्नुपर्छ। (जस्तै, 234 - 90 - 550)
+                            <br /> फुल किंग जित्नको लागि ओपन र क्लोज दुबैको ट्रिपल अंक मिल्नुपर्छ।
+                            (जस्तै, 234 - 550)
+                        </li>
+                    </ul>
                 </p>
-                <h3 className="mt-5 text-lg styled-text">खेल कसरी खेल्ने</h3>
+                <h3 className="my-5 text-lg styled-text">
+                    Kingxclub मा रिजल्ट कसरी प्रकाशित हुन्छ?
+                </h3>
+
                 <p>
-                    सट्टा मटका खेलमा, मानिसहरूले अंकहरू भएका चिठ्ठा देख्छन्। चिठ्ठामा मात्र एउटा
-                    विशिष्ट अंकले लटरी जित्ने सुनिश्चित हुन्छ। कागजी चिठ्ठामा 00 देखि 99 सम्मका
-                    अंकहरू हुन्छन्। खेलाडीहरूले 00 देखि 99 सम्मको अंकमा बाजी लगाउँछन्। यदि कुनै
-                    व्यक्तिको भाग्य राम्रो छ भने, अंकले लटरी जित्छ। लटरीका विजेताहरूलाई यस खेलको
-                    रानी वा राजा मानिन्छ। उनीहरूलाई बाजीको रकमको आधारमा पुरस्कृत गरिन्छ।
+                    क्लबमा प्रत्यक्ष रूपमा कार्डहरू निकालेका आधारमा नम्बरहरू तय हुन्छन्।
+                    <br /> Kingxclub ले दुबईको क्लबमा आफ्ना ग्राहकहरूको अगाडि लाइभ 1-10 कार्ड (10
+                    लाई 0 मानिन्छ) बाट नतिजा निकाल्छ। प्रत्येक कार्डको २२-२२ ओटा कार्ड हुन्छ, जम्मा
+                    220 कार्ड हुन्छ। तीमध्ये ३ ओटा कार्ड रिलिज गरेर नतिजा निकालिन्छ।
+                    <br />
+                    जस्तै, 469=4+6+9=19 (अन्तिम अंक 9) र 677=6+7+7=21 (अन्तिम अंक 1) मिलाएर नतिजा
+                    निकालिन्छ। यसरी सबै क्लबको नतिजा समयमा प्रकाशित हुन्छ।
+                    <br />
+                    Kingxclub खेलाडीहरूको खेल्ने आधार खेलाडीहरूले आफ्नो भाग्य, विश्लेषण, र सपनामा
+                    देखिएका चित्रहरूको आधारमा खेल्ने गर्छन्।
                 </p>
-                <h3 className="mt-5 text-lg styled-text">हाम्रा सट्टामटका विशेषज्ञले तपाईंलाई कसरी मद्दत गर्न सक्छन्</h3>
+            </div>
+
+            <div className="text-center w-full pt-5 pb-40 px-8">
+                <h3 className="my-5 text-lg styled-text">Kingxclub Overview:</h3>
+
                 <p>
-                    हाम्रा विशेषज्ञहरूले तपाईंलाई सबैभन्दा राम्रो अनुमान सुझावहरू र प्रभावकारी मटका
-                    नतिजा दिन्छन्। हाम्रो शुभकामना र तपाईंको भाग्यको साथ, तपाईं सट्टा मटका विजेता
-                    बन्न सक्नुहुन्छ! SattaMatka777.IN भारतको प्रमुख वेबसाइट हो; यसले आफ्नो
-                    आगन्तुकहरूलाई छिटो नतिजाहरू प्रदान गर्दछ। हाम्रा नवीन सुझावहरू र चालहरूले
-                    तपाईंलाई यी खेलहरू सही रूपमा खेल्न मद्दत गर्दछ। हाम्रा अनुभवी अनुमानकर्ताहरूले
-                    दिएको अनौठो सल्लाहले तपाईंलाई ठूलो रकम जित्न र कमाउन मद्दत गर्दछ। उन्नत
-                    प्रविधिहरूसँग मेल राख्दै, हाम्रो सुरक्षित वेबसाइटले कल्याण सट्टा मट्टा
-                    चार्टहरूको पहुँच प्रदान गर्दछ जसले सुपर छिटो मटका कल्याण चार्टहरू प्रदान गर्दछ।
-                    अपडेट गरिएको जानकारीको लागि हामीलाई दैनिक रूपमा भ्रमण गर्ने सुझाव दिन्छौं।
+                    <b className="styled-text">Kingxclub.com</b> is an online platform where you can
+                    potentially earn a lot of money with a small investment. The platform offers
+                    various games in which you can bet and win significant returns.
                 </p>
-                <h3 className="mt-5 text-lg styled-text">नि:शुल्क कल्याण मटका सुझावहरूको खोजीमा</h3>
+
+                <h3 className="my-5 text-lg styled-text">How to Join Kingxclub?</h3>
                 <p>
-                    हाम्रो विशेषज्ञहरूबाट नि:शुल्क कल्याण मटका र राजधानी मटका सुझावहरू, सट्टा बट्टा
-                    र मटका सट्टा सुझावहरू पहुँच गर्नुहोस्। छिटो कमाईसँग सम्बन्धित कुनै पनि प्रश्न
-                    सोध्न हामी तपाईंलाई आमन्त्रित गर्छौं। हाम्रो वेबसाइटले सट्टा मटका बजारमा भाग
-                    लिने आदर्श वातावरण प्रदान गर्दछ। यो सुनौलो अवसरको अधिकतम लाभ उठाउन सुरु
-                    गर्नुहोस्! हाम्रो सबै भन्दा राम्रो सट्टा मटका सल्लाहसँग प्रभावशाली जीतको आनन्द
-                    लिनुहोस्। हामीले वाचा गरेको निश्चित मटका नम्बरको साथ तपाईंको गेमिङ अनुभव पूर्ण
-                    सुरक्षित छ। सबैभन्दा राम्रो सट्टा मटका वेबसाइटमा अनलाइन खेल्नुहोस् र ठूलो
-                    पुरस्कार जित्नुहोस्!
+                    Search for "kingxclub.com" on Google. Alternatively, open the link provided to
+                    you and register.
                 </p>
+                <h3 className="my-5 text-lg styled-text">How to Invest in Kingxclub?</h3>
                 <p>
-                    अनुभव र चालहरूको साथ, कसैको सट्टामटका खेलमा जित्ने ठूलो सम्भावना हुन्छ र ठूलो
-                    रकम जित्न सक्छ। सुरक्षित खेल्न, खेलाडीले प्रत्येक दिन 3 वा 4 अंकहरू चयन गर्न
-                    सक्छ र तिनीहरूलाई हाम्रो वेबसाइटबाट प्राप्त गर्न सक्छ। यद्यपि वास्तविकता बिर्सनु
-                    हुँदैन, किनभने भाग्यले यहाँ ठूलो भूमिका खेल्छ; हरेक दिन तपाईंको भाग्यशाली दिन
-                    हुँदैन! तपाईं आज जित्न सक्नुहुन्छ वा भोलि हार्न सक्नुहुन्छ, तर आशावादी रहनु
-                    महत्त्वपूर्ण छ र निराशाहरूले तपाईंलाई नियन्त्रणमा राख्न नदिनुहोस् किनभने यस
-                    खेलमा जित्न सँधै हराउनु भन्दा राम्रो हो!
+                    Kingxclub offers 6 different platforms for betting:
+                    <ul>
+                        <li>
+                            <b className="styled-text">Single Digit: </b> Choose a number between
+                            0-9. If your number is chosen, you win 9 times your bet.
+                        </li>
+                        <li>
+                            <b className="styled-text"> Double Digit:</b> Choose a number between
+                            00-99. If your number is chosen, you win 90 times your bet.
+                        </li>
+                        <li>
+                            <b className="styled-text"> Triple Digit:</b> Choose a number between
+                            000-999. There are three types of games: single, double, and triple. The
+                            winnings are 150x, 250x, and 490x your bet respectively.
+                        </li>
+                        <li>
+                            <b className="styled-text"> Jackpot:</b> The ticket costs 500 rupees and
+                            the winning amount is 1,000,000 rupees.
+                        </li>
+                    </ul>
                 </p>
-                <h3 className="mt-5 text-lg styled-text">भारतीयहरूको लागि सट्टामटका ठूलो हिट</h3>
+
+                <h3 className="my-5 text-lg styled-text">Kingxclub Rules:</h3>
                 <p>
-                    सट्टामटका बजार सट्टा मटका, सट्टा एम, मटका सट्का, सट्टा-मटका, सट्टा.मटका, सट्का,
-                    मटाका, का मटका, सट्टा मट्टा, सट्टा मटका 143 र मटका इन को शीर्ष गन्तव्य हो।
-                    हाम्रा विशेषज्ञ टोलीले तपाईंलाई सट्टामटका खेल प्रवृत्तिहरूको विश्लेषण र
-                    समाचारहरू चार्ट परिणामहरू र अन्य विवरणहरू जस्तै ओपन क्लोज सिंगल फिक्स जोडी
-                    प्यानल र खेलहरूको बारेमा जानकारी दिन्छ जसले तपाईंको जित्ने सम्भावना बढाउँछ। हामी
-                    एक मौलिक वेबसाइट हौं जसले तपाईंलाई भारतको लोकप्रिय बाजी खेल - सट्टामटका मा अपडेट
-                    राख्छ। साथै, हाम्रा जुवाडीहरूको समुदायले गेमिङ उद्योगको अनुभव र ज्ञानमा
-                    अन्तर्दृष्टि प्रदान गर्दछ। तपाईं पनि विशेषज्ञहरूलाई पछ्याउन सक्नुहुन्छ जब
-                    तिनीहरूले आफ्नो क्षेत्रको ताजा लेख, छविहरू वा भिडियोहरू पोस्ट गर्दा समयमा सूचना
-                    प्राप्त गर्न।
+                    <ul>
+                        <li>Each club has a fixed time for publishing results.</li>
+                        <li>
+                            For example, Club Panther publishes results at 7am, 11am, 3pm, and 7pm.
+                        </li>
+                        <li>Bets must be placed at least 15 minutes before the result time.</li>
+                    </ul>
                 </p>
-                <h3 className="mt-5 text-lg styled-text">सट्टा किङ खेल - लाभदायक जुवा खेल वा पैसा हराउने मात्र</h3>
+                <h3 className="my-5 text-lg styled-text">How Kingxclub Publishes Results:</h3>
                 <p>
-                    सट्टा सट्टा लोकप्रिय क्यासिनो खेलको अर्को शब्द हो। यो खेल पहिलो पटक नेपालमा
-                    परिचित भयो र पछि भारतमा फैलियो। यो भारतको उत्तरी क्षेत्रमा सबैभन्दा लोकप्रिय छ।
-                    इन्टरनेट र आधुनिक प्रविधिको आगमनसँगै यो खेल अब विश्वभर परिचित भएको छ। डिपबोस
-                    एउटा सट्टा मटका परिणाम साइट हो जसले तपाईंलाई मटका खेल जित्न मद्दत गर्न सुझावहरू
-                    र चालहरू प्रदान गर्दछ। हाम्रो विशेष डिपबोस मटका सुझावहरूको साथ, तपाईंले ठूलो
-                    मात्रामा ज्याकपट जित्ने सम्भावना बढाउन सक्नुहुन्छ।
+                    Results are determined by drawing cards live in front of customers. Each card
+                    set creates a number.
                 </p>
+
+                <h3 className="my-5 text-lg styled-text">How to Play on Kingxclub:</h3>
                 <p>
-                    धेरै मटका वेबसाइटहरू छन् जसमा खेलाडीहरूले सट्टा खेल्न सक्छन्, लटरी खेल। लटरीको
-                    नतिजा पत्ता लगाउनका लागि खेलाडीहरूले सट्टा मटका को आधिकारिक वेबसाइटमा जानु पर्छ।
-                    डिपबोस मटका वेबसाइटले उनीहरूले चयन गरेको सट्टा मटका खेलको बारेमा सबै जानकारी
-                    प्रदान गर्दछ।
+                    <ul>
+                        <li>Go to the club and select the time.</li>
+                        <li>Choose your position.</li>
+                        <li>If your numbers match, you win according to the game's rules.</li>
+                    </ul>
                 </p>
             </div>
             <BottomNavbar />
