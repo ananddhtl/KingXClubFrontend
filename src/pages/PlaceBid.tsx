@@ -12,6 +12,7 @@ import {
     SingleBet,
     TripleBet,
 } from "@/constants/assets/Icons";
+import { BiSolidLeftArrowAlt } from "react-icons/bi";
 
 export const PlaceBid = () => {
     const navigate = useNavigate();
@@ -40,65 +41,15 @@ export const PlaceBid = () => {
                     city={city}
                 />
             ) : (
-                <section className="text-white flex flex-col items-center py-8 min-h-screen ">
+                <section className=" flex flex-col items-center py-8 min-h-screen ">
                     <div className="sticky top-1 px-4 grid grid-cols-5 justify-center place-items-center w-full">
-                        <button onClick={() => navigate(routes.INDEX)}>
-                            <svg
-                                width="44"
-                                height="44"
-                                viewBox="0 0 44 44"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect
-                                    x="0.517039"
-                                    y="0.517039"
-                                    width="42.9659"
-                                    height="42.9659"
-                                    rx="21.483"
-                                    fill="url(#paint0_linear_831_6513)"
-                                />
-                                <rect
-                                    x="0.517039"
-                                    y="0.517039"
-                                    width="42.9659"
-                                    height="42.9659"
-                                    rx="21.483"
-                                    stroke="url(#paint1_linear_831_6513)"
-                                    stroke-width="1.03408"
-                                />
-                                <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M24.6379 15.0602C25.0225 15.3679 25.0849 15.9292 24.7772 16.3138L20.4662 21.7026L24.7772 27.0914C25.0849 27.476 25.0225 28.0373 24.6379 28.345C24.2533 28.6527 23.692 28.5904 23.3843 28.2057L18.6275 22.2598C18.3669 21.934 18.3669 21.4712 18.6275 21.1455L23.3843 15.1995C23.692 14.8149 24.2533 14.7525 24.6379 15.0602Z"
-                                    fill="white"
-                                />
-                                <defs>
-                                    <linearGradient
-                                        id="paint0_linear_831_6513"
-                                        x1="21.9999"
-                                        y1="0"
-                                        x2="21.9999"
-                                        y2="41.0667"
-                                        gradientUnits="userSpaceOnUse"
-                                    >
-                                        <stop stop-color="#FF5301" />
-                                        <stop offset="1" stop-color="#FFD901" />
-                                    </linearGradient>
-                                    <linearGradient
-                                        id="paint1_linear_831_6513"
-                                        x1="22"
-                                        y1="0"
-                                        x2="22"
-                                        y2="44"
-                                        gradientUnits="userSpaceOnUse"
-                                    >
-                                        <stop stop-color="#571100" />
-                                        <stop offset="1" stop-color="#CE2800" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </button>
+                        <button
+                        onClick={() => navigate(routes.INDEX)}
+                    className="p-3 bg-gray-100 rounded-full shadow-sm"
+                >
+                <BiSolidLeftArrowAlt className="w-full text-black"/>
+                    {/* <FontAwesomeIcon icon="fa-solid fa-arrow-left" /> */}
+                </button>
                         <span className="text-2xl font-sans font-semibold col-span-3 oleo-script">
                             {city}
                         </span>

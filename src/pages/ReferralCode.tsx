@@ -4,10 +4,13 @@ import { useProfileContext } from "@/App";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/constants";
 import { useEffect } from "react";
+import { MdContentCopy } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const ReferralCode = () => {
-  const {user} = useProfileContext()
-  const navigate = useNavigate()
+  const {user} = useProfileContext();
+  console.log("ok", user, parseInt(user?.phone || 0, 36));
+  const navigate = useNavigate();
     const handleFacebookShare = () => {
         const shareUrl =
             `https://www.facebook.com/sharer/sharer.php?u=https://www.kingxclub.com/#/signup/${parseInt(user?.phone || 0, 36)}`;
@@ -93,6 +96,16 @@ useEffect(() => {
             <h1 className="text-center my-5 text-white font-semibold font-mono text-lg">
                 Scan the QR to get Referral Code{" "}
             </h1>
+            <div
+                      onClick={() => {
+                        window.navigator.clipboard.writeText(parseInt(user?.phone || 0, 36).toString());
+                        toast.success("refer code coppied")
+                      }}
+                      className="flex m-2 gap-3 items-center "
+                    >
+                      <span className="styled-text !text-lg">{parseInt(user?.phone || 0, 36).toString()}</span>
+                      <MdContentCopy/>
+                    </div>
             <QRCode
                 value={`https://www.kingxclub.com/#/signup/${parseInt(user?.phone || 0, 36)}`}
                 bgColor="white"
@@ -105,6 +118,7 @@ useEffect(() => {
                 eyeColor={["orange", "orange", "orange"]}
                 qrStyle="dots"
             />
+
 
             <div className="w-full flex flex-col items-center justify-center my-3 ">
                 <div className="flex  w-72 justify-center text-center flex-col tracking-wider   my-5 text-white font-semibold font-mono text-sm ">

@@ -1,12 +1,12 @@
 import { CLUBS, routes } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { getAllResult } from "@/api/api";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/utils/cn";
 import Countdown from "react-countdown";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
-import minuteCountdown from "@/assets/minute-countdown.mp4";
-
+// import minuteCountdown from "@/assets/minute-countdown.mp4";
+import { BiSolidLeftArrowAlt } from "react-icons/bi";
 export const Result = () => {
     const next = CLUBS.map(({ time, place }) =>
         time.map((timestamp) => {
@@ -27,7 +27,12 @@ export const Result = () => {
 
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
+    const [selectedClub, setSelectedClub] = useState("Club Panther");
     console.log({ results });
+
+    const resultToShow = useMemo(() => {
+        return results.filter(({ place }) => place === selectedClub);
+    }, [results, selectedClub]);
 
     const sumOfDigits = (number) => {
         return String(number)
@@ -39,8 +44,8 @@ export const Result = () => {
         (async () => {
             try {
                 const results = await getAllResult();
-                console.log({ results });
-                setResults(results.data);
+                const sorted = results.data.sort((a, b) => a.time - b.time);
+                setResults(sorted);
             } catch (error) {
                 console.log(`Error fetching lucky winner: ${error}`);
                 // toast.error(error.response?.data?.message || "Unknown error", {id: 'unknown-error'});
@@ -52,77 +57,156 @@ export const Result = () => {
             <div className="sticky top-0 flex justify-between items-center w-full  p-4">
                 <button
                     onClick={() => navigate(routes.PROFILE)}
-                    className="p-4 bg-gradient-to-b from-[#FF5F01] to-[#FFD401] rounded-full shadow-sm"
+                    className="p-3 bg-gray-100 rounded-full shadow-sm"
                 >
-                    <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 9 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M8 1L1 8L8 15"
-                            stroke="white"
-                            stroke-width="2.3125"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
+                <BiSolidLeftArrowAlt className="w-full"/>
+                    {/* <FontAwesomeIcon icon="fa-solid fa-arrow-left" /> */}
                 </button>
                 <span className="text-2xl oleo-script font-semibold text-white italic tracking-wide">
                     Result
                 </span>
                 <div />
             </div>
-            <div className="px-4  max-w-full w-[90dvw]">
-                <div className="border-2  border-yellow-500 rounded-lg text-center text-white">
-                    <div className="flex items-center justify-around mb-4">
-                        <img
-                            src="assets/img/logo.png"
-                            alt="crown icon"
-                            className="rounded-ful w-16"
-                        />
-                        <span className="ml-2 text-xl mx-2 font-bold h-12 w-1 bg-gradient-to-b rounded-lg from-yellow-500 to-red-500"></span>
-
-                        <div className="flex flex-col items-center space-y-4 text-center">
-                            <span className="text-xl">Next result in : </span>
-                            {next ? (
-                                <>
-                                    <Countdown
-                                        date={next.time}
-                                        renderer={({ days, hours, minutes, seconds }) => (
-                                            <span>
-                                                {days > 0 && `${days} d `}
-                                                {hours < 10 ? "0" + hours : hours} hr{" "}
-                                                {minutes < 10 ? "0" + minutes : minutes} min{" "}
-                                                {seconds < 10 ? "0" + seconds : seconds} sec
-                                            </span>
-                                        )}
-                                        autoStart
-                                        className="text-xl styled-text"
-                                    />
-                                    <span className="text-xl styled-text">{next.place} </span>
-                                </>
-                            ):(
-                                <span className="text-xl styled-text">No Result to Publish</span>
-                            )}
-                        </div>
+            <div className="border-1 w-[80dvw] border-green-600 rounded-lg text-center text-white">
+                <div className="flex items-center justify-around">
+                    <div className="flex flex-col items-center my-2 space-y-2 text-center">
+                        {next ? (
+                            <>
+                                <span className="!text-2xl styled-text">{next.place} </span>
+                                <Countdown
+                                    date={next.time}
+                                    renderer={({ hours, minutes, seconds }) => (
+                                        <div className="flex justify-center gap-10 sm:gap-8 scale-75 md:scale-100">
+                                            <div className="flex flex-col gap-5 relative">
+                                                <div className="h-16 w-16 sm:w-32 sm:h-32 lg:w-40 lg:h-40 flex justify-between items-center bg-green-600 rounded-lg">
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 !-left-[6px] rounded-full bg-[#240700]"></div>
+                                                    <span className="lg:text-7xl sm:text-6xl text-2xl font-semibold text-white">
+                                                        {hours}
+                                                    </span>
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 -right-[6px] rounded-full bg-[#240700]"></div>
+                                                </div>
+                                                <span className="text-green-600 text-xl sm:text-2xl text-center font-medium">
+                                                    {hours == 1 ? "Hour" : "Hours"}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-col gap-5 relative">
+                                                <div className="h-16 w-16 sm:w-32 sm:h-32 lg:w-40 lg:h-40 flex justify-between items-center bg-green-600 rounded-lg">
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 !-left-[6px] rounded-full bg-[#240700]"></div>
+                                                    <span className="lg:text-7xl sm:text-6xl text-2xl font-semibold text-white">
+                                                        {minutes}
+                                                    </span>
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 -right-[6px] rounded-full bg-[#240700]"></div>
+                                                </div>
+                                                <span className="text-green-600 text-xl sm:text-2xl text-center capitalize">
+                                                    {minutes == 1 ? "Minute" : "Minutes"}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-col gap-5 relative">
+                                                <div className="h-16 w-16 sm:w-32 sm:h-32 lg:w-40 lg:h-40 flex justify-between items-center bg-green-600 rounded-lg">
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 !-left-[6px] rounded-full bg-[#240700]"></div>
+                                                    <span className="lg:text-7xl sm:text-6xl text-2xl font-semibold text-white">
+                                                        {seconds}
+                                                    </span>
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 -right-[6px] rounded-full bg-[#240700]"></div>
+                                                </div>
+                                                <span className="text-green-600 text-xl sm:text-2xl text-center capitalize">
+                                                    {seconds == 1 ? "Second" : "Seconds"}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    autoStart
+                                    className="text-xl styled-text"
+                                />
+                            </>
+                        ) : (
+                            <span className="text-xl styled-text">No Result to Publish</span>
+                        )}
                     </div>
                 </div>
             </div>
-
+            {results.length > 0 && (
+                <div className="border-1 p-3 w-[80dvw] border-orange-600 rounded-lg text-center text-white">
+                    <div className="flex items-center justify-around">
+                        <div className="space-y-2">
+                            <p>Last Result</p>
+                            <p className="styled-text">{results[0].place} </p>
+                            <p>
+                                {new Date(results[0].time).toLocaleString("default", {
+                                    // year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                })}{" "}
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center my-2 space-y-2 text-center">
+                            <div className="flex gap-4 items-center justify-center">
+                                {results[0]?.leftTicketNumber &&
+                                    showVerticleNumber(results[0].leftTicketNumber.toString())}
+                                <div className="flex">
+                                    {results[0]?.leftTicketNumber &&
+                                    new Date(results[0].time).setMinutes(
+                                        new Date(results[0].time).getMinutes() + 15
+                                    )
+                                        ? showVerticleNumber(
+                                              sumOfDigits(results[0].leftTicketNumber)
+                                                  .toString()
+                                                  [
+                                                      sumOfDigits(
+                                                          results[0].leftTicketNumber
+                                                      ).toString().length - 1
+                                                  ].toString()
+                                          )
+                                        : showVerticleNumber("*")}
+                                    {results[0]?.rightTicketNumber &&
+                                    new Date(results[0].time).setMinutes(
+                                        new Date(results[0].time).getMinutes() + (1 * 60 + 15)
+                                    )
+                                        ? showVerticleNumber(
+                                              sumOfDigits(results[0].rightTicketNumber)
+                                                  .toString()
+                                                  [
+                                                      sumOfDigits(
+                                                          results[0].rightTicketNumber
+                                                      ).toString().length - 1
+                                                  ].toString()
+                                          )
+                                        : showVerticleNumber("*")}
+                                </div>
+                                {results[0]?.rightTicketNumber
+                                    ? showVerticleNumber(results[0].rightTicketNumber.toString())
+                                    : showVerticleNumber("***")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* 
             <video
                 src={minuteCountdown}
                 loop
                 autoPlay
                 className="w-full max-w-[40rem] h-full rounded-3xl p-4"
-            />
+            /> */}
 
             <div className="p-3 mb-[5rem] w-full">
-                <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
-                    <div className="bg-[#240601] w-full">
-                        <p className="styled-text mt-5">All Result</p>
+                <div className=" flex flex-col justify-center items-center max-w-full">
+                    <div className=" w-full">
+                        {/* <p className="styled-text mt-5">All Result</p> */}
+                        <div className="flex justify-around">
+                            {CLUBS.map(({ place }) => (
+                                <button
+                                    className={`text-white outline-none mt-5 ${
+                                        selectedClub === place && "styled-text"
+                                    }`}
+                                    onClick={() => setSelectedClub(place)}
+                                >
+                                    {place.split(" ")[1]}
+                                </button>
+                            ))}
+                        </div>
                         <div className="w-full mt-5 border-1  rounded-xl border-red-800">
                             <table className="w-full table-sm">
                                 <thead className="text-white py-5">
@@ -142,9 +226,9 @@ export const Result = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="text-white text-center text-xl">
-                                    {results.length > 0 ? (
+                                    {resultToShow.length > 0 ? (
                                         <>
-                                            {results.map((result, index) => (
+                                            {resultToShow.map((result, index) => (
                                                 <tr className="border-t border-red-700">
                                                     <td className="text-white text-sm leading-[14px]">
                                                         {

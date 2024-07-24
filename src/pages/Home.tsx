@@ -45,7 +45,7 @@ export const Home = () => {
     return (
         <HelmetProvider>
             <Navbar />
-            <div className="w-full  p-2 my-4">
+            <div className="w-full p-2 my-4">
                 <Carousel
                     responsive={responsive}
                     autoPlay={true}
@@ -192,36 +192,23 @@ export const Home = () => {
                     </NavLink>
                 </div>
             </div>
-            <div className="flex justify-center gap-10 my-10  items-center flex-col ">
-                <iframe
-                    src="https://www.youtube.com/embed/mQs9_xZPLW4?si=CDuSv73r9hIVVa-g"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className="h-[50dvw] w-[90dvw] rounded-2xl"
-                ></iframe>
-                <span className="text-center text-2xl styled-text px-2">
-                    Win Jackpot !!! Buy ticket worth Rs 500 and won upto 10 Lakh.
-                </span>
-                {/* <img src={SlotGif} className="w-full h-full rounded-3xl" /> */}
-            </div>
+            <City />
 
-            <div className="my-5 text-2xl text-center px-5 italic">
+
+            {/* <div className="my-5 text-2xl text-center px-5 italic">
                 तपाईंले सपनामा सेतो सर्प देख्नु भएको छ भने, र त्यसमा सेतो रंग लै नी हामि ले ७ नम्बर
                 बुझछुम, त्यसको आधारमा तपाईले ७ नम्बरमा पैसा लगाउनु हुन्छ। ७ नम्बरबाट आउने सबै डबल,
                 ट्रिपल नम्बरमा पनि पैसा लगाउनु हुन्छ जस्तै: ७०, ७१, ७२, ७३, १२४, ११५, ०१६, ०२५, ४५८,
                 ७७० आदि.... यसरी अन्य डेटा हेरेर पनि लगानी गर्न सकिन्छ।
                 <br /> थोरै जोखिम त हुन्छ नै, तर तपाईको भाग्यले साथ दिए पछि तपाई राजा बन्न सक्नु
                 हुन्छ। सपना र भाग्यको खेलमा सफलता प्राप्त गर्न शुभकामना।
-            </div>
+            </div> */}
 
-            <City />
             <div className="text-center w-full p-8">
                 <h3 className="my-5 text-lg styled-text"> Kingxclub के हो?</h3>
                 <p>
                     <b className="styled-text">Kingxclub.com</b> एउटा अनलाइन प्लेटफर्म हो जहाँ थोरै
-                    लगानी गरेर धेरै पैसा कमाउन सकिन्छ भनिएको छ। यसमा विभिन्न प्रकारका खेलहरू हुन्छन्
+                    लगानी गरेर धेरै पैसा कमाउन सकिन्छ। यसमा विभिन्न प्रकारका खेलहरू हुन्छन्
                     जसमा लगानी गरेर ठुलो नाफा कमाउन सकिन्छ। यसमा तपाईले १० रुपैयाँको लगानी गरेर
                     १,००,००० रुपैयाँसम्म सजिलै कमाउन सक्नुहुन्छ, त्यो पनि २-३ घण्टामा।
                 </p>
@@ -245,7 +232,7 @@ export const Home = () => {
                         </li>
                         <li>
                             <b className="styled-text"> Triple Digit:</b> 000-999 को बीचमा नम्बर
-                            छनोट गर्न सकिन्छ। Single, Double, र Triple तीन प्रकारका खेलहरू हुन्छन्।
+                            छनोट गर्न सकिन्छ। Single Pana, Double Pana, र Triple Pana तीन प्रकारका खेलहरू हुन्छन्।
                             नाफा क्रमशः 150x, 250x, र 490x हुन्छ।
                         </li>
                         <li>
@@ -258,7 +245,12 @@ export const Home = () => {
                 <p>
                     <ul>
                         <li>सब क्लबमा निश्चित समय हुन्छ।</li>
-                        <li>Club Panther मा 7am, 11am, 3pm, र 7pm मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>Club Panther मा 7am, 1om, 5pm, र 1am मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>Club Tiger मा 8am, 2pm, 6pm, र 10pm मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>Club Lion मा 9am, 1pm, 7pm, र 11pm मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>Club Puma मा 10am, 4pm, 8pm, र 12am मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>Club Cobra मा 11am, 5pm, 9pm, र 2am मा रिजल्ट प्रकाशित हुन्छ।</li>
+                        <li>सब क्लबमा निश्चित समयमा खुला र बन्द हुन्छ।</li>
                         <li>रिजल्ट समयभन्दा १५ मिनेट अघि तपाईले शर्त लगाइसक्नुपर्छ</li>
                     </ul>
                 </p>
@@ -270,7 +262,7 @@ export const Home = () => {
                         <li>Position चयन गर्ने।</li>
                         <li>नम्बर मिलाएमा तपाईँले जित्न सक्नुहुन्छ।</li>
                         <li>पोजिसन ओपन र क्लोज हुन्छ। उदाहरणका लागि, (234 - 90 - 550):</li>
-                        <li className="text-left pl-16">
+                        <li className="pl-16">
                             <br /> ओपन अंक: 234 - 9
                             <br /> क्लोज अंक: 0 - 550
                             <br /> आधा किंग जित्नको लागि ओपनको ट्रिपल अंक र क्लोजको सिंगल अंक

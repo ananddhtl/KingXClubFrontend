@@ -22,7 +22,6 @@ const Agentform = () => {
 
     const [formData, setFormData] = useState({
         name: "",
-        phone: "",
         country: "",
         address: "",
         iddentity: null,
@@ -51,21 +50,26 @@ const Agentform = () => {
     };
 
     // Function to handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         // Check if all fields are filled and terms are agreed upon
         if (
             formData.name &&
-            formData.phone &&
             formData.country &&
             formData.address &&
             formData.iddentity &&
             agreedToTerms
         ) {
-            // If all conditions are met, log form values
-            console.log(formData);
-            agentFormAPI(formData)
-            // You can add further logic here, such as submitting the form data
+            try{
+
+                // If all conditions are met, log form values
+                console.log(formData);
+                const res = await agentFormAPI(formData)
+                toast.success(res.data?.message || "Application submitted")
+                navigate(routes.PROFILE)
+            } catch{
+            toast.error("FIle size too large use small file size");
+            }
         } else {
             toast.error("Please fill in all fields.");
         }
@@ -102,7 +106,7 @@ const Agentform = () => {
                 </div>
             </div>
 
-            <div className="max-w-sm mx-auto p-4 bg-black min-h-screen my-8 text-white">
+            <div className="max-w-sm mx-auto p-4  min-h-screen my-8 text-white">
                 <form
                     className="space-y-4 mt-4"
                     // encType="multipart/form-data"
@@ -141,27 +145,6 @@ const Agentform = () => {
                                 onChange={handleInputChange}
                                 className="bg-transparent flex-1 p-3 rounded-full text-black leading-tight focus:outline-none"
                                 placeholder="Enter agent's name"
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label
-                            htmlFor="phoneNumber"
-                            className="block text-md my-1 font-mono tracking-widr"
-                        >
-                            Phone Number
-                        </label>
-                        <div className="flex items-center bg-white text-black rounded-xl mb-4">
-                            <input
-                                type="text"
-                                id="phone"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                className="bg-transparent flex-1 p-3 rounded-full text-black leading-tight focus:outline-none"
-                                placeholder="Enter phone number"
                                 required
                             />
                         </div>

@@ -65,20 +65,20 @@ const Login = () => {
     }, [navigate, user]);
 
     return (
-        <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
+        <section className="bg-[#000e00] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
             <NavLink to="/">
-            <img className="w-10" src={Logo} alt="logo" />
+            <img className="w-16" src={Logo} alt="logo" />
             </NavLink>
             <div className="flex flex-col justify-center items-center">
-                <div className="flex justify-between max-w-xs border border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
-                    <button className="bg-[#FE480F] text-white tracking-widest font-bold py-2 px-10 rounded-full">
+                <div className="flex justify-between max-w-xs border border-green-800 w-full mb-10 h-12 rounded-full bg-[#000e00">
+                    <button className="bg-green-600 text-white tracking-widest font-bold py-2 px-10 rounded-full">
                         Login
                     </button>
                     <button className="bg-transparent text-white tracking-widest font-semibold py-2 px-10 rounded-full">
                         <NavLink to="/signup">Signup</NavLink>
                     </button>
                 </div>
-                <div className="w-full max-w-sm mx-auto rounded-2xl border border-gray-600 shadow-lg p-5 bg-[#0F0F0F]">
+                <div className="w-full max-w-sm mx-auto rounded-2xl border border-gray-600 shadow-lg p-5 bg-[#021d02]">
                     <div className="text-center">
                         <div className="mb-4">
                             <img

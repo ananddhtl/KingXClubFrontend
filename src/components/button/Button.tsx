@@ -19,11 +19,12 @@ export const Button: FC<ButtonProps> = ({
     disabled = false
 }) => {
     return (
+        <div className="flex justify-center w-full">
         <button
             disabled={isLoading || disabled}
             onClick={onAction}
             type={type}
-            className={cn("w-full bg-[#FE480F] outline-none flex justify-center text-white  py-3 px-4 rounded-xl hover:bg-[#fe3f0f] disabled:opacity-45 disabled:cursor-not-allowed", className)}
+            className={cn("w-full max-w-80 bg-green-600 outline-none flex justify-center text-white  py-3 px-4 rounded-xl hover:bg-green-800 disabled:opacity-45 disabled:cursor-not-allowed", className)}
         >
             {isLoading ? (
                 <svg
@@ -45,5 +46,6 @@ export const Button: FC<ButtonProps> = ({
                 <span className="text-xl font-semibold">{text}</span>
             )}
         </button>
+        </div>
     );
 };

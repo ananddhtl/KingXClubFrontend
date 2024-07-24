@@ -35,7 +35,6 @@ export const Table: FC<ITable> = ({
     state,
     setGlobalFilter,
     page,
-    visibleColumns,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -84,7 +83,7 @@ export const Table: FC<ITable> = ({
   };
 
   return (
-    <div className='my-5'>
+    <div className='my-5 flex justify-center flex-col'>
       <div className="flex items-center justify-between m-2">
         {showPagination && (
           <div className="font-mono">

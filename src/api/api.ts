@@ -22,6 +22,10 @@ export const getTodaysTicket = () => {
     return baseURL.get("/ticket/today/all");
 };
 
+export const getTodaysTicketForAgent = () => {
+    return baseURL.get("/ticket/agent/today/all");
+};
+
 export const getPurchasedTicket = () => {
     return baseURL.get("/ticket/me");
 };
@@ -32,6 +36,14 @@ export const getAllResult = () => {
 
 export const getUserDetail = () => {
     return baseURL.get("/user/me");
+};
+
+export const getUserDetailForAgent = () => {
+    return baseURL.get("/user/agent/getUser");
+};
+
+export const getallAgent = () => {
+    return baseURL.get("/user/agent/getAll");
 };
 
 export const getAllUser = () => {
@@ -71,6 +83,8 @@ export const register = (payload: any) => {
 };
 
 export const logout = (payload: any) => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     return baseURL.post("/auth/logout", payload);
 };
 

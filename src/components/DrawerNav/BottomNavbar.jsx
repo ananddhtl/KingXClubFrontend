@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 function BottomNavbar() {
     return (
-        <div className="fixed w-full bottom-0 z-10 left-0 right-0 bg-[rgba(31,7,1,1)] backdrop-blur-lg sm:hidden">
+        <div className="fixed w-full bottom-0 z-10 left-0 right-0 bg-[#030e03] backdrop-blur-lg sm:hidden">
             <nav className="flex h-20 w-full justify-around items-center ">
                 <NavLink
                     className="flex justify-center h-[70px] w-[35px] flex-col hover:text-orange-500"
-                    to="/games"
+                    to="/"
                 >
                     <img className="" src="./assets/img/games.png" />
                     <p className="text-xs -mt-2 font-mono text-center oleo-script ">Games</p>

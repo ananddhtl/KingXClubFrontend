@@ -1,13 +1,13 @@
 import { useProfileContext } from "@/App"
-import { Data } from "@/components/data-info/DataInfo"
+import { AgentOrAdminDataInfo } from "@/components/data-info/AgentOrAdminDataInfo"
 import Navbar from "@/components/navbar/Navbar"
-import { routes } from "@/constants"
+import { ROLE, routes } from "@/constants"
 import { useEffect } from "react"
-import { toast } from "react-hot-toast"
+// import { toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 
 
-export const Admin = () => {
+export const AgentOrAdmin = () => {
   const { user } = useProfileContext();
   const navigate = useNavigate()
 
@@ -15,8 +15,8 @@ export const Admin = () => {
   useEffect(() => {
     console.log({user});
     
-    if (!user || user?.role !== 'admin') {
-      toast.error("Unauthorized !!! Not Admin", {id: 'not-admin'});
+    if (!user || (user?.role !== ROLE.ADMIN && user?.role !== ROLE.AGENT)) {
+      // toast.error("Unauthorized !!! Not Admin", {id: 'not-admin'});
       navigate(routes.INDEX);
     }
 }, [navigate, user]);
@@ -24,6 +24,6 @@ export const Admin = () => {
 return (
   <>
   <Navbar />
-    <Data />
+    <AgentOrAdminDataInfo />
     </>
 )}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useProfileContext } from "@/App";
+import BottomNavbar from "../components/DrawerNav/BottomNavbar";
 
 export const BidHistory = () => {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ export const BidHistory = () => {
         <section className="flex flex-col items-center justify-start text-white gap-10 min-h-screen p-4">
             <div className="sticky top-5 flex justify-between items-center w-full">
                 <button
-                    onClick={() => navigate(routes.PROFILE)}
+                    onClick={() => navigate(routes.INDEX)}
                 >
                      <svg
                                 width="44"
@@ -97,7 +98,7 @@ export const BidHistory = () => {
                 ) : (
                     <>
                         {bidHistory.map((bid) => (
-                            <div className="border-red-800 border-2 relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl">
+                            <div className={`${bid.won ? 'border-green-800' : 'border-red-800'} border-2 relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl`}>
                                 <span className=" rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">
                                     {bid.place}
                                 </span>
@@ -128,26 +129,11 @@ export const BidHistory = () => {
                                     <span className="text-xs text-center font-medium ">
                                         BID DATE
                                         <p className="text-center text-sm">
-                                            {new Date(bid.time).toLocaleDateString()}
-                                        </p>
-                                    </span>
-                                    <span className="text-xs text-center font-medium ">
-                                        BID TIME
-                                        <p className="text-center text-sm">
-                                            {new Date(bid.time).toLocaleTimeString('en', {
-                                                hour: "numeric",
-                                                minute: "numeric"
-                                            })}
-                                        </p>
-                                    </span>
-                                    <span className="text-xs text-center font-medium ">
-                                        TRANSACTION
-                                        <p className="text-center text-sm">
-                                            {new Date(bid.createdAt).toLocaleString('en', {
-                                                hour: "numeric",
-                                                minute: "numeric",
-                                                month: 'short',
-                                                day: 'numeric'
+                                            {new Date(bid.time).toLocaleDateString("default",{
+                                                day: "2-digit",
+                                                month: "short",
+                                                hour: "2-digit",
+                                                minute: "2-digit"
                                             })}
                                         </p>
                                     </span>
@@ -156,12 +142,18 @@ export const BidHistory = () => {
                                             RETURNS<p className="text-center text-sm">{bid.returns}</p>
                                         </span>
                                     )}
+                                    <br/>
+                                        <span className={`text-xl w-full text-center font-semibold ${bid.won ? "text-green-600" : "text-red-600"}`}>
+                                            {bid.won ? "Congratulation!!! you won the prize" : "Better Luck next time"}
+                                        </span>
+                                    
                                 </div>
                             </div>
                         ))}
                     </>
                 )}
             </div>
+            <BottomNavbar />
         </section>
     )
 };

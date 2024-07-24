@@ -39,7 +39,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div className="w-full sticky z-10 top-0 bg-[rgba(19,7,4,1)] pt-10 pb-5 shadow-xl">
+        <div className="w-full sticky z-10 top-0 bg-[#030e03] pt-10 pb-5 shadow-xl">
             <div className="w-full flex justify-between px-5 items-center rounded-xl h-[50px]">
                 <div
                     className="bg-white/5 cursor-pointer p-3 flex items-center justify-center rounded-full"
@@ -47,9 +47,16 @@ const Navbar = () => {
                 >
                     <FaBars />
                 </div>
-                <NavLink to="/">
-                    <img src={LogoCropped} alt="logo" className="w-12 h-auto"/>
-                </NavLink>
+                <div className="flex flex-col gap-2 justify-center items-center py-10">
+                    <NavLink to="/">
+                        <img src={LogoCropped} alt="logo" className="w-10 h-auto" />
+                    </NavLink>
+                    {user && (
+                        <p className="text-center styled-text pb-2">
+                            Rs. {user?.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </p>
+                    )}
+                </div>
                 {user ? (
                     <NavLink to="/notifications">
                         <button>
@@ -60,7 +67,7 @@ const Navbar = () => {
                     </NavLink>
                 ) : (
                     <NavLink
-                        className="bg-orange-600 px-2 py-1 rounded-lg hover:bg-orange-700 text-lg oleo-script inline-flex items-center gap-1"
+                        className="bg-green-600 px-2 py-1 rounded-lg hover:bg-green-700 text-lg oleo-script inline-flex items-center gap-1"
                         to="/login"
                     >
                         <svg
@@ -87,7 +94,7 @@ const Navbar = () => {
                         animate={{ x: 0 }}
                         exit={{ x: "-100%" }}
                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                        className="absolute z-20 -top-3 left-0 w-64 h-screen bg-[rgba(31,7,1,1)] rounded-tr-lg rounded-br-lg text-white py-4"
+                        className="absolute z-20 -top-3 left-0 w-64 h-screen bg-[#030e03] rounded-tr-lg rounded-br-lg text-white py-4"
                     >
                         <div className="flex justify-between items-stretch p-5">
                             {user ? (
@@ -247,8 +254,6 @@ const Navbar = () => {
                                                     refreshToken:
                                                         localStorage.getItem("refreshToken"),
                                                 });
-                                                localStorage.removeItem("accessToken");
-                                                localStorage.removeItem("refreshToken");
                                                 setUser(null);
                                                 toggleSidebar();
                                             }}

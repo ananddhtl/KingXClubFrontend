@@ -16,14 +16,14 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [referCode, setReferCode] = useState("");
+    const [usedReferCode, setUsedReferCode] = useState(refer?.referCode || "kingxclub");
     const [isLoading, setIsLoading] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleChange = (e, changeFor: "email" | "phone" | "password" | "referCode") => {
+    const handleChange = (e, changeFor: "email" | "phone" | "password" | "usedReferCode") => {
         switch (changeFor) {
             case "email":
                 setEmail(e.target.value);
@@ -34,8 +34,8 @@ const Signup = () => {
             case "phone":
                 setPhone(e.target.value);
                 break;
-            case "referCode":
-                setReferCode(e.target.value);
+            case "usedReferCode":
+                setUsedReferCode(e.target.value);
                 break;
             default:
                 break;
@@ -54,7 +54,7 @@ const Signup = () => {
                 email,
                 phone,
                 password,
-                referCode,
+                usedReferCode,
             });
             saveLoginData(res.data?.tokens);
             toast.success(res.data?.message || "Success");
@@ -82,20 +82,20 @@ const Signup = () => {
     }, [navigate, user])
 
     return (
-        <section className="bg-[#000000] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
+        <section className="bg-[#000e00] flex flex-col items-center justify-start gap-10 min-h-screen p-4">
             <NavLink to="/">
-            <img className="w-28" src={Logo} alt="logo" />
+            <img className="w-10" src={Logo} alt="logo" />
             </NavLink>
             <div className="flex flex-col justify-center items-center">
-                <div className="flex justify-between border max-w-xs border-[#FE480F] w-full mb-10 h-12 rounded-full bg-black">
+                <div className="flex justify-between border max-w-xs border-[#FE480F] w-full mb-10 h-12 rounded-full bg-[#021d02]">
                     <button className="bg-transparent text-white tracking-widest font-semibold py-2 px-10 rounded-full">
                         <NavLink to="/login">Login</NavLink>
                     </button>
-                    <button className="bg-[#FE480F] text-white tracking-widest font-bold py-2 px-10 rounded-full">
+                    <button className="bg-green-600 text-white tracking-widest font-bold py-2 px-10 rounded-full">
                         Signup
                     </button>
                 </div>
-                <div className="w-full max-w-sm mx-auto rounded-2xl border border-gray-600 shadow-lg p-5 bg-[#0F0F0F]">
+                <div className="w-full max-w-sm mx-auto rounded-2xl border border-gray-600 shadow-lg p-5 bg-[#021d02]">
                     <div className="font-semibold tracking-widest text-white text-xl text-center">
                         Let's Get Started
                     </div>
@@ -144,10 +144,10 @@ const Signup = () => {
                         </label>
                         <div className="flex items-center bg-white text-black rounded-xl mb-4">
                             <input
-                                onChange={(e) => handleChange(e, "referCode")}
+                                onChange={(e) => handleChange(e, "usedReferCode")}
                                 type="text"
                                 id="referCode"
-                                defaultValue={refer?.referCode || ''}
+                                defaultValue={refer?.referCode || usedReferCode}
                                 className="bg-transparent flex-1 p-3 rounded-l-full text-black leading-tight focus:outline-none"
                                 placeholder="Enter your Refer Code"
                             />

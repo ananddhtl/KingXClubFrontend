@@ -5,6 +5,7 @@ import { routes } from "@/constants";
 import { cn } from "@/utils/cn";
 import { useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
+import { BiSolidLeftArrowAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 const BidModal = ({ isOpen, onClose, time, position, city }) => {
@@ -14,7 +15,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
     const [tickets, setTickets] = useState(isOpen === "jackpot" ? {
         [777]: {
             amount: 500,
-            ticket: 777,
+            ticket: '777',
             time,
             position,
         },
@@ -55,22 +56,21 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
         return true;
     };
 
-    const findPana = (num: number) => {
-        const numberString = num.toString();
+    const findPana = (value: string) => {
         // Create an object to store digit counts
         const digitCounts = {};
-
+      
         // Iterate through each digit in the string
-        for (const digit of numberString) {
-            // Check if the digit is already present in the object
-            if (digitCounts[digit]) {
-                digitCounts[digit]++; // Increment the count if found
-            } else {
-                digitCounts[digit] = 1; // Initialize the count to 1 if not found
-            }
+        for (const digit of value) {
+          // Check if the digit is already present in the object
+          if (digitCounts[digit]) {
+            digitCounts[digit]++; // Increment the count if found
+          } else {
+            digitCounts[digit] = 1; // Initialize the count to 1 if not found
+          }
         }
         return Math.max(...(Object.values(digitCounts) as number[]));
-    };
+      };
 
     const totalAmount = useMemo(
         () =>
@@ -85,9 +85,9 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
     const totalReturnAmount = useMemo(
         () =>
             Object.values(tickets).reduce(
-                (accumulator: number, currentValue: { amount: number; ticket: number }) => {
+                (accumulator: number, currentValue: { amount: number; ticket: string }) => {
                     const currentReturn =
-                        currentValue.ticket === 777
+                        currentValue.ticket === '777'
                             ? 1000000
                             : isOpen === "single"
                             ? currentValue.amount * 9
@@ -104,8 +104,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
             ),
         [isOpen, tickets]
     ) as number;
-
-    console.log({ tickets });
 
     const renderNumbers = () => {
         if (isOpen === "single") {
@@ -126,10 +124,10 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                 position,
                             },
                         }));
-                        setTimeout(
-                            () => document.getElementById(`input-${num.toString()}`).focus(),
-                            1000
-                        );
+                        // setTimeout(
+                        //     () => document.getElementById(`input-${num.toString()}`).focus(),
+                        //     1000
+                        // );
                     }}
                 >
                     <p className="font-medium text-xl">{num.toString()}</p>
@@ -149,23 +147,23 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                         setTickets((prev) => ({
                             ...prev,
                             [num.toLocaleString("en-US", { minimumIntegerDigits: 2 })]: {
-                                amount: 10,
+                                amount: 100,
                                 ticket: num.toLocaleString("en-US", { minimumIntegerDigits: 2 }),
                                 time,
                                 position,
                             },
                         }));
-                        setTimeout(
-                            () =>
-                                document
-                                    .getElementById(
-                                        `input-${num.toLocaleString("en-US", {
-                                            minimumIntegerDigits: 2,
-                                        })}`
-                                    )
-                                    .focus(),
-                            1000
-                        );
+                        // setTimeout(
+                        //     () =>
+                        //         document
+                        //             .getElementById(
+                        //                 `input-${num.toLocaleString("en-US", {
+                        //                     minimumIntegerDigits: 2,
+                        //                 })}`
+                        //             )
+                        //             .focus(),
+                        //     1000
+                        // );
                     }}
                 >
                     <p className="font-medium text-xl">
@@ -176,6 +174,13 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
         } else if (isOpen === "triple") {
             return Array.from({ length: 100 }, (_, i) => {
                 const num = i + 100 * selectedInitial;
+                if(num === 777) return
+                if(num.toString()[1] === '0' && num.toString()[2] === '0'){
+                    return num;
+                }
+                if(num.toString()[2] === '0' && (isIncreasingNumber(Number(num.toString().slice(0,2)))) ){
+                    return num;
+                }
                 if (isIncreasingNumber(num)) return num;
                 return;
             })
@@ -193,7 +198,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             setTickets((prev) => ({
                                 ...prev,
                                 [num.toLocaleString("en-US", { minimumIntegerDigits: 3 })]: {
-                                    amount: 10,
+                                    amount: 50,
                                     ticket: num.toLocaleString("en-US", {
                                         minimumIntegerDigits: 3,
                                     }),
@@ -201,17 +206,17 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                     position,
                                 },
                             }));
-                            setTimeout(
-                                () =>
-                                    document
-                                        .getElementById(
-                                            `input-${num.toLocaleString("en-US", {
-                                                minimumIntegerDigits: 3,
-                                            })}`
-                                        )
-                                        .focus(),
-                                1000
-                            );
+                            // setTimeout(
+                            //     () =>
+                            //         document
+                            //             .getElementById(
+                            //                 `input-${num.toLocaleString("en-US", {
+                            //                     minimumIntegerDigits: 3,
+                            //                 })}`
+                            //             )
+                            //             .focus(),
+                            //     1000
+                            // );
                         }}
                     >
                         <p className="font-medium text-xl">
@@ -229,63 +234,14 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
             {isOpen && (
                 <section className="pt-5 z-10 flex flex-col items-center justify-start text-white gap-10 min-h-screen">
                     <div className="sticky  py-4  grid grid-cols-5 justify-center place-items-center w-full">
-                        <button onClick={onClose}>
-                            <svg
-                                width="44"
-                                height="44"
-                                viewBox="0 0 44 44"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect
-                                    x="0.517039"
-                                    y="0.517039"
-                                    width="42.9659"
-                                    height="42.9659"
-                                    rx="21.483"
-                                    fill="url(#paint0_linear_831_6513)"
-                                />
-                                <rect
-                                    x="0.517039"
-                                    y="0.517039"
-                                    width="42.9659"
-                                    height="42.9659"
-                                    rx="21.483"
-                                    stroke="url(#paint1_linear_831_6513)"
-                                    stroke-width="1.03408"
-                                />
-                                <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M24.6379 15.0602C25.0225 15.3679 25.0849 15.9292 24.7772 16.3138L20.4662 21.7026L24.7772 27.0914C25.0849 27.476 25.0225 28.0373 24.6379 28.345C24.2533 28.6527 23.692 28.5904 23.3843 28.2057L18.6275 22.2598C18.3669 21.934 18.3669 21.4712 18.6275 21.1455L23.3843 15.1995C23.692 14.8149 24.2533 14.7525 24.6379 15.0602Z"
-                                    fill="white"
-                                />
-                                <defs>
-                                    <linearGradient
-                                        id="paint0_linear_831_6513"
-                                        x1="21.9999"
-                                        y1="0"
-                                        x2="21.9999"
-                                        y2="41.0667"
-                                        gradientUnits="userSpaceOnUse"
-                                    >
-                                        <stop stop-color="#FF5301" />
-                                        <stop offset="1" stop-color="#FFD901" />
-                                    </linearGradient>
-                                    <linearGradient
-                                        id="paint1_linear_831_6513"
-                                        x1="22"
-                                        y1="0"
-                                        x2="22"
-                                        y2="44"
-                                        gradientUnits="userSpaceOnUse"
-                                    >
-                                        <stop stop-color="#571100" />
-                                        <stop offset="1" stop-color="#CE2800" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </button>
+                        
+                        <button
+                        onClick={onClose}
+                    className="p-3 bg-gray-100 rounded-full shadow-sm"
+                >
+                <BiSolidLeftArrowAlt className="w-full text-black"/>
+                    {/* <FontAwesomeIcon icon="fa-solid fa-arrow-left" /> */}
+                </button>
                         <span className="text-2xl tracking-wide font-sans font-semibold col-span-3 oleo-script">
                             Select Tickets
                         </span>
@@ -293,7 +249,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                     </div>
                     <div className="flex flex-col items-center justify-between pb-20 w-full h-full">
                         {!(isOpen === "single" || isOpen === "jackpot") && (
-                            <div className="flex gap-2 border-1 border-red-800 p-2 rounded-2xl">
+                            <div className="flex flex-wrap justify-center m-2 gap-2 border-1 border-red-800 p-2 rounded-2xl">
                                 {Array.from({ length: 10 }, (_, i) => i).map((num) => (
                                     <p
                                         onClick={() => setSelectedInitial(num)}
@@ -315,8 +271,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                             </div>}
                         </div>
                         <div className="p-3 w-full">
-                            <div className="custom-border-image flex flex-col justify-center items-center max-w-full">
-                                <div className="bg-[#240601] w-[85dvw] max-w-full">
+                            <div className="flex flex-col justify-center items-center max-w-full">
+                                <div className="w-[85dvw] max-w-full">
                                     <p className="styled-text pt-5 ">Your Bidding Summary</p>
 
                                     <div className="w-full mt-5 border-1 rounded-xl border-red-800">
@@ -345,7 +301,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                 time,
                                                             }: {
                                                                 amount: number;
-                                                                ticket: number;
+                                                                ticket: string;
                                                                 position: string;
                                                                 time: string;
                                                             }) => (
@@ -358,9 +314,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                             type="number"
                                                                             id={`input-${ticket}`}
                                                                             onChange={(e) => {
-                                                                                setTickets(
-                                                                                    (prev) => ({
-                                                                                        ...prev,
+                                                                                setTickets({
+                                                                                        ...tickets,
                                                                                         [ticket]: {
                                                                                             amount: Number(
                                                                                                 e
@@ -371,12 +326,11 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                                             time,
                                                                                             position,
                                                                                         },
-                                                                                    })
-                                                                                );
+                                                                            });
                                                                             }}
                                                                             defaultValue={amount}
                                                                             disabled={
-                                                                                ticket === 777
+                                                                                ticket === '777'
                                                                             }
                                                                             min={10}
                                                                             placeholder="Amount"
@@ -386,7 +340,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                         />
                                                                     </td>
                                                                     <td className="text-center leading-[14px]">
-                                                                        {ticket === 777
+                                                                        {ticket === '777'
                                                                             ? 2000
                                                                             : isOpen === "single"
                                                                             ? "x9"
@@ -400,7 +354,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                     </td>
                                                                     <td className="text-center leading-[14px]">
                                                                         Rs.{" "}
-                                                                        {ticket === 777
+                                                                        {ticket === '777'
                                                                             ? 1000000
                                                                             : isOpen === "single"
                                                                             ? amount * 9
