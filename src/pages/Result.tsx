@@ -146,10 +146,7 @@ export const Result = () => {
                                 {results[0]?.leftTicketNumber &&
                                     showVerticleNumber(results[0].leftTicketNumber.toString())}
                                 <div className="flex">
-                                    {results[0]?.leftTicketNumber &&
-                                    new Date(results[0].time).setMinutes(
-                                        new Date(results[0].time).getMinutes() + 15
-                                    )
+                                    {results[0]?.leftTicketNumber
                                         ? showVerticleNumber(
                                               sumOfDigits(results[0].leftTicketNumber)
                                                   .toString()
@@ -160,10 +157,7 @@ export const Result = () => {
                                                   ].toString()
                                           )
                                         : showVerticleNumber("*")}
-                                    {results[0]?.rightTicketNumber &&
-                                    new Date(results[0].time).setMinutes(
-                                        new Date(results[0].time).getMinutes() + (1 * 60 + 15)
-                                    )
+                                    {results[0]?.rightTicketNumber
                                         ? showVerticleNumber(
                                               sumOfDigits(results[0].rightTicketNumber)
                                                   .toString()

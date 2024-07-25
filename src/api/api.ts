@@ -42,10 +42,6 @@ export const getUserDetailForAgent = () => {
     return baseURL.get("/user/agent/getUser");
 };
 
-export const getallAgent = () => {
-    return baseURL.get("/user/agent/getAll");
-};
-
 export const getAllUser = () => {
     return baseURL.get("/user/all");
 };

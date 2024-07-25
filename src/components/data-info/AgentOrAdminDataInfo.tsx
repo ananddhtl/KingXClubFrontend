@@ -173,7 +173,7 @@ export const AgentOrAdminDataInfo = () => {
 
     return (
         <div className="w-full flex justify-center">
-            <section className="bg-neutral-900 min-h-screen w-full lg:w-screen flex-col flex py-10 px-3">
+            <section className="bg-neutral-900 min-h-screen w-full lg:w-screen flex-col flex">
                 <DepositAmount />
                 {dataLoading ? (
                     <svg
@@ -227,7 +227,7 @@ const TopSection: FC<ITopSection> = ({ text, description, children }) => {
         <div className="bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
             <div className="text-orange-600 text-center font-semibold text-lg">{text}</div>
 
-            <p className="text-gray-500 my-1">{description}</p>
+            <p className="text-gray-500 my-1 text-center">{description}</p>
             {children}
         </div>
     );
@@ -255,6 +255,31 @@ const DepositAmount: FC = () => {
             [dataFor]: value,
         });
     }
+
+    const userColumn = useMemo(
+        () => [
+            {
+                Header: "Phone",
+                accessor: "phone" || "",
+            },
+            {
+                Header: "Email",
+                accessor: "email" || "",
+            },
+            {
+                Header: "Balance",
+                accessor: "amount" || "",
+            },
+            {
+                Header: "Role",
+                accessor: "role" || "",
+            },
+            {
+                Header: "Id",
+                accessor: "_id" || "",
+            },
+        ],
+            [])
 
     const fetchUser = async () => {
         try {
@@ -288,14 +313,15 @@ const DepositAmount: FC = () => {
     }, []);
 
     return (
-        <div className="flex bg-black/40  justify-center">
+        <div className="flex flex-wrap gap-5  justify-center">
+        <div className="max-w-5xl bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
+            <div className="text-orange-600 text-center font-semibold text-lg">
+                Update Balance
+            </div>
 
-        <div className="max-w-5xl flex flex-col rounded-xl p-5 my-5 relative">
-            <div className="text-orange-600 text-center font-semibold text-lg">Update Balance</div>
-
-            <p className="text-gray-500 my-1">Find the number to deposit amount</p>
+            <p className="text-gray-500 my-1 text-center">Find the number to deposit amount</p>
             <form className="flex flex-wrap gap-10">
-                <div className="gap-4 flex flex-col bg-black/60 rounded-lg w-full justify-around p-2">
+                <div className="gap-4 p-5 md:p-20 flex flex-col w-full justify-around">
                     <div className="flex flex-col justify-between gap-2 items-start">
                         <label htmlFor="place" className="text-white text-lg mx-2">
                             Phone
@@ -319,10 +345,12 @@ const DepositAmount: FC = () => {
                                 </option>
                                 {filteredUsers.map(({ phone, email }) => {
                                     return (
-                                        <option key={phone} value={phone} className="bg-black text-sm">
-                                            {phone}
-                                            {" "}|{" "}
-                                            {email}
+                                        <option
+                                            key={phone}
+                                            value={phone}
+                                            className="bg-black text-sm"
+                                        >
+                                            {phone} | {email}
                                         </option>
                                     );
                                 })}
@@ -335,7 +363,7 @@ const DepositAmount: FC = () => {
                             data.balance < 0 && "opacity-25 disabled:cursor-not-allowed"
                         )}
                     >
-                        <label className="text-white text-lg ">Deposit</label>
+                        <label className="text-white text-lg pr-10">Deposit</label>
                         <input
                             disabled={data.balance < 0}
                             type="number"
@@ -367,60 +395,82 @@ const DepositAmount: FC = () => {
                             required
                         />
                     </div>
+                    {data.phone && (
+                        <div className="flex flex-col p-4 rounded-lg w-full justify-around">
+                            <span className="text-white pb-3 text-lg self-center">
+                                User Details
+                            </span>
+
+                            <span>
+                                Email:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.email}
+                                </p>
+                            </span>
+                            <span>
+                                Current Balance:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.amount}
+                                </p>
+                            </span>
+                            <span>
+                                Refered By:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.referCode}
+                                </p>
+                            </span>
+                            <span>
+                                Phone:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.phone}
+                                </p>
+                            </span>
+                            <span>
+                                Role:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.role}
+                                </p>
+                            </span>
+                            <span>
+                                Id:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?._id}
+                                </p>
+                            </span>
+                        </div>
+                    )}
+
+                    <Button
+                        disabled={!data.balance || !data.phone}
+                        text={`${
+                            data.balance > 0
+                                ? "Deposit"
+                                : data.balance < 0
+                                ? "Withdraw"
+                                : "Update"
+                        } Balance`}
+                        onAction={depositBalance}
+                        isLoading={isLoading}
+                    />
                 </div>
-                {data.phone && (
-                    <div className="flex flex-col p-4 bg-black/60 rounded-lg w-full justify-around">
-                        <span className="text-white pb-3 text-lg self-center">User Details</span>
-
-                        <span>
-                            Email:{" "}
-                            <p className="inline-flex ">
-                                {users.find((user) => user.phone == data.phone)?.email}
-                            </p>
-                        </span>
-                        <span>
-                            Current Balance:{" "}
-                            <p className="inline-flex ">
-                                {users.find((user) => user.phone == data.phone)?.amount}
-                            </p>
-                        </span>
-                        <span>
-                            Refered By:{" "}
-                            <p className="inline-flex ">
-                                {users.find((user) => user.phone == data.phone)?.referCode}
-                            </p>
-                        </span>
-                        <span>
-                            Phone:{" "}
-                            <p className="inline-flex ">
-                                {users.find((user) => user.phone == data.phone)?.phone}
-                            </p>
-                        </span>
-                        <span>
-                            Role:{" "}
-                            <p className="inline-flex ">
-                                {users.find((user) => user.phone == data.phone)?.role}
-                            </p>
-                        </span>
-                        <span>
-                            Id:{" "}
-                            <p className="inline-flex ">
-                                {users.find((user) => user.phone == data.phone)?._id}
-                            </p>
-                        </span>
-                    </div>
-                )}
-
-                <Button
-                    disabled={!data.balance || !data.phone}
-                    text={`${
-                        data.balance > 0 ? "Deposit" : data.balance < 0 ? "Withdraw" : "Update"
-                    } Balance`}
-                    onAction={depositBalance}
-                    isLoading={isLoading}
-                />
             </form>
         </div>
-        </div>
+        {users.length > 0 ? (
+                <div className="bg-black/60 p-2 my-10">
+                    
+                        
+                        <TopSection
+                            text="Customer Information"
+                            description="* This data has been shown according to data from the website"
+                        >
+                            <Table columns={userColumn} data={users} />
+                        </TopSection>
+                    </div>
+                ) : (
+                    <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
+                        No data found
+                    </span>
+                )}
+    </div>
     );
 };

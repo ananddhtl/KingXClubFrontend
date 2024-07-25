@@ -26,15 +26,15 @@ export const Home = () => {
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
-            items: 3,
+            items: 5,
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 2,
+            items: 4,
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
-            items: 1,
+            items: 2,
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
@@ -219,7 +219,7 @@ export const Home = () => {
                     दर्ता गर्नुपर्छ।
                 </p>
                 <h3 className="my-5 text-lg styled-text">Kingxclub मा लगानी कसरी गर्ने?</h3>
-                <p>
+                <div>
                     Kingxclub मा ६ वटा प्लेटफर्महरू छन्:
                     <ul>
                         <li>
@@ -240,9 +240,9 @@ export const Home = () => {
                             जितको राशि 10,00,000 रुपैयाँ हुन्छ।
                         </li>
                     </ul>
-                </p>
+                </div>
                 <h3 className="my-5 text-lg styled-text">Kingxclub को नियमहरू:</h3>
-                <p>
+                <div>
                     <ul>
                         <li>सब क्लबमा निश्चित समय हुन्छ।</li>
                         <li>Club Panther मा 7am, 1om, 5pm, र 1am मा रिजल्ट प्रकाशित हुन्छ।</li>
@@ -253,10 +253,10 @@ export const Home = () => {
                         <li>सब क्लबमा निश्चित समयमा खुला र बन्द हुन्छ।</li>
                         <li>रिजल्ट समयभन्दा १५ मिनेट अघि तपाईले शर्त लगाइसक्नुपर्छ</li>
                     </ul>
-                </p>
+                </div>
 
                 <h3 className="my-5 text-lg styled-text">Kingxclub मा खेल कसरी खेल्ने?</h3>
-                <p>
+                <div>
                     <ul>
                         <li>क्लबमा गएर समय चयन गर्ने।</li>
                         <li>Position चयन गर्ने।</li>
@@ -271,7 +271,7 @@ export const Home = () => {
                             (जस्तै, 234 - 550)
                         </li>
                     </ul>
-                </p>
+                </div>
                 <h3 className="my-5 text-lg styled-text">
                     Kingxclub मा रिजल्ट कसरी प्रकाशित हुन्छ?
                 </h3>
@@ -305,7 +305,7 @@ export const Home = () => {
                     you and register.
                 </p>
                 <h3 className="my-5 text-lg styled-text">How to Invest in Kingxclub?</h3>
-                <p>
+                <div>
                     Kingxclub offers 6 different platforms for betting:
                     <ul>
                         <li>
@@ -326,10 +326,10 @@ export const Home = () => {
                             the winning amount is 1,000,000 rupees.
                         </li>
                     </ul>
-                </p>
+                </div>
 
                 <h3 className="my-5 text-lg styled-text">Kingxclub Rules:</h3>
-                <p>
+                <div>
                     <ul>
                         <li>Each club has a fixed time for publishing results.</li>
                         <li>
@@ -337,7 +337,7 @@ export const Home = () => {
                         </li>
                         <li>Bets must be placed at least 15 minutes before the result time.</li>
                     </ul>
-                </p>
+                </div>
                 <h3 className="my-5 text-lg styled-text">How Kingxclub Publishes Results:</h3>
                 <p>
                     Results are determined by drawing cards live in front of customers. Each card
@@ -345,13 +345,13 @@ export const Home = () => {
                 </p>
 
                 <h3 className="my-5 text-lg styled-text">How to Play on Kingxclub:</h3>
-                <p>
+                <div>
                     <ul>
                         <li>Go to the club and select the time.</li>
                         <li>Choose your position.</li>
                         <li>If your numbers match, you win according to the game's rules.</li>
                     </ul>
-                </p>
+                </div>
             </div>
             <BottomNavbar />
         </HelmetProvider>

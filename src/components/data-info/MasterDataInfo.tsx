@@ -13,6 +13,11 @@ export const MasterDataInfo = () => {
     const [summary, setSummary] = useState<any[]>([]);
     const [dataLoading, setDataLoading] = useState(false);
     const [digit, setDigit] = useState("all");
+    const [singleNumber, setSingleNumber] = useState(null);
+
+    function sumOfDigits(value: string) {
+        return value.split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+      }
 
     const columns = useMemo(
         () => [
@@ -160,14 +165,16 @@ export const MasterDataInfo = () => {
         ],
         []
     );
+    console.log({singleNumber});
+    
 
     const filteredSummaryData = useMemo(() => {
         if(digit === 'all') return summary.map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}));
         else if(digit === 'single') return summary.filter((data) => data._id.ticket.length === 1).map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}))
-        else if(digit === 'double') return summary.filter((data) => data._id.ticket.length === 2).map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}))
-        else if(digit === 'triple') return summary.filter((data) => data._id.ticket.length === 3).map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}))
+        else if(digit === 'double') return summary.filter((data) => data._id.ticket.length === 2 && singleNumber ? (Number(data._id.ticket[0]) === singleNumber || Number(data._id.ticket[1]) === singleNumber) : true).map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}))
+        else if(digit === 'triple') return summary.filter((data) => data._id.ticket.length === 3 && singleNumber ? sumOfDigits(data._id.ticket) === singleNumber : true).map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}))
         else return []
-    }, [digit, summary])
+    }, [digit, singleNumber, summary])
         
     useEffect(() => {
         (async () => {
@@ -208,17 +215,21 @@ export const MasterDataInfo = () => {
                 </svg>
             ) : tickets.length > 0 ? (
                 <>
+                <div className=" bg-black/60 p-2 my-10">
                     <TopSection
                         text="Today's Ticket Purchase Information"
                         description="* This data has been shown according to purchase from the website"
                     >
                         <Table columns={columns} data={tickets} />
                     </TopSection>
+                    </div>
+                <div className="bg-black/60 p-2 my-10">
+
                     <TopSection
                         text="Today's Ticket Summary Information"
                         description="* This data has been shown according to purchase from the website"
                     >
-                        <div className="flex justify-center w-full">
+                        <div className="flex justify-center w-full my-5">
                             <div className="flex justify-center mt-6 border-1 border-red-800 rounded-full">
                                 <input
                                     onChange={() => setDigit("all")}
@@ -297,9 +308,40 @@ export const MasterDataInfo = () => {
                                     Triple
                                 </label>
                             </div>
-                        </div>
+                            </div>
+                            {(digit === 'triple' || digit === 'double') && (
+                                <div className="flex justify-center">
+                                <label
+                                className={cn(
+                                    " py-2 px-8 text-lg text-white",
+                                )}
+                                htmlFor="single-number"
+                            >
+                                Single Number
+                            </label>
+                                <input
+                                onChange={(e) => {
+                                    if(e.target.value.length > 1) return
+                                    if(e.target.value.length === 0) {
+                                        setSingleNumber(null)
+                                        return
+                                    }
+                                    setSingleNumber(Number(e.target.value))
+                                }}
+                                className="bg-white/90 w-20 rounded-3xl text-black pl-10"
+                                type="number"
+                                name="bet-position"
+                                id="single-number"
+                                max={1}
+                                autoComplete="off"
+                                required
+                            />
+                            
+                            </div>
+                            )}
                         <Table columns={summaryColumns} data={filteredSummaryData} />
                     </TopSection>
+                    </div>
                 </>
             ) : (
                 <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
@@ -319,7 +361,7 @@ interface ITopSection {
 
 const TopSection: FC<ITopSection> = ({ text, description, children }) => {
     return (
-        <div className="flex text-center flex-col rounded-xl p-5 my-5 relative">
+        <div className="flex text-center flex-col rounded-xl my-5 relative">
             <div className="text-orange-600 text-center font-semibold text-lg">{text}</div>
 
             <p className="text-gray-500 my-1">{description}</p>
@@ -365,8 +407,8 @@ const PublishResult: FC = () => {
     };
 
     return (
-        <div className="flex bg-black/40 justify-center">
-            <div className="max-w-5xl flex flex-col rounded-xl p-5 my-5 relative">
+        <div className="flex  justify-center">
+            <div className="max-w-5xl bg-black/60 flex flex-col rounded-xl p-5 my-5 relative">
                 <div className="text-orange-600 text-center font-semibold text-lg">
                     Publish Result
                 </div>
@@ -374,7 +416,7 @@ const PublishResult: FC = () => {
                 <p className="text-gray-500 my-1 text-center">
                     * Fill the below form to release the result
                 </p>
-                <form className="flex flex-wrap gap-10 bg-black/60 p-20 rounded-lg">
+                <form className="flex flex-wrap gap-10 p-20 rounded-lg">
                     <div className="flex justify-center w-full">
                         <div className="flex justify-center mt-6 border-1 border-red-800 rounded-full">
                             <input
@@ -425,7 +467,7 @@ const PublishResult: FC = () => {
                         <select
                             id="place"
                             onChange={(e) => handleChange(e, "place")}
-                            className="ticket-dropdown my-4 px-4 w-52 border bg-black/40 rounded-md outline-none text-orange-600"
+                            className="ticket-dropdown my-4 px-4 w-52 border bg-black/60 rounded-md outline-none text-orange-600"
                         >
                             <option hidden value={null}>
                                 Select Place
@@ -445,7 +487,7 @@ const PublishResult: FC = () => {
                         <select
                             id="time"
                             onChange={(e) => handleChange(e, "time")}
-                            className="ticket-dropdown px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
+                            className="ticket-dropdown px-4 w-52 my-2 border bg-black/60 rounded-md outline-none text-orange-600"
                         >
                             <option value={null} hidden>
                                 Select Time
@@ -529,6 +571,81 @@ const DepositAmount: FC = () => {
         });
     }
 
+    const userColumn = useMemo(
+        () => [
+            {
+                Header: "Phone",
+                accessor: "phone" || "",
+            },
+            {
+                Header: "Email",
+                accessor: "email" || "",
+            },
+            {
+                Header: "Name",
+                accessor: "name" || "",
+            },
+            {
+                Header: "Country",
+                accessor: "country" || "",
+            },
+            {
+                Header: "Address",
+                accessor: "address" || "",
+            },
+            {
+                Header: "Balance",
+                accessor: "amount" || "",
+            },
+            {
+                Header: "Role",
+                accessor: "role" || "",
+            },
+            {
+                Header: "Refer Code",
+                accessor: "referCode" || "",
+            },
+            {
+                Header: "Id",
+                accessor: "_id" || "",
+            },
+            {
+                Header: "Created Time",
+                accessor: (values) => {
+                    return values?.createdAt || "N/A";
+                },
+                Cell: ({ cell }: any) => {
+                    const { value } = cell;
+                    return (
+                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
+                            {new Date(value).toLocaleString("default", {
+                                month: "long",
+                                year: "numeric",
+                                day: "2-digit",
+                                hour: "numeric",
+                                minute: "numeric",
+                            })}
+                        </div>
+                    );
+                },
+            },
+            {
+                Header: "Customers",
+                accessor: (values) => {
+                    return values?.users?.length || 0;
+                },
+                Cell: ({ cell }: any) => {
+                    const { value } = cell;
+                    return (
+                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
+                            {value}
+                        </div>
+                    );
+                },
+            }
+        ],
+            [])
+
     const fetchUser = async () => {
         try {
             const users = await getAllUser();
@@ -563,148 +680,166 @@ const DepositAmount: FC = () => {
     }, []);
 
     return (
-        <div className="flex bg-black/40  justify-center">
-            <div className="max-w-5xl flex flex-col rounded-xl p-5 my-5 relative">
-                <div className="text-orange-600 text-center font-semibold text-lg">
-                    Update Balance
-                </div>
+        <>
+        <div className="flex w-full justify-center">
+        <div className="max-w-5xl bg-black/60  flex flex-col rounded-xl p-5 my-5 relative">
+            <div className="text-orange-600 text-center font-semibold text-lg">
+                Update Balance
+            </div>
 
-                <p className="text-gray-500 my-1 text-center">Find the number to deposit amount</p>
-                <form className="flex flex-wrap gap-10">
-                    <div className="gap-4 p-20 flex flex-col bg-black/60 rounded-lg w-full justify-around">
-                        <div className="flex flex-col justify-between gap-2 items-start">
-                            <label htmlFor="place" className="text-white text-lg mx-2">
-                                Phone
-                            </label>
+            <p className="text-gray-500 my-1 text-center">Find the number to deposit amount</p>
+            <form className="flex flex-wrap gap-10">
+                <div className="gap-4 p-5 md:p-20 flex flex-col w-full justify-around">
+                    <div className="flex flex-col justify-between gap-2 items-start">
+                        <label htmlFor="place" className="text-white text-lg mx-2">
+                            Phone
+                        </label>
 
-                            <div className="flex w-full flex-col">
-                                <input
-                                    type="number"
-                                    value={search}
-                                    onChange={handleSearchChange}
-                                    placeholder="Search Number"
-                                    className="ticket-search-input px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
-                                />
-                                <select
-                                    id="phone"
-                                    onChange={(e) => handleChange(String(e.target.value), "phone")}
-                                    className="ticket-dropdown px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
-                                >
-                                    <option value={null} hidden className="text-black/50">
-                                        Select Number
-                                    </option>
-                                    {filteredUsers.map(({ phone, email }) => {
-                                        return (
-                                            <option
-                                                key={phone}
-                                                value={phone}
-                                                className="bg-black text-sm"
-                                            >
-                                                {phone} | {email}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                        </div>
-                        <div
-                            className={cn(
-                                "flex justify-between items-center",
-                                data.balance < 0 && "opacity-25 disabled:cursor-not-allowed"
-                            )}
-                        >
-                            <label className="text-white text-lg pr-10">Deposit</label>
+                        <div className="flex w-full flex-col">
                             <input
-                                disabled={data.balance < 0}
                                 type="number"
-                                className="form-control w-52 placeholder:opacity-50"
-                                id="betAmount"
-                                name="betAmount"
-                                placeholder="Balance"
-                                min="1"
-                                onChange={(e) => handleChange(Number(e.target.value), "balance")}
-                                required
+                                value={search}
+                                onChange={handleSearchChange}
+                                placeholder="Search Number"
+                                className="ticket-search-input px-4 w-52 my-2 border bg-black/60 rounded-md outline-none text-orange-600"
                             />
+                            <select
+                                id="phone"
+                                onChange={(e) => handleChange(String(e.target.value), "phone")}
+                                className="ticket-dropdown px-4 w-52 my-2 border bg-black/60 rounded-md outline-none text-orange-600"
+                            >
+                                <option value={null} hidden className="text-black/50">
+                                    Select Number
+                                </option>
+                                {filteredUsers.map(({ phone, email }) => {
+                                    return (
+                                        <option
+                                            key={phone}
+                                            value={phone}
+                                            className="bg-black text-sm"
+                                        >
+                                            {phone} | {email}
+                                        </option>
+                                    );
+                                })}
+                            </select>
                         </div>
-                        <div
-                            className={cn(
-                                "flex justify-between items-center",
-                                data.balance > 0 && "opacity-25 disabled:cursor-not-allowed"
-                            )}
-                        >
-                            <label className="text-white text-lg ">Withdraw</label>
-                            <input
-                                disabled={data.balance > 0}
-                                type="number"
-                                className="form-control w-52 placeholder:opacity-50"
-                                id="betAmount"
-                                name="betAmount"
-                                placeholder="Balance"
-                                min="1"
-                                onChange={(e) => handleChange(-Number(e.target.value), "balance")}
-                                required
-                            />
-                        </div>
-                        {data.phone && (
-                            <div className="flex flex-col p-4 rounded-lg w-full justify-around">
-                                <span className="text-white pb-3 text-lg self-center">
-                                    User Details
-                                </span>
-
-                                <span>
-                                    Email:{" "}
-                                    <p className="inline-flex ">
-                                        {users.find((user) => user.phone == data.phone)?.email}
-                                    </p>
-                                </span>
-                                <span>
-                                    Current Balance:{" "}
-                                    <p className="inline-flex ">
-                                        {users.find((user) => user.phone == data.phone)?.amount}
-                                    </p>
-                                </span>
-                                <span>
-                                    Refered By:{" "}
-                                    <p className="inline-flex ">
-                                        {users.find((user) => user.phone == data.phone)?.referCode}
-                                    </p>
-                                </span>
-                                <span>
-                                    Phone:{" "}
-                                    <p className="inline-flex ">
-                                        {users.find((user) => user.phone == data.phone)?.phone}
-                                    </p>
-                                </span>
-                                <span>
-                                    Role:{" "}
-                                    <p className="inline-flex ">
-                                        {users.find((user) => user.phone == data.phone)?.role}
-                                    </p>
-                                </span>
-                                <span>
-                                    Id:{" "}
-                                    <p className="inline-flex ">
-                                        {users.find((user) => user.phone == data.phone)?._id}
-                                    </p>
-                                </span>
-                            </div>
+                    </div>
+                    <div
+                        className={cn(
+                            "flex justify-between items-center",
+                            data.balance < 0 && "opacity-25 disabled:cursor-not-allowed"
                         )}
-
-                        <Button
-                            disabled={!data.balance || !data.phone}
-                            text={`${
-                                data.balance > 0
-                                    ? "Deposit"
-                                    : data.balance < 0
-                                    ? "Withdraw"
-                                    : "Update"
-                            } Balance`}
-                            onAction={depositBalance}
-                            isLoading={isLoading}
+                    >
+                        <label className="text-white text-lg pr-10">Deposit</label>
+                        <input
+                            disabled={data.balance < 0}
+                            type="number"
+                            className="form-control w-52 placeholder:opacity-50"
+                            id="betAmount"
+                            name="betAmount"
+                            placeholder="Balance"
+                            min="1"
+                            onChange={(e) => handleChange(Number(e.target.value), "balance")}
+                            required
                         />
                     </div>
-                </form>
-            </div>
+                    <div
+                        className={cn(
+                            "flex justify-between items-center",
+                            data.balance > 0 && "opacity-25 disabled:cursor-not-allowed"
+                        )}
+                    >
+                        <label className="text-white text-lg ">Withdraw</label>
+                        <input
+                            disabled={data.balance > 0}
+                            type="number"
+                            className="form-control w-52 placeholder:opacity-50"
+                            id="betAmount"
+                            name="betAmount"
+                            placeholder="Balance"
+                            min="1"
+                            onChange={(e) => handleChange(-Number(e.target.value), "balance")}
+                            required
+                        />
+                    </div>
+                    {data.phone && (
+                        <div className="flex flex-col p-4 rounded-lg w-full justify-around">
+                            <span className="text-white pb-3 text-lg self-center">
+                                User Details
+                            </span>
+
+                            <span>
+                                Email:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.email}
+                                </p>
+                            </span>
+                            <span>
+                                Current Balance:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.amount}
+                                </p>
+                            </span>
+                            <span>
+                                Refered By:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.referCode}
+                                </p>
+                            </span>
+                            <span>
+                                Phone:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.phone}
+                                </p>
+                            </span>
+                            <span>
+                                Role:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?.role}
+                                </p>
+                            </span>
+                            <span>
+                                Id:{" "}
+                                <p className="inline-flex ">
+                                    {users.find((user) => user.phone == data.phone)?._id}
+                                </p>
+                            </span>
+                        </div>
+                    )}
+
+                    <Button
+                        disabled={!data.balance || !data.phone}
+                        text={`${
+                            data.balance > 0
+                                ? "Deposit"
+                                : data.balance < 0
+                                ? "Withdraw"
+                                : "Update"
+                        } Balance`}
+                        onAction={depositBalance}
+                        isLoading={isLoading}
+                    />
+                </div>
+            </form>
         </div>
+        </div>
+        {users.length > 0 ? (
+                <div className="bg-black/60 p-2 my-10">
+                    
+                        
+                        <TopSection
+                            text="Customer Information"
+                            description="* This data has been shown according to data from the website"
+                        >
+                            <Table columns={userColumn} data={users} />
+                        </TopSection>
+                    </div>
+                ) : (
+                    <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
+                        No data found
+                    </span>
+                )}
+    </>
     );
 };

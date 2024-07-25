@@ -32,9 +32,9 @@ function App() {
     const [user, setUser] = useState<null | IUser>(null);
     const [isLoading, setIsLoading] = useState(true);
     //for Production
-    // console.log = () => {};
-    // console.error = () => {};
-    // console.debug = () => {};
+    console.log = () => {};
+    console.error = () => {};
+    console.debug = () => {};
     const fetchCurrentUser = async() =>{
         try {
             setIsLoading(true);
@@ -47,7 +47,9 @@ function App() {
                 role: user.data.role,
             });
         } catch (error) {
-            console.log(`Error fetching lucky winner: ${error}`);
+            console.log(`Error fetching user: ${error}`);
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
         } finally {
             setIsLoading(false);
         }

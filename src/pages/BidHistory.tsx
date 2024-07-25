@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useProfileContext } from "@/App";
 import BottomNavbar from "../components/DrawerNav/BottomNavbar";
+import { BiSolidLeftArrowAlt } from "react-icons/bi";
 
 export const BidHistory = () => {
     const navigate = useNavigate();
@@ -14,6 +15,13 @@ export const BidHistory = () => {
     useEffect(() => {
         if (!user) navigate(routes.LOGIN);
     }, [navigate, user]);
+
+    const hasWon = (bid) => {
+        if(bid.position === 'Open' && new Date(bid?.time).getTime() > Date.now()) return null;
+        else if(bid.position === 'Close' && new Date(bid?.time).setMinutes(
+            new Date(bid?.time).getHours() + 1
+        ) > Date.now()) return null;
+    }
     
     useEffect(() => {
         (async () => {
@@ -30,64 +38,12 @@ export const BidHistory = () => {
     return (
         <section className="flex flex-col items-center justify-start text-white gap-10 min-h-screen p-4">
             <div className="sticky top-5 flex justify-between items-center w-full">
-                <button
-                    onClick={() => navigate(routes.INDEX)}
+            <button
+                        onClick={() => navigate(routes.INDEX)}
+                    className="p-3 bg-gray-100 rounded-full shadow-sm"
                 >
-                     <svg
-                                width="44"
-                                height="44"
-                                viewBox="0 0 44 44"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect
-                                    x="0.517039"
-                                    y="0.517039"
-                                    width="42.9659"
-                                    height="42.9659"
-                                    rx="21.483"
-                                    fill="url(#paint0_linear_831_6513)"
-                                />
-                                <rect
-                                    x="0.517039"
-                                    y="0.517039"
-                                    width="42.9659"
-                                    height="42.9659"
-                                    rx="21.483"
-                                    stroke="url(#paint1_linear_831_6513)"
-                                    stroke-width="1.03408"
-                                />
-                                <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M24.6379 15.0602C25.0225 15.3679 25.0849 15.9292 24.7772 16.3138L20.4662 21.7026L24.7772 27.0914C25.0849 27.476 25.0225 28.0373 24.6379 28.345C24.2533 28.6527 23.692 28.5904 23.3843 28.2057L18.6275 22.2598C18.3669 21.934 18.3669 21.4712 18.6275 21.1455L23.3843 15.1995C23.692 14.8149 24.2533 14.7525 24.6379 15.0602Z"
-                                    fill="white"
-                                />
-                                <defs>
-                                    <linearGradient
-                                        id="paint0_linear_831_6513"
-                                        x1="21.9999"
-                                        y1="0"
-                                        x2="21.9999"
-                                        y2="41.0667"
-                                        gradientUnits="userSpaceOnUse"
-                                    >
-                                        <stop stop-color="#FF5301" />
-                                        <stop offset="1" stop-color="#FFD901" />
-                                    </linearGradient>
-                                    <linearGradient
-                                        id="paint1_linear_831_6513"
-                                        x1="22"
-                                        y1="0"
-                                        x2="22"
-                                        y2="44"
-                                        gradientUnits="userSpaceOnUse"
-                                    >
-                                        <stop stop-color="#571100" />
-                                        <stop offset="1" stop-color="#CE2800" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
+                <BiSolidLeftArrowAlt className="w-full text-black"/>
+                    {/* <FontAwesomeIcon icon="fa-solid fa-arrow-left" /> */}
                 </button>
                 <span className="text-2xl font-sans font-semibold  oleo-script">Bid History</span>
                 <div />
@@ -98,7 +54,7 @@ export const BidHistory = () => {
                 ) : (
                     <>
                         {bidHistory.map((bid) => (
-                            <div className={`${bid.won ? 'border-green-800' : 'border-red-800'} border-2 relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl`}>
+                            <div className={`${hasWon(bid) === null ? 'border-gray-500' : hasWon(bid) ? 'border-green-800' : 'border-red-800'} border-2 relative flex flex-col gap-2 items-center p-1 w-full rounded-3xl`}>
                                 <span className=" rounded-tl-lg rounded-tr-lg text-white font-semibold text-lg py-2 w-full text-center">
                                     {bid.place}
                                 </span>
@@ -137,15 +93,17 @@ export const BidHistory = () => {
                                             })}
                                         </p>
                                     </span>
-                                    {bid.won === true && (
+                                    {hasWon(bid) === true && (
                                         <span className="text-xs text-center font-semibold text-green-600">
                                             RETURNS<p className="text-center text-sm">{bid.returns}</p>
                                         </span>
                                     )}
                                     <br/>
+                                    {hasWon(bid) !== null &&
                                         <span className={`text-xl w-full text-center font-semibold ${bid.won ? "text-green-600" : "text-red-600"}`}>
                                             {bid.won ? "Congratulation!!! you won the prize" : "Better Luck next time"}
                                         </span>
+}
                                     
                                 </div>
                             </div>
