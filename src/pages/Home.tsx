@@ -89,7 +89,7 @@ export const Home = () => {
             </div> */}
             {/* <div className="bg-white/10 m-4 p-4 rounded-lg grid grid-cols-2 gap-4">
                 <NavLink
-                    to="https://wa.me/+9779822798040"
+                    to="https://wa.me/+9779707559773"
                     target="_blank"
                     className="flex text-lg text-[#ff3333] font-semibold bg-white/10 p-3 rounded-lg items-center justify-center gap-3"
                 >
@@ -112,7 +112,7 @@ export const Home = () => {
                     Deposit
                 </NavLink>
                 <NavLink
-                    to="https://wa.me/+9779822798040"
+                    to="https://wa.me/+9779707559773"
                     target="_blank"
                     className="flex text-lg text-[#38df38] font-semibold bg-white/10 p-3 rounded-lg items-center justify-center gap-3"
                 >
@@ -138,7 +138,7 @@ export const Home = () => {
             <div className="flex w-full justify-center gap-4">
                 <div className="group p-1 rounded-lg hover:text-orange-700  bg-gradient-to-r from-[#ffd800] to-[#fe480f] shadow-lg ">
                     <NavLink
-                        to="https://wa.me/+9779822798040?text=I%20want%20to%20withdraw%20from%20my%20balance."
+                        to="https://wa.me/+9779707559773?text=I%20want%20to%20withdraw%20from%20my%20balance."
                         target="_blank"
                         className="flex items-center bg-[#3c170a]  justify-start w-full p-2 px-8 lg:px-16 xl:px-16"
                         // onClick={toggleSidebar}
@@ -166,7 +166,7 @@ export const Home = () => {
 
                 <div className="group p-1 rounded-lg hover:text-orange-700  bg-gradient-to-r from-[#ffd800] to-[#fe480f] shadow-lg ">
                     <NavLink
-                        to="https://wa.me/+9779822798040?text=I%20want%20to%20withdraw%20from%20my%20balance."
+                        to="https://wa.me/+9779707559773?text=I%20want%20to%20withdraw%20from%20my%20balance."
                         target="_blank"
                         className="flex items-center bg-[#3c170a]  justify-start w-full p-2 px-8 lg:px-16 xl:px-16"
                         // onClick={toggleSidebar}

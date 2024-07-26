@@ -165,7 +165,7 @@ const Navbar = () => {
                             </li>
                             <li className="group hover:text-orange-700">
                                 <NavLink
-                                    to="https://wa.me/+9779822798040?text=I%20want%20a%20deposit%20for%20a%20game."
+                                    to="https://wa.me/+9779707559773?text=I%20want%20a%20deposit%20for%20a%20game."
                                     target="_blank"
                                     className="flex items-center justify-start w-full"
                                     onClick={toggleSidebar}
@@ -193,7 +193,7 @@ const Navbar = () => {
 
                             <li className="group hover:text-orange-700">
                                 <NavLink
-                                    to="https://wa.me/+9779822798040?text=I%20want%20to%20withdraw%20from%20my%20balance."
+                                    to="https://wa.me/+9779707559773?text=I%20want%20to%20withdraw%20from%20my%20balance."
                                     target="_blank"
                                     className="flex items-center justify-start w-full"
                                     onClick={toggleSidebar}

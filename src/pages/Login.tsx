@@ -134,7 +134,7 @@ const Login = () => {
                     </div>
                     <div className="text-start mt-4">
                         <NavLink 
-                        to="https://wa.me/+9779822798040?text=I%20forgot%20my%20password."
+                        to="https://wa.me/+9779707559773?text=I%20forgot%20my%20password."
                         target="_blank" className="text-[#FE480F] hover:text-[#fe3f0f] text-sm">
                             Forgot password?
                         </NavLink>

@@ -23,7 +23,7 @@ function BottomNavbar() {
 
                 <NavLink
                     className=" flex justify-center h-[75px] items-center"
-                    to="https://wa.me/+9779822798040?text=I%27m%20interested%20in%20your%20games"
+                    to="https://wa.me/+9779707559773?text=I%27m%20interested%20in%20your%20games"
                 >
                     <img className="h-[60px] w-[60px]" src="./assets/img/contact.png" />
                 </NavLink>
@@ -39,7 +39,7 @@ function BottomNavbar() {
                 <NavLink
                     className="flex justify-center h-[70px] w-[50px] flex-col  hover:text-orange-500"
                     target="_blank"
-                    to="https://wa.me/+9779822798040"
+                    to="https://wa.me/+9779707559773"
                 >
                     <img className=" w-[35px] justify-center ml-2" src="./assets/img/support.png" />
                     <p className="text-xs -mt-2 font-mono text-center oleo-script ">Support</p>
