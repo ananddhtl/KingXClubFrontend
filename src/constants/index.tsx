@@ -1,6 +1,6 @@
 import { ClubPanther, ClubTiger, ClubLion, ClubPuma, ClubCobra } from "@/constants/assets/Icons";
 
-export const routes = { INDEX: '/', PLACE_BID: '/place-bid', RESULT: '/result', BID_HISTORY: '/bid-history', MASTER: '/master', ADMIN: '/admin', AGENT: '/agent', PROFILE: '/profile', LOGIN: '/login', SIGNUP: '/signup', AGENT_FORM :'/apply/agent', REFERRAL : '/refer', NOTIFICATION: '/notifications' }
+export const routes = { INDEX: '/', PLACE_BID: '/place-bid', RESULT: '/result', BID_HISTORY: '/bid-history', MASTER_RESULT: '/master/result', MASTER_USER: '/master/users', ADMIN: '/admin', AGENT: '/agent', PROFILE: '/profile', LOGIN: '/login', SIGNUP: '/signup', AGENT_FORM :'/apply/agent', MAKE_AGENT :'/make/agent', REFERRAL : '/refer', NOTIFICATION: '/notifications' }
 
 export enum ROLE {
     MASTER = 'master',

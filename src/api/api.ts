@@ -92,6 +92,10 @@ export const agentFormAPI = (payload: any) => {
     return baseURL.post("/user/submit/agent-form", payload);
 };
 
+export const makeAgentFormAPI = (payload: any) => {
+    return baseURL.post("/user/make/agent", payload);
+};
+
 export const updateBalance = (payload: any) => {
     return baseURL.post("/user/update-balance", payload);
 };

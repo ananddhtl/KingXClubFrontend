@@ -1,220 +1,20 @@
 import { FC, ReactNode, useEffect, useMemo, useState } from "react";
 import { Table } from "../table";
-import { getTodaysTicketForAgent, getUserDetailForAgent, updateBalance } from "@/api/api";
+import { getAllUser, updateBalance } from "@/api/api";
 import toast from "react-hot-toast";
-import { SelectColumnFilter } from "../table/filters";
 import { Button } from "../button/Button";
 import { cn } from "@/utils/cn";
 import { useProfileContext } from "@/App";
 
-export const AgentOrAdminDataInfo = () => {
-    const [tickets, setTickets] = useState<any[]>([]);
-    const [summary, setSummary] = useState<any[]>([]);
-    const [dataLoading, setDataLoading] = useState(false);
-
-    const columns = useMemo(
-        () => [
-            {
-                Header: "Ticket Number",
-                accessor: "ticket" || "",
-            },
-            {
-                Header: "Purchase Time",
-                accessor: (values) => {
-                    return values?.createdAt || "N/A";
-                },
-                Filter: SelectColumnFilter,
-                filter: "equals",
-                Cell: ({ cell }: any) => {
-                    const { value } = cell;
-                    return (
-                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
-                            {new Date(value).toLocaleString("default", {
-                                month: "long",
-                                year: "numeric",
-                                day: "2-digit",
-                                hour: "numeric",
-                                minute: "numeric",
-                            })}
-                        </div>
-                    );
-                },
-            },
-            {
-                Header: "Result Time",
-                accessor: (values) => {
-                    return values?.time || "N/A";
-                },
-                Filter: SelectColumnFilter,
-                filter: "equals",
-                Cell: ({ cell }: any) => {
-                    const { value } = cell;
-                    return (
-                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
-                            {new Date(value).toLocaleString("default", {
-                                month: "long",
-                                year: "numeric",
-                                day: "2-digit",
-                                hour: "numeric",
-                                minute: "numeric",
-                            })}
-                        </div>
-                    );
-                },
-            },
-            {
-                Header: "Amount",
-                accessor: "amount" || "",
-            },
-            {
-                Header: "Position",
-                accessor: "position" || "",
-            },
-            {
-                Header: "Returns",
-                accessor: "returns" || "",
-            },
-            {
-                Header: "Place",
-                accessor: "place" || "",
-            },
-            {
-                Header: "Won",
-                accessor: (values) => {
-                    return String(values?.won) || "N/A";
-                },
-                // Filter: SelectColumnFilter,
-                filter: "equals",
-                Cell: ({ cell }: any) => {
-                    const { value } = cell;
-
-                    return (
-                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
-                            {value}
-                        </div>
-                    );
-                },
-            },
-            {
-                Header: "User",
-                accessor: "user" || "",
-            },
-        ],
-        []
-    );
-
-    const summaryColumns = useMemo(
-        () => [
-            {
-                Header: "Ticket Number",
-                accessor: "_id.ticket" || "",
-            },
-            {
-                Header: "Result Time",
-                accessor: (values) => {
-                    return values?.time || "N/A";
-                },
-                Filter: SelectColumnFilter,
-                filter: "equals",
-                Cell: ({ cell }: any) => {
-                    const { value } = cell;
-                    return (
-                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
-                            {new Date(value).toLocaleString("default", {
-                                month: "long",
-                                year: "numeric",
-                                day: "2-digit",
-                                hour: "numeric",
-                                minute: "numeric",
-                            })}
-                        </div>
-                    );
-                },
-            },
-            {
-                Header: "Place",
-                accessor: "_id.place" || "",
-            },
-            {
-                Header: "Position",
-                accessor: "_id.position" || "",
-            },
-            {
-                Header: "Count",
-                accessor: "count" || "",
-            },
-            {
-                Header: "Amount",
-                accessor: "totalAmount" || "",
-            },
-            {
-                Header: "Returns",
-                accessor: "returnAmount" || "",
-            },
-        ],
-        []
-    );
-
-    useEffect(() => {
-        (async () => {
-            try {
-                setDataLoading(true);
-                const buyers = await getTodaysTicketForAgent();
-                console.log({ buyers });
-                setTickets(buyers.data.data);
-                setSummary(buyers.data.summary);
-            } catch (error) {
-                console.log(`Error fetching lucky winner: ${error}`);
-            } finally {
-                setDataLoading(false);
-            }
-        })();
-    }, []);
+export const MasterUserInfo = () => {
 
     return (
-        <div className="w-full flex justify-center">
-            <section className="bg-neutral-900 min-h-screen w-full lg:w-screen flex-col flex">
-                <DepositAmount />
-                {dataLoading ? (
-                    <svg
-                        className="spinner text-center animate-spin"
-                        id="spinner"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                    </svg>
-                ) : tickets.length > 0 ? (
-                    <>
-                        <TopSection
-                            text="Today's Ticket Purchase Information"
-                            description="* This data has been shown according to purchase from the website"
-                        >
-                            <Table columns={columns} data={tickets} />
-                        </TopSection>
-                        <TopSection
-                            text="Today's Ticket Summary Information"
-                            description="* This data has been shown according to purchase from the website"
-                        >
-                            <Table columns={summaryColumns} data={summary} />
-                        </TopSection>
-                    </>
-                ) : (
-                    <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
-                        No data found
-                    </span>
-                )}
-            </section>
-        </div>
+        <section className="bg-neutral-900 min-h-screen w-full lg:w-screen flex-col flex">
+            <DepositAmount />            
+        </section>
     );
 };
+
 
 interface ITopSection {
     text: string;
@@ -224,10 +24,10 @@ interface ITopSection {
 
 const TopSection: FC<ITopSection> = ({ text, description, children }) => {
     return (
-        <div className="bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
+        <div className="flex text-center flex-col rounded-xl my-5 relative">
             <div className="text-orange-600 text-center font-semibold text-lg">{text}</div>
 
-            <p className="text-gray-500 my-1 text-center">{description}</p>
+            <p className="text-gray-500 my-1">{description}</p>
             {children}
         </div>
     );
@@ -236,13 +36,12 @@ const TopSection: FC<ITopSection> = ({ text, description, children }) => {
 const DepositAmount: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [users, setUser] = useState([]);
-
+    const { fetchCurrentUser } = useProfileContext();
     const [data, setData] = useState({
         phone: null,
         balance: 0,
     });
     const [search, setSearch] = useState("");
-    const {fetchCurrentUser} = useProfileContext()
 
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
@@ -267,6 +66,18 @@ const DepositAmount: FC = () => {
                 accessor: "email" || "",
             },
             {
+                Header: "Name",
+                accessor: "name" || "",
+            },
+            {
+                Header: "Country",
+                accessor: "country" || "",
+            },
+            {
+                Header: "Address",
+                accessor: "address" || "",
+            },
+            {
                 Header: "Balance",
                 accessor: "amount" || "",
             },
@@ -275,21 +86,60 @@ const DepositAmount: FC = () => {
                 accessor: "role" || "",
             },
             {
+                Header: "Refer Code",
+                accessor: "referCode" || "",
+            },
+            {
                 Header: "Id",
                 accessor: "_id" || "",
             },
+            {
+                Header: "Created Time",
+                accessor: (values) => {
+                    return values?.createdAt || "N/A";
+                },
+                Cell: ({ cell }: any) => {
+                    const { value } = cell;
+                    return (
+                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
+                            {new Date(value).toLocaleString("default", {
+                                month: "long",
+                                year: "numeric",
+                                day: "2-digit",
+                                hour: "numeric",
+                                minute: "numeric",
+                            })}
+                        </div>
+                    );
+                },
+            },
+            {
+                Header: "Customers",
+                accessor: (values) => {
+                    return values?.users?.length || 0;
+                },
+                Cell: ({ cell }: any) => {
+                    const { value } = cell;
+                    return (
+                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
+                            {value}
+                        </div>
+                    );
+                },
+            }
         ],
             [])
 
     const fetchUser = async () => {
         try {
-            const users = await getUserDetailForAgent();
+            const users = await getAllUser();
             console.log({ users });
             setUser(users.data);
         } catch (error) {
             console.log(`Error fetching user: ${error}`);
         }
-    }
+    };
+
     const depositBalance = async (): Promise<any> => {
         if (!data.phone) return toast("Please select phone number");
         if (!data.balance) return toast("Please enter the balance to deposit");
@@ -308,13 +158,15 @@ const DepositAmount: FC = () => {
             setData({ ...data, balance: 0 });
         }
     };
+
     useEffect(() => {
-        fetchUser()
+        fetchUser();
     }, []);
 
     return (
-        <div className="flex flex-col w-full items-center justify-center">
-        <div className="max-w-5xl bg-black/40 flex flex-col rounded-xl p-5 my-5 relative">
+        <>
+        <div className="flex w-full justify-center">
+        <div className="max-w-5xl bg-black/60  flex flex-col rounded-xl p-5 my-5 relative">
             <div className="text-orange-600 text-center font-semibold text-lg">
                 Update Balance
             </div>
@@ -333,12 +185,12 @@ const DepositAmount: FC = () => {
                                 value={search}
                                 onChange={handleSearchChange}
                                 placeholder="Search Number"
-                                className="ticket-search-input px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
+                                className="ticket-search-input px-4 w-52 my-2 border bg-black/60 rounded-md outline-none text-orange-600"
                             />
                             <select
                                 id="phone"
                                 onChange={(e) => handleChange(String(e.target.value), "phone")}
-                                className="ticket-dropdown px-4 w-52 my-2 border bg-black/40 rounded-md outline-none text-orange-600"
+                                className="ticket-dropdown px-4 w-52 my-2 border bg-black/60 rounded-md outline-none text-orange-600"
                             >
                                 <option value={null} hidden className="text-black/50">
                                     Select Number
@@ -455,6 +307,7 @@ const DepositAmount: FC = () => {
                 </div>
             </form>
         </div>
+        </div>
         {users.length > 0 ? (
                 <div className="bg-black/60 p-2 my-10">
                     
@@ -471,6 +324,6 @@ const DepositAmount: FC = () => {
                         No data found
                     </span>
                 )}
-    </div>
+    </>
     );
 };

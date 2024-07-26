@@ -42,20 +42,48 @@ useEffect(() => {
                 <span className="text-2xl font-sans font-semibold  oleo-script">Refer & Earn</span>
                 <div />
             </div>
-        <div className=" w-full h-screen flex flex-col items-center justify-center">
+            <div className="w-full flex flex-col items-center justify-center ">
+                <div className="flex  w-72 justify-center text-center flex-col tracking-wider my-1 text-white font-semibold font-mono text-sm ">
+                    Share app among your friends{" "}
+                </div>
+                {/* <a href="https://www.kingxclub.com"> */}
+                    <img
+                        className="h-20 w-auto"
+                        src="assets/img/logo.png"
+                    />
+                {/* </a>{" "} */}
+            </div>
+        <div className=" w-full h-screen flex flex-col items-center">
             <h1 className="text-center my-5 text-white font-semibold font-mono text-lg">
                 Scan the QR to get Referral Code{" "}
             </h1>
+            <div className="flex w-full items-center justify-center gap-5 ">
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold flex justify-center items-center h-8 w-8 p-2 rounded-full "
+                    onClick={handleFacebookShare}
+                >
+                    <FaFacebookF className="text-xl" />
+                </button>
+                <button
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold  flex justify-center items-center h-8 w-8 p-2 rounded-full "
+                    onClick={handleWhatsAppShare}
+                >
+                    <FaWhatsapp className="text-xl" />
+                </button>
+            </div>
             <div
-                      onClick={() => {
-                        window.navigator.clipboard.writeText(parseInt(user?.phone || 0, 36).toString());
-                        toast.success("refer code coppied")
-                      }}
-                      className="flex m-2 gap-3 items-center "
+                      
+                      className="flex m-4 gap-3 justify-center "
                     >
                       <span className="styled-text !text-lg">{parseInt(user?.phone || 0, 36).toString()}</span>
-                      <MdContentCopy/>
-                      <MdShare onClick={() => window.open(referUrl, "_blank")} />
+                      <MdContentCopy onClick={() => {
+                        window.navigator.clipboard.writeText(parseInt(user?.phone || 0, 36).toString());
+                        toast.success("refer code coppied", {id: 'refer-code'})
+                      }}/>
+                      <MdShare onClick={() => {
+                        window.navigator.clipboard.writeText(referUrl);
+                        toast.success("share link coppied", {id: 'share-link'})
+                      }} />
                     </div>
             <QRCode
                 value={`https://www.kingxclub.com/#/signup/${parseInt(user?.phone || 0, 36)}`}
@@ -71,31 +99,7 @@ useEffect(() => {
             />
 
 
-            <div className="w-full flex flex-col items-center justify-center my-3 ">
-                <div className="flex  w-72 justify-center text-center flex-col tracking-wider   my-5 text-white font-semibold font-mono text-sm ">
-                    Share app among your friends{" "}
-                </div>
-                {/* <a href="https://www.kingxclub.com"> */}
-                    <img
-                        className="h-32 w-24"
-                        src="assets/img/logo.png"
-                    />
-                {/* </a>{" "} */}
-            </div>
-            <div className="flex  w-72 justify-center gap-5 my-5">
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold flex justify-center items-center h-8 w-8 p-2 rounded-full "
-                    onClick={handleFacebookShare}
-                >
-                    <FaFacebookF className="text-xl" />
-                </button>
-                <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold  flex justify-center items-center h-8 w-8 p-2 rounded-full "
-                    onClick={handleWhatsAppShare}
-                >
-                    <FaWhatsapp className="text-xl" />
-                </button>
-            </div>
+          
         </div>
         </section>
     );

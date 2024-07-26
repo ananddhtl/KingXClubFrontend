@@ -67,7 +67,7 @@ const Navbar = () => {
                     </NavLink>
                 ) : (
                     <NavLink
-                        className="bg-green-600 px-2 py-1 rounded-lg hover:bg-green-700 text-lg oleo-script inline-flex items-center gap-1"
+                        className="bg-green-600 p-2 rounded-lg hover:bg-green-700 text-lg oleo-script inline-flex items-center gap-1"
                         to="/login"
                     >
                         <svg
@@ -84,6 +84,7 @@ const Navbar = () => {
                         </svg>
                         Login
                     </NavLink>
+                   
                 )}
             </div>
             <AnimatePresence>

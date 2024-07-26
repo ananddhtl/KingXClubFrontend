@@ -2,7 +2,7 @@ import { Route, Routes, HashRouter } from "react-router-dom";
 import "./App.scss";
 import { routes } from "./constants";
 import { Home } from "./pages/Home";
-import { Master } from "./pages/Master";
+import { MasterResult, MasterUsers } from "./pages/Master";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { Profile } from "@/pages/Profile";
@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import Loader from "./components/Loader/Loader";
 import { getUserDetail } from "./api/api";
 import Agentform from "./pages/Agentform";
+import {MakeAgent} from "./pages/MakeAgent";
 import ReferralCode from "./pages/ReferralCode";
 import Notification from "./pages/Notification";
 import { AgentOrAdmin } from "./pages/AgentOrAdmin";
@@ -32,9 +33,9 @@ function App() {
     const [user, setUser] = useState<null | IUser>(null);
     const [isLoading, setIsLoading] = useState(true);
     //for Production
-    console.log = () => {};
-    console.error = () => {};
-    console.debug = () => {};
+    // console.log = () => {};
+    // console.error = () => {};
+    // console.debug = () => {};
     const fetchCurrentUser = async() =>{
         try {
             setIsLoading(true);
@@ -92,10 +93,12 @@ function App() {
                                 <Route path={routes.RESULT} element={<Result />} />
                                 <Route path={routes.SIGNUP} element={<Signup />} />
                                 <Route path={`${routes.SIGNUP}/:referCode`} element={<Signup />} />
-                                <Route path={routes.MASTER} element={<Master />} />
+                                <Route path={routes.MASTER_RESULT} element={<MasterResult />} />
+                                <Route path={routes.MASTER_USER} element={<MasterUsers />} />
                                 <Route path={routes.AGENT} element={<AgentOrAdmin />} />
                                 <Route path={routes.ADMIN} element={<AgentOrAdmin />} />
                                 <Route path={routes.AGENT_FORM} element={<Agentform />} />
+                                <Route path={routes.MAKE_AGENT} element={<MakeAgent />} />
                                 <Route path={routes.REFERRAL} element={<ReferralCode />} />
                                 <Route path={routes.NOTIFICATION} element={<Notification />} />
                                 {/* <Route path="*" element={<Navigate to={routes.INDEX} replace />} /> */}
