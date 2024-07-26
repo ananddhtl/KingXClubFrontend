@@ -8,8 +8,8 @@ import { cn } from "@/utils/cn";
 import { CLUBS } from "@/constants";
 
 function sumOfDigits(value: string) {
-    return value.split('').reduce((sum, digit) => sum + parseInt(digit), 0);
-  }
+    return value.split("").reduce((sum, digit) => sum + parseInt(digit), 0);
+}
 
 export const MasterResultInfo = () => {
     const [tickets, setTickets] = useState<any[]>([]);
@@ -17,7 +17,6 @@ export const MasterResultInfo = () => {
     const [dataLoading, setDataLoading] = useState(false);
     const [digit, setDigit] = useState("all");
     const [singleNumber, setSingleNumber] = useState(null);
-
 
     const columns = useMemo(
         () => [
@@ -205,34 +204,59 @@ export const MasterResultInfo = () => {
         ],
         []
     );
-    
 
     const filteredSummaryData = useMemo(() => {
-        let data = []
-        if(digit === 'all') data = summary.map((data) => ({ ...data, possibility: (data.count/data.returnAmount)}));
-        else if(digit === 'single') data = summary.filter((data) => data._id.ticket.length === 1).map((data) => ({ ...data, possibility: (data.count/data.returnAmount).toFixed(5)}))
-        else if(digit === 'double') data = summary.map((data) => {
-            if(data._id.ticket.length !== 2) return
-            if(singleNumber){
-                if(Number(data._id.ticket[0]) !== singleNumber && Number(data._id.ticket[1]) !== singleNumber) return
-            }
-            return{ ...data, possibility: (data.count/data.returnAmount)}
-            })
-        else if(digit === 'triple') data = summary.map((data) => {
-            if(data._id.ticket.length !== 3) return
-            if(singleNumber){
-                
-                if(Number(sumOfDigits(data._id.ticket).toString()[sumOfDigits(data._id.ticket).toString().length - 1 ]) !== singleNumber) return
-            }
-            return{ ...data, possibility: (data.count/data.returnAmount)}
-            })
-         return data.filter((value) => value).sort((a,b) => a.possibility - b.possibility).map((data, index) => ({...data, possibility: index + 1}))
-         .filter((value) => value).sort((a,b) => b.possibility - a.possibility).map((data, index) => ({...data, possibility: index + 1}))
-    }, [digit, singleNumber, summary])
+        let data = [];
+        if (digit === "all")
+            data = summary.map((data) => ({
+                ...data,
+                possibility: data.count / data.returnAmount,
+            }));
+        else if (digit === "single")
+            data = summary
+                .filter((data) => data._id.ticket.length === 1)
+                .map((data) => ({
+                    ...data,
+                    possibility: (data.count / data.returnAmount).toFixed(5),
+                }));
+        else if (digit === "double")
+            data = summary.map((data) => {
+                if (data._id.ticket.length !== 2) return;
+                if (singleNumber) {
+                    if (
+                        Number(data._id.ticket[0]) !== singleNumber &&
+                        Number(data._id.ticket[1]) !== singleNumber
+                    )
+                        return;
+                }
+                return { ...data, possibility: data.count / data.returnAmount };
+            });
+        else if (digit === "triple")
+            data = summary.map((data) => {
+                if (data._id.ticket.length !== 3) return;
+                if (singleNumber) {
+                    if (
+                        Number(
+                            sumOfDigits(data._id.ticket).toString()[
+                                sumOfDigits(data._id.ticket).toString().length - 1
+                            ]
+                        ) !== singleNumber
+                    )
+                        return;
+                }
+                return { ...data, possibility: data.count / data.returnAmount };
+            });
+        return data
+            .filter((value) => value)
+            .sort((a, b) => a.possibility - b.possibility)
+            .map((data, index) => ({ ...data, possibility: index + 1 }))
+            .filter((value) => value)
+            .sort((a, b) => b.possibility - a.possibility)
+            .map((data, index) => ({ ...data, possibility: index + 1 }));
+    }, [digit, singleNumber, summary]);
 
-    console.log({filteredSummaryData});
-    
-        
+    console.log({ filteredSummaryData });
+
     useEffect(() => {
         (async () => {
             try {
@@ -271,133 +295,130 @@ export const MasterResultInfo = () => {
                 </svg>
             ) : tickets.length > 0 ? (
                 <>
-                <div className=" bg-black/60 p-2 my-10">
-                    <TopSection
-                        text="Today's Ticket Purchase Information"
-                        description="* This data has been shown according to purchase from the website"
-                    >
-                        <Table columns={columns} data={tickets} />
-                    </TopSection>
-                    </div>
                 <div className="bg-black/60 p-2 my-10">
-
-                    <TopSection
-                        text="Today's Ticket Summary Information"
-                        description="* This data has been shown according to purchase from the website"
-                    >
-                        <div className="flex justify-center w-full my-5">
-                            <div className="flex justify-center mt-6 border-1 border-red-800 rounded-full">
-                                <input
-                                    onChange={() => setDigit("all")}
-                                    className="btn-check"
-                                    type="radio"
-                                    name="bet-position"
-                                    id="bet-all"
-                                    value="all"
-                                    autoComplete="off"
-                                    required
-                                />
-                                <label
-                                    className={cn(
-                                        "btn py-2 text-lg px-8 text-white rounded-full",
-                                        digit === "all" && "!bg-orange-500"
-                                    )}
-                                    htmlFor="bet-all"
-                                >
-                                    All
-                                </label>
-                                <input
-                                    onChange={() => setDigit("single")}
-                                    className="btn-check"
-                                    type="radio"
-                                    name="bet-position"
-                                    id="bet-single"
-                                    value="single"
-                                    autoComplete="off"
-                                    required
-                                />
-                                <label
-                                    className={cn(
-                                        "btn py-2 px-8 text-lg text-white rounded-full",
-                                        digit === "single" && " !bg-orange-500"
-                                    )}
-                                    htmlFor="bet-single"
-                                >
-                                    Single
-                                </label>
-                                <input
-                                    onChange={() => setDigit("double")}
-                                    className="btn-check"
-                                    type="radio"
-                                    name="bet-position"
-                                    id="bet-double"
-                                    value="double"
-                                    autoComplete="off"
-                                    required
-                                />
-                                <label
-                                    className={cn(
-                                        "btn py-2 px-8 text-lg text-white rounded-full",
-                                        digit === "double" && " !bg-orange-500"
-                                    )}
-                                    htmlFor="bet-double"
-                                >
-                                    Double
-                                </label>
-                                <input
-                                    onChange={() => setDigit("triple")}
-                                    className="btn-check"
-                                    type="radio"
-                                    name="bet-position"
-                                    id="bet-triple"
-                                    value="triple"
-                                    autoComplete="off"
-                                    required
-                                />
-                                <label
-                                    className={cn(
-                                        "btn py-2 px-8 text-lg text-white rounded-full",
-                                        digit === "triple" && " !bg-orange-500"
-                                    )}
-                                    htmlFor="bet-triple"
-                                >
-                                    Triple
-                                </label>
+                        <TopSection
+                            text="Today's Ticket Summary Information"
+                            description="* This data has been shown according to purchase from the website"
+                        >
+                            <div className="flex justify-center w-full my-5">
+                                <div className="flex w-[80%] justify-center mt-6 border-1 border-red-800 rounded-full">
+                                    <input
+                                        onChange={() => setDigit("all")}
+                                        className="btn-check"
+                                        type="radio"
+                                        name="bet-position"
+                                        id="bet-all"
+                                        value="all"
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    <label
+                                        className={cn(
+                                            "btn py-2 text-lg px-5 text-white rounded-full",
+                                            digit === "all" && "!bg-orange-500"
+                                        )}
+                                        htmlFor="bet-all"
+                                    >
+                                        All
+                                    </label>
+                                    <input
+                                        onChange={() => setDigit("single")}
+                                        className="btn-check"
+                                        type="radio"
+                                        name="bet-position"
+                                        id="bet-single"
+                                        value="single"
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    <label
+                                        className={cn(
+                                            "btn py-2 px-5 text-lg text-white rounded-full",
+                                            digit === "single" && " !bg-orange-500"
+                                        )}
+                                        htmlFor="bet-single"
+                                    >
+                                        Single
+                                    </label>
+                                    <input
+                                        onChange={() => setDigit("double")}
+                                        className="btn-check"
+                                        type="radio"
+                                        name="bet-position"
+                                        id="bet-double"
+                                        value="double"
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    <label
+                                        className={cn(
+                                            "btn py-2 px-5 text-lg text-white rounded-full",
+                                            digit === "double" && " !bg-orange-500"
+                                        )}
+                                        htmlFor="bet-double"
+                                    >
+                                        Double
+                                    </label>
+                                    <input
+                                        onChange={() => setDigit("triple")}
+                                        className="btn-check"
+                                        type="radio"
+                                        name="bet-position"
+                                        id="bet-triple"
+                                        value="triple"
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    <label
+                                        className={cn(
+                                            "btn py-2 px-5 text-lg text-white rounded-full",
+                                            digit === "triple" && " !bg-orange-500"
+                                        )}
+                                        htmlFor="bet-triple"
+                                    >
+                                        Triple
+                                    </label>
+                                </div>
                             </div>
-                            </div>
-                            {(digit === 'triple' || digit === 'double') && (
+                            {(digit === "triple" || digit === "double") && (
                                 <div className="flex justify-center">
-                                <label
-                                className={cn(
-                                    " py-2 px-8 text-lg text-white",
-                                )}
-                                htmlFor="single-number"
-                            >
-                                Single Number
-                            </label>
-                                <input
-                                onChange={(e) => {
-                                    if(e.target.value.length > 1) return
-                                    if(e.target.value.length === 0) {
-                                        setSingleNumber(null)
-                                        return
-                                    }
-                                    setSingleNumber(Number(e.target.value))
-                                }}
-                                className="bg-white/90 w-20 rounded-3xl text-black pl-10"
-                                type="number"
-                                name="bet-position"
-                                id="single-number"
-                                max={1}
-                                autoComplete="off"
-                                required
-                            />
-                            
-                            </div>
+                                    <label
+                                        className={cn(" py-2 px-5 text-lg text-white")}
+                                        htmlFor="single-number"
+                                    >
+                                        Single Number
+                                    </label>
+                                    <input
+                                        onChange={(e) => {
+                                            if (e.target.value.length > 1) return;
+                                            if (e.target.value.length === 0) {
+                                                setSingleNumber(null);
+                                                return;
+                                            }
+                                            setSingleNumber(Number(e.target.value));
+                                        }}
+                                        className="bg-white/90 w-20 rounded-3xl text-black pl-10"
+                                        type="number"
+                                        name="bet-position"
+                                        id="single-number"
+                                        max={1}
+                                        autoComplete="off"
+                                        required
+                                    />
+                                </div>
                             )}
-                        <Table columns={summaryColumns} data={filteredSummaryData} />
-                    </TopSection>
+                            <Table columns={summaryColumns} data={filteredSummaryData} />
+                        </TopSection>
                     </div>
+                    <div className=" bg-black/60 p-2 my-10">
+                        <TopSection
+                            text="Today's Ticket Purchase Information"
+                            description="* This data has been shown according to purchase from the website"
+                        >
+                            <Table columns={columns} data={tickets} />
+                        </TopSection>
+                    </div>
+                    
                 </>
             ) : (
                 <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
@@ -426,10 +447,13 @@ const TopSection: FC<ITopSection> = ({ text, description, children }) => {
     );
 };
 
+interface IPublishSection {
+    summary: any[];
+}
 
-const PublishResult = (summary) => {
+const PublishResult: FC<IPublishSection> = ({ summary }) => {
     console.log(summary);
-    
+
     const [isLoading, setIsLoading] = useState(false);
     // const [position, setPosition] = useState(null);
     const [data, setData] = useState({
@@ -446,13 +470,15 @@ const PublishResult = (summary) => {
     }
 
     const filteredData = useMemo(() => {
-        if(data.time && data.place && data.position){
-            return summary.filter((value) => (new Date(value.time).getTime() === new Date(data.time).getTime() && value._id.position === data.position && value._id.place === data.place))
-        } 
-        else return []
-    }, [data.place, data.position, data.time, summary])
-
-    
+        if (data.time && data.place && data.position) {
+            return summary.filter(
+                (value) =>
+                    new Date(value.time).getTime() === new Date(data.time).getTime() &&
+                    value._id.position === data.position &&
+                    value._id.place === data.place
+            );
+        } else return [];
+    }, [data.place, data.position, data.time, summary]);
 
     const publishResult = async (): Promise<any> => {
         if (!data.ticketNumber) return toast("Please enter ticket number");
@@ -607,14 +633,58 @@ const PublishResult = (summary) => {
                     </div>
                     {data.time && data.place && data.position && (
                         <div className="flex w-full justify-center gap-5 flex-wrap">
-                        <p className="styled-text text-xl">Total Collection : {filteredData.reduce((sum, current) => sum + parseInt(current.totalAmount), 0)}</p>
-                        {data.ticketNumber && 
-                        <><p className="styled-text text-xl">Total Return : {filteredData.filter((value) => (value._id.ticket === data.ticketNumber || sumOfDigits(data.ticketNumber).toString()[sumOfDigits(data.ticketNumber).toString().length - 1 ] === value._id.ticket)).reduce((sum, current) => sum + parseInt(current.returnAmount), 0)}</p>
-                        <p className="styled-text text-xl">Profit : {filteredData.reduce((sum, current) => sum + parseInt(current.totalAmount), 0) - filteredData.filter((value) => (value._id.ticket === data.ticketNumber || sumOfDigits(data.ticketNumber).toString()[sumOfDigits(data.ticketNumber).toString().length - 1 ] === value._id.ticket)).reduce((sum, current) => sum + parseInt(current.returnAmount), 0)}</p>
-                        </>}
+                            <p className="styled-text text-xl">
+                                Total Collection :{" "}
+                                {filteredData.reduce(
+                                    (sum, current) => sum + parseInt(current.totalAmount),
+                                    0
+                                )}
+                            </p>
+                            {data.ticketNumber && (
+                                <>
+                                    <p className="styled-text text-xl">
+                                        Total Return :{" "}
+                                        {filteredData
+                                            .filter(
+                                                (value) =>
+                                                    value._id.ticket === data.ticketNumber ||
+                                                    sumOfDigits(data.ticketNumber).toString()[
+                                                        sumOfDigits(data.ticketNumber).toString()
+                                                            .length - 1
+                                                    ] === value._id.ticket
+                                            )
+                                            .reduce(
+                                                (sum, current) =>
+                                                    sum + parseInt(current.returnAmount),
+                                                0
+                                            )}
+                                    </p>
+                                    <p className="styled-text text-xl">
+                                        Profit :{" "}
+                                        {filteredData.reduce(
+                                            (sum, current) => sum + parseInt(current.totalAmount),
+                                            0
+                                        ) -
+                                            filteredData
+                                                .filter(
+                                                    (value) =>
+                                                        value._id.ticket === data.ticketNumber ||
+                                                        sumOfDigits(data.ticketNumber).toString()[
+                                                            sumOfDigits(
+                                                                data.ticketNumber
+                                                            ).toString().length - 1
+                                                        ] === value._id.ticket
+                                                )
+                                                .reduce(
+                                                    (sum, current) =>
+                                                        sum + parseInt(current.returnAmount),
+                                                    0
+                                                )}
+                                    </p>
+                                </>
+                            )}
                         </div>
-                    )
-                }
+                    )}
                     <Button
                         disabled={!data.ticketNumber || !data.place || !data.time || !data.position}
                         text="Publish result"
