@@ -33,9 +33,9 @@ function App() {
     const [user, setUser] = useState<null | IUser>(null);
     const [isLoading, setIsLoading] = useState(true);
     //for Production
-    // console.log = () => {};
-    // console.error = () => {};
-    // console.debug = () => {};
+    console.log = () => {};
+    console.error = () => {};
+    console.debug = () => {};
     const fetchCurrentUser = async() =>{
         try {
             setIsLoading(true);
