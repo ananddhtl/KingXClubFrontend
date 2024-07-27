@@ -103,47 +103,7 @@ export const MasterResultInfo = () => {
             },
             {
                 Header: "User Id",
-                accessor: "user._id" || "",
-            },
-            {
-                Header: "User Name",
-                accessor: "user.name" || "",
-            },
-            {
-                Header: "User Email",
-                accessor: "user.email" || "",
-            },
-            {
-                Header: "User Number",
-                accessor: "user.phone" || "",
-            },
-            {
-                Header: "User Agent",
-                accessor: "user.agent" || "",
-            },
-            {
-                Header: "User Balance",
-                accessor: "user.amount" || "",
-            },
-            {
-                Header: "User createdAt",
-                accessor: (values) => {
-                    return values?.createdAt || "N/A";
-                },
-                Cell: ({ cell }: any) => {
-                    const { value } = cell;
-                    return (
-                        <div style={{ textAlign: "center", fontWeight: "600", fontSize: 15 }}>
-                            {new Date(value).toLocaleString("default", {
-                                month: "long",
-                                year: "numeric",
-                                day: "2-digit",
-                                hour: "numeric",
-                                minute: "numeric",
-                            })}
-                        </div>
-                    );
-                },
+                accessor: "user" || "",
             },
         ],
         []

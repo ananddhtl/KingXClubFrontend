@@ -1,5 +1,6 @@
+import { useProfileContext } from "@/App";
 import { getMyActivity } from "@/api/api";
-import { routes } from "@/constants";
+import { ROLE, routes } from "@/constants";
 import { useEffect, useState } from "react";
 import { BiSolidLeftArrowAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -12,9 +13,10 @@ const Notification = () => {
             createdAt: string;
         }[]
     >([]);
-    const [transactionCount, setTransactionCount] = useState(0)
-    const [transactionAmount, setTransactionAmount] = useState(0)
+    const [transactionCount, setTransactionCount] = useState(0);
+    const [transactionAmount, setTransactionAmount] = useState(0);
     const navigate = useNavigate();
+    const { user } = useProfileContext();
 
     useEffect(() => {
         (async () => {
@@ -30,33 +32,24 @@ const Notification = () => {
         })();
     }, []);
 
-    console.log({transactionCount, transactionAmount});
-    
-
     return (
         <section className="flex flex-col items-center justify-start text-white gap-10 min-h-screen p-4">
             <div className="sticky top-5 flex justify-between items-center w-full">
-                        <button
-                        onClick={() => navigate(routes.PROFILE)}
+                <button
+                    onClick={() => navigate(routes.PROFILE)}
                     className="p-3 bg-gray-100 rounded-full shadow-sm"
                 >
-                <BiSolidLeftArrowAlt className="w-full text-black"/>
+                    <BiSolidLeftArrowAlt className="w-full text-black" />
                     {/* <FontAwesomeIcon icon="fa-solid fa-arrow-left" /> */}
                 </button>
                 <span className="text-2xl font-sans font-semibold  oleo-script">Activity</span>
                 <div />
             </div>
             <div className="flex flex-col w-full items-center gap-8">
-            <div className="flex w-full justify-center gap-5 flex-wrap">
-                            <p className="styled-text text-xl">
-                                Transaction Volume :{" "}
-                                {transactionCount}
-                            </p>
-                            <p className="styled-text text-xl">
-                                Transaction Balance :{" "}
-                                {transactionAmount}
-                            </p>
-                            </div>
+                {user.role !== ROLE.MASTER && <div className="flex w-full justify-center gap-5 flex-wrap">
+                    <p className="styled-text text-xl">Transaction Volume : {transactionCount}</p>
+                    <p className="styled-text text-xl">Transaction Balance : {transactionAmount}</p>
+                </div>}
                 {activity.length === 0 ? (
                     <span className="text-xl">No history found</span>
                 ) : (
