@@ -236,7 +236,7 @@ export const MasterResultInfo = () => {
     return (
         // <div className="w-full flex justify-center">
         <section className="bg-neutral-900 min-h-screen w-full lg:w-screen flex-col flex">
-            {summary.length > 0 && <PublishResult summary={summary} />}
+            <PublishResult summary={summary} />
             {dataLoading ? (
                 <svg
                     className="spinner text-center animate-spin"
