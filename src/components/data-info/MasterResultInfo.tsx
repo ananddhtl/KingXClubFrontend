@@ -6,6 +6,7 @@ import { SelectColumnFilter } from "../table/filters";
 import { Button } from "../button/Button";
 import { cn } from "@/utils/cn";
 import { CLUBS } from "@/constants";
+import Countdown from "react-countdown";
 
 function sumOfDigits(value: string) {
     return value.split("").reduce((sum, digit) => sum + parseInt(digit), 0);
@@ -17,6 +18,23 @@ export const MasterResultInfo = () => {
     const [dataLoading, setDataLoading] = useState(false);
     const [digit, setDigit] = useState("all");
     const [singleNumber, setSingleNumber] = useState(null);
+
+    const next = CLUBS.map(({ time, place }) =>
+        time.map((timestamp) => {
+            return {
+                place,
+                time: new Date().setHours(
+                    Number(timestamp.split(":")[0]) * 24 + Number(timestamp.split(":")[1]),
+                    Number(timestamp.split(":")[2]),
+                    0,
+                    0
+                ),
+            };
+        })
+    )
+        .flat()
+        .sort((a, b) => a.time - b.time)
+        .find(({ time }) => time > Date.now());
 
     const columns = useMemo(
         () => [
@@ -206,6 +224,11 @@ export const MasterResultInfo = () => {
                 }
                 return { ...data, possibility: data.count / data.returnAmount };
             });
+        else if (digit === "kings")
+            data = summary.map((data) => {
+                if (data._id.ticket.split("-").length !== 2) return;
+                return { ...data, possibility: data.count / data.returnAmount };
+            });
         return data
             .filter((value) => value)
             .sort((a, b) => a.possibility - b.possibility)
@@ -236,6 +259,62 @@ export const MasterResultInfo = () => {
     return (
         // <div className="w-full flex justify-center">
         <section className="bg-neutral-900 min-h-screen w-full lg:w-screen flex-col flex">
+            <div className="flex justify-center">
+                    <div className="flex flex-col items-center my-2 space-y-2 border-2 border-green-700 rounded-xl p-4 w-fit text-center">
+            {next ? (
+                            <>
+                                <span className="!text-2xl styled-text">{next.place} </span>
+                                <Countdown
+                                    date={next.time}
+                                    renderer={({ hours, minutes, seconds }) => (
+                                        <div className="flex justify-center gap-10 sm:gap-8 scale-75 md:scale-100">
+                                            <div className="flex flex-col gap-5 relative">
+                                                <div className="h-16 w-16 sm:w-32 sm:h-32 lg:w-40 lg:h-40 flex justify-between items-center bg-green-600 rounded-lg">
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 !-left-[6px] rounded-full bg-[#240700]"></div>
+                                                    <span className="lg:text-7xl sm:text-6xl text-2xl font-semibold text-white">
+                                                        {hours}
+                                                    </span>
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 -right-[6px] rounded-full bg-[#240700]"></div>
+                                                </div>
+                                                <span className="text-green-600 text-xl sm:text-2xl text-center font-medium">
+                                                    {hours == 1 ? "Hour" : "Hours"}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-col gap-5 relative">
+                                                <div className="h-16 w-16 sm:w-32 sm:h-32 lg:w-40 lg:h-40 flex justify-between items-center bg-green-600 rounded-lg">
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 !-left-[6px] rounded-full bg-[#240700]"></div>
+                                                    <span className="lg:text-7xl sm:text-6xl text-2xl font-semibold text-white">
+                                                        {minutes}
+                                                    </span>
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 -right-[6px] rounded-full bg-[#240700]"></div>
+                                                </div>
+                                                <span className="text-green-600 text-xl sm:text-2xl text-center capitalize">
+                                                    {minutes == 1 ? "Minute" : "Minutes"}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-col gap-5 relative">
+                                                <div className="h-16 w-16 sm:w-32 sm:h-32 lg:w-40 lg:h-40 flex justify-between items-center bg-green-600 rounded-lg">
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 !-left-[6px] rounded-full bg-[#240700]"></div>
+                                                    <span className="lg:text-7xl sm:text-6xl text-2xl font-semibold text-white">
+                                                        {seconds}
+                                                    </span>
+                                                    <div className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 -right-[6px] rounded-full bg-[#240700]"></div>
+                                                </div>
+                                                <span className="text-green-600 text-xl sm:text-2xl text-center capitalize">
+                                                    {seconds == 1 ? "Second" : "Seconds"}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    autoStart
+                                    className="text-xl styled-text"
+                                />
+                            </>
+                        ) : (
+                            <span className="text-xl styled-text">No Result to Publish</span>
+                        )}
+                        </div>
+                        </div>
             <PublishResult summary={summary} />
             {dataLoading ? (
                 <svg
@@ -255,13 +334,13 @@ export const MasterResultInfo = () => {
                 </svg>
             ) : tickets.length > 0 ? (
                 <>
-                <div className="bg-black/60 p-2 my-10">
+                    <div className="bg-black/60 p-2 my-10">
                         <TopSection
                             text="Today's Ticket Summary Information"
                             description="* This data has been shown according to purchase from the website"
                         >
                             <div className="flex justify-center w-full my-5">
-                                <div className="flex w-[80%] justify-center mt-6 border-1 border-red-800 rounded-full">
+                                <div className="flex w-[98%] justify-center mt-6 border-1 border-red-800 rounded-full">
                                     <input
                                         onChange={() => setDigit("all")}
                                         className="btn-check"
@@ -274,7 +353,7 @@ export const MasterResultInfo = () => {
                                     />
                                     <label
                                         className={cn(
-                                            "btn py-2 text-lg px-5 text-white rounded-full",
+                                            "btn py-2 text-lg px-4 text-white rounded-full",
                                             digit === "all" && "!bg-orange-500"
                                         )}
                                         htmlFor="bet-all"
@@ -293,7 +372,7 @@ export const MasterResultInfo = () => {
                                     />
                                     <label
                                         className={cn(
-                                            "btn py-2 px-5 text-lg text-white rounded-full",
+                                            "btn py-2 px-4 text-lg text-white rounded-full",
                                             digit === "single" && " !bg-orange-500"
                                         )}
                                         htmlFor="bet-single"
@@ -312,7 +391,7 @@ export const MasterResultInfo = () => {
                                     />
                                     <label
                                         className={cn(
-                                            "btn py-2 px-5 text-lg text-white rounded-full",
+                                            "btn py-2 px-4 text-lg text-white rounded-full",
                                             digit === "double" && " !bg-orange-500"
                                         )}
                                         htmlFor="bet-double"
@@ -331,19 +410,38 @@ export const MasterResultInfo = () => {
                                     />
                                     <label
                                         className={cn(
-                                            "btn py-2 px-5 text-lg text-white rounded-full",
+                                            "btn py-2 px-4 text-lg text-white rounded-full",
                                             digit === "triple" && " !bg-orange-500"
                                         )}
                                         htmlFor="bet-triple"
                                     >
                                         Triple
                                     </label>
+                                    <input
+                                        onChange={() => setDigit("kings")}
+                                        className="btn-check"
+                                        type="radio"
+                                        name="bet-position"
+                                        id="bet-kings"
+                                        value="kings"
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    <label
+                                        className={cn(
+                                            "btn py-2 px-4 text-lg text-white rounded-full",
+                                            digit === "kings" && " !bg-orange-500"
+                                        )}
+                                        htmlFor="bet-kings"
+                                    >
+                                        Kings
+                                    </label>
                                 </div>
                             </div>
                             {(digit === "triple" || digit === "double") && (
                                 <div className="flex justify-center">
                                     <label
-                                        className={cn(" py-2 px-5 text-lg text-white")}
+                                        className={cn(" py-2 px-4 text-lg text-white")}
                                         htmlFor="single-number"
                                     >
                                         Single Number
@@ -378,7 +476,6 @@ export const MasterResultInfo = () => {
                             <Table columns={columns} data={tickets} />
                         </TopSection>
                     </div>
-                    
                 </>
             ) : (
                 <span className="text-center py-20 text-2xl w-full flex justify-center text-red-500">
@@ -412,8 +509,6 @@ interface IPublishSection {
 }
 
 const PublishResult: FC<IPublishSection> = ({ summary }) => {
-    console.log(summary);
-
     const [isLoading, setIsLoading] = useState(false);
     // const [position, setPosition] = useState(null);
     const [data, setData] = useState({
@@ -434,7 +529,7 @@ const PublishResult: FC<IPublishSection> = ({ summary }) => {
             return summary.filter(
                 (value) =>
                     new Date(value.time).getTime() === new Date(data.time).getTime() &&
-                    value._id.position === data.position &&
+                    (value._id.position ? value._id.position === data.position : true) &&
                     value._id.place === data.place
             );
         } else return [];
@@ -549,11 +644,43 @@ const PublishResult: FC<IPublishSection> = ({ summary }) => {
                             {(CLUBS.find(({ place }) => place === data.place)?.time || []).map(
                                 (timestamp) => {
                                     const time = new Date().setHours(
-                                        Number(timestamp.split(":")[0]) * 24 + Number(timestamp.split(":")[1]),
+                                        Number(timestamp.split(":")[0]) * 24 +
+                                            Number(timestamp.split(":")[1]),
                                         Number(timestamp.split(":")[2]),
                                         0,
                                         0
                                     );
+                                    if (Number(timestamp.split(":")[0]) === 1) {
+                                        const previousTime = new Date().setHours(
+                                            Number(timestamp.split(":")[1]),
+                                            Number(timestamp.split(":")[2]),
+                                            0,
+                                            0
+                                        );
+                                        return (
+                                            <>
+                                                <option value={previousTime} className="bg-black">
+                                                    {new Date(previousTime).toLocaleString(
+                                                        "default",
+                                                        {
+                                                            month: "long",
+                                                            hour: "numeric",
+                                                            minute: "numeric",
+                                                            day: "2-digit",
+                                                        }
+                                                    )}
+                                                </option>
+                                                <option value={time} className="bg-black">
+                                                    {new Date(time).toLocaleString("default", {
+                                                        month: "long",
+                                                        hour: "numeric",
+                                                        minute: "numeric",
+                                                        day: "2-digit",
+                                                    })}
+                                                </option>
+                                            </>
+                                        );
+                                    }
                                     return (
                                         <option value={time} className="bg-black">
                                             {new Date(time).toLocaleString("default", {
@@ -609,9 +736,33 @@ const PublishResult: FC<IPublishSection> = ({ summary }) => {
                                                 (value) =>
                                                     value._id.ticket === data.ticketNumber ||
                                                     sumOfDigits(data.ticketNumber).toString()[
-                                                        sumOfDigits(data.ticketNumber).toString()
-                                                            .length - 1
-                                                    ] === value._id.ticket
+                                                        sumOfDigits(
+                                                            data.ticketNumber
+                                                        ).toString().length - 1
+                                                    ] === value._id.ticket ||
+                                                    data.position === 'Open' ? (value._id.ticket
+                                                        .split("-")[0] === data.ticketNumber ||
+                                                    value._id.ticket
+                                                        .split("-")[0] ===
+                                                            sumOfDigits(
+                                                                data.ticketNumber
+                                                            ).toString()[
+                                                                sumOfDigits(
+                                                                    data.ticketNumber
+                                                                ).toString().length - 1
+                                                            ]
+                                                        ) : (value._id.ticket
+                                                            .split("-")[1] === data.ticketNumber ||
+                                                        value._id.ticket
+                                                            .split("-")[1] ===
+                                                                sumOfDigits(
+                                                                    data.ticketNumber
+                                                                ).toString()[
+                                                                    sumOfDigits(
+                                                                        data.ticketNumber
+                                                                    ).toString().length - 1
+                                                                ]
+                                                            )
                                             )
                                             .reduce(
                                                 (sum, current) =>
@@ -633,7 +784,30 @@ const PublishResult: FC<IPublishSection> = ({ summary }) => {
                                                             sumOfDigits(
                                                                 data.ticketNumber
                                                             ).toString().length - 1
-                                                        ] === value._id.ticket
+                                                        ] === value._id.ticket ||
+                                                        data.position === 'Open' ? (value._id.ticket
+                                                            .split("-")[0] === data.ticketNumber ||
+                                                        value._id.ticket
+                                                            .split("-")[0] ===
+                                                                sumOfDigits(
+                                                                    data.ticketNumber
+                                                                ).toString()[
+                                                                    sumOfDigits(
+                                                                        data.ticketNumber
+                                                                    ).toString().length - 1
+                                                                ]
+                                                            ) : (value._id.ticket
+                                                                .split("-")[1] === data.ticketNumber ||
+                                                            value._id.ticket
+                                                                .split("-")[1] ===
+                                                                    sumOfDigits(
+                                                                        data.ticketNumber
+                                                                    ).toString()[
+                                                                        sumOfDigits(
+                                                                            data.ticketNumber
+                                                                        ).toString().length - 1
+                                                                    ]
+                                                                )
                                                 )
                                                 .reduce(
                                                     (sum, current) =>

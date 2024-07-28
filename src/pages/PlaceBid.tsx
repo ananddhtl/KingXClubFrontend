@@ -196,15 +196,15 @@ export const PlaceBid = () => {
                         </button>
 
                         <button
-                            disabled={true}
-                            onClick={() => setIsModalOpen(null)}
+                            disabled={!selectedTime || !position}
+                            onClick={() => setIsModalOpen('half-king')}
                             className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                             <HalfKing />
                         </button>
                         <button
-                            disabled={true}
-                            onClick={() => setIsModalOpen(null)}
+                            disabled={!selectedTime || !position}
+                            onClick={() => setIsModalOpen('full-king')}
                             className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                             <FullKing />
