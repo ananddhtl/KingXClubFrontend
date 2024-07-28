@@ -62,8 +62,8 @@ export const PlaceBid = () => {
                                 {CLUBS.find((event) => event.place === city).time.map(
                                     (timestamp, index) => {
                                         const time = new Date().setHours(
-                                            Number(timestamp.split(":")[0]),
-                                            Number(timestamp.split(":")[1]),
+                                            Number(timestamp.split(":")[0]) * 24 + Number(timestamp.split(":")[1]),
+                                            Number(timestamp.split(":")[2]),
                                             0,
                                             0
                                         );

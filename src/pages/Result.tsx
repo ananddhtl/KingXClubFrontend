@@ -13,8 +13,8 @@ export const Result = () => {
             return {
                 place,
                 time: new Date().setHours(
-                    Number(timestamp.split(":")[0]),
-                    Number(timestamp.split(":")[1]),
+                    Number(timestamp.split(":")[0]) * 24 + Number(timestamp.split(":")[1]),
+                    Number(timestamp.split(":")[2]),
                     0,
                     0
                 ),
