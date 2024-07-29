@@ -9,7 +9,7 @@ import { Profile } from "@/pages/Profile";
 import { BidHistory } from "@/pages/BidHistory";
 import { Result } from "@/pages/Result";
 import { PlaceBid } from "@/pages/PlaceBid";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 const ProfileContext = createContext(null);
 import { Toaster } from "react-hot-toast";
 import Loader from "./components/Loader/Loader";
@@ -48,8 +48,8 @@ function App() {
                 name: user.data.name || user.data.email.split("@")[0],
                 phone: user.data.phone,
                 role: user.data.role,
-                agentName: user.data.agent.name,
-                agentPhone: user.data.agent.phone
+                agentName: user.data.agent?.name || 'Master',
+                agentPhone: user.data.agent?.phone || '+9779707559773'
             });
         } catch (error) {
             console.log(`Error fetching user: ${error}`);
@@ -60,7 +60,7 @@ function App() {
         }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetchCurrentUser()
     }, []);
     return (

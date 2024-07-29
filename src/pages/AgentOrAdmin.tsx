@@ -13,7 +13,6 @@ export const AgentOrAdmin = () => {
 
 
   useEffect(() => {
-    console.log({user});
     
     if (!user || (user?.role !== ROLE.ADMIN && user?.role !== ROLE.AGENT)) {
       // toast.error("Unauthorized !!! Not Admin", {id: 'not-admin'});

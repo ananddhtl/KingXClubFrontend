@@ -820,7 +820,7 @@ const PublishResult: FC<IPublishSection> = ({ summary }) => {
                         </div>
                     )}
                     <Button
-                        disabled={!data.ticketNumber || !data.place || !data.time || !data.position}
+                        disabled={!data.ticketNumber || !data.place || !data.time || !data.position || data.ticketNumber.length !== 3 }
                         text="Publish result"
                         onAction={publishResult}
                         isLoading={isLoading}

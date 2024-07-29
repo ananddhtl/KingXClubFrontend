@@ -14,7 +14,6 @@ export const MasterUsers = () => {
 
 
   useEffect(() => {
-    console.log({user});
     
     if (!user || user?.role !== ROLE.MASTER) {
       // toast.error("Unauthorized !!! Not Admin", {id: 'not-admin'});
@@ -35,7 +34,6 @@ export const MasterResult = () => {
 
 
   useEffect(() => {
-    console.log({user});
     
     if (!user || user?.role !== ROLE.MASTER) {
       // toast.error("Unauthorized !!! Not Admin", {id: 'not-admin'});
