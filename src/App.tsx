@@ -1,6 +1,6 @@
 import { Route, Routes, HashRouter } from "react-router-dom";
 import "./App.scss";
-import { routes } from "./constants";
+import { ROLE, routes } from "./constants";
 import { Home } from "./pages/Home";
 import { MasterResult, MasterUsers } from "./pages/Master";
 import Login from "./pages/Login";
@@ -25,8 +25,10 @@ export interface IUser {
     amount: number;
     email: string;
     name: string;
-    role: "user" | "agent" | "admin";
+    role: ROLE;
     phone: string;
+    agentPhone: string;
+    agentName: string;
 }
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
                 name: user.data.name || user.data.email.split("@")[0],
                 phone: user.data.phone,
                 role: user.data.role,
+                agentName: user.data.agent.name,
+                agentPhone: user.data.agent.phone
             });
         } catch (error) {
             console.log(`Error fetching user: ${error}`);

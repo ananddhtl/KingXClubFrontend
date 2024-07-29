@@ -431,7 +431,7 @@ export const Profile = () => {
                 )}
 
                 <NavLink
-                    to="https://t.me/rahulshah63"
+                    to="https://t.me/kingxclub"
                     target="_blank"
                     className="bg-orange-600 relative flex items-center justify-end w-72 h-[52px] px-4 rounded-3xl"
                 >

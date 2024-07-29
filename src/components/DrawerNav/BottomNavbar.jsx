@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useProfileContext } from "@/App";
 
 function BottomNavbar() {
+    const {agentPhone} = useProfileContext()
     return (
         <div className="fixed w-full bottom-0 z-10 left-0 right-0 bg-[#030e03] backdrop-blur-lg sm:hidden">
             <nav className="flex h-20 w-full justify-around items-center ">
@@ -23,7 +25,7 @@ function BottomNavbar() {
 
                 <NavLink
                     className=" flex justify-center h-[75px] items-center"
-                    to="https://wa.me/+9779707559773?text=I%27m%20interested%20in%20your%20games"
+                    to={`https://wa.me/${agentPhone ?? '+9779707559773'}?text=I%27m%20interested%20in%20your%20games`}
                 >
                     <img className="h-[60px] w-[60px]" src="./assets/img/contact.png" />
                 </NavLink>
