@@ -18,7 +18,7 @@ export const BidHistory = () => {
 
     const hasWon = (bid) => {
         if(bid.position === 'Open' && new Date(bid?.time).getTime() > Date.now()) return null;
-        else if(bid.position === 'Close' && new Date(bid?.time).setMinutes(
+        else if((bid.position === 'Close' || bid.position === null) && new Date(bid?.time).setMinutes(
             new Date(bid?.time).getHours() + 1
         ) > Date.now()) return null;
     }

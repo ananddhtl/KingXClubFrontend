@@ -209,6 +209,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                 },
                                             });
                                             setFirstNumber(null);
+                                            setSecondNumber(null);
                                         }
                                     }}
                                     time={time}
@@ -236,6 +237,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                 },
                                             });
                                             setFirstNumber(null);
+                                            setSecondNumber(null);
                                         }
                                     }}
                                     time={time}
@@ -252,7 +254,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                 setTickets={setTickets}
                                 time={time}
                                 firstNumber={firstNumber}
-                                otherCall={() => null}
                                 position={position}
                             />
                         )}
@@ -468,7 +469,7 @@ export const RenderNumbers = ({
     time,
     position,
     firstNumber,
-    otherCall,
+    otherCall = null,
     disabled = false,
 }) => {
     const [selectedInitial, setSelectedInitial] = useState(0);

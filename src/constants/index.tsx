@@ -36,11 +36,3 @@ export const CLUBS = [
       time: ["00:11:00", "00:17:00", "00:21:00", "01:02:00"],
   },
 ];
-
-//1. show 2 day time
-// show wallet balance at top
-//4. Agents dashboard to show all the customer he brings
-/**
- * Deposit/Withdraw
- * No. of customer -> balance, ticket purchase information
- */

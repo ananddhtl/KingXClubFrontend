@@ -45,7 +45,7 @@ export const Home = () => {
     return (
         <HelmetProvider>
             <Navbar />
-            <div className="w-full p-2 my-4">
+            <div className="w-full p-2 my-4 hidden lg:block">
                 <Carousel
                     responsive={responsive}
                     autoPlay={true}
@@ -135,7 +135,7 @@ export const Home = () => {
                     Withdraw
                 </NavLink>
             </div> */}
-            <div className="flex w-full justify-center gap-4">
+            <div className="flex w-full justify-center gap-4 my-8">
                 <div className="group p-1 rounded-lg hover:text-orange-700  bg-gradient-to-r from-[#ffd800] to-[#fe480f] shadow-lg ">
                     <NavLink
                         to="https://wa.me/+9779707559773?text=I%20want%20to%20withdraw%20from%20my%20balance."

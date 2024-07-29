@@ -46,7 +46,7 @@ const Notification = () => {
                 <div />
             </div>
             <div className="flex flex-col w-full items-center gap-8">
-                {user.role !== ROLE.MASTER && <div className="flex w-full justify-center gap-5 flex-wrap">
+                {user.role !== ROLE.USER && <div className="flex w-full justify-center gap-5 flex-wrap">
                     <p className="styled-text text-xl">Transaction Volume : {transactionCount}</p>
                     <p className="styled-text text-xl">Transaction Balance : {transactionAmount}</p>
                 </div>}
