@@ -73,8 +73,8 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
     const findKing = (value: string) => {
         const numbers = value.split('-');
         if (numbers.length !== 2) return 0;
-        if (numbers.every(number => number.length === 3)) return 5000;
-        return 2500;
+        if (numbers.every(number => number.length === 3)) return 10000;
+        return 1000;
       };
 
     const totalAmount = useMemo(
@@ -87,30 +87,30 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
         [tickets]
     ) as number;
 
-    const totalReturnAmount = useMemo(
-        () =>
-            Object.values(tickets).reduce(
-                (accumulator: number, currentValue: { amount: number; ticket: string }) => {
-                    const currentReturn =
-                        currentValue.ticket === "777"
-                            ? 1000000
-                            : isOpen === "single"
-                            ? currentValue.amount * 9
-                            : isOpen === "double"
-                            ? currentValue.amount * 90
-                            : findPana(currentValue.ticket) === 1
-                            ? currentValue.amount * 150
-                            : findPana(currentValue.ticket) === 2
-                            ? currentValue.amount * 250
-                            : findPana(currentValue.ticket) === 3 
-                            ? currentValue.amount * 490
-                            : currentValue.amount * findKing(currentValue.ticket);
-                    return accumulator + currentReturn;
-                },
-                0
-            ),
-        [isOpen, tickets]
-    ) as number;
+    // const totalReturnAmount = useMemo(
+    //     () =>
+    //         Object.values(tickets).reduce(
+    //             (accumulator: number, currentValue: { amount: number; ticket: string }) => {
+    //                 const currentReturn =
+    //                     currentValue.ticket === "777"
+    //                         ? 1000000
+    //                         : isOpen === "single"
+    //                         ? currentValue.amount * 9
+    //                         : isOpen === "double"
+    //                         ? currentValue.amount * 90
+    //                         : findPana(currentValue.ticket) === 1
+    //                         ? currentValue.amount * 150
+    //                         : findPana(currentValue.ticket) === 2
+    //                         ? currentValue.amount * 250
+    //                         : findPana(currentValue.ticket) === 3 
+    //                         ? currentValue.amount * 490
+    //                         : currentValue.amount * findKing(currentValue.ticket);
+    //                 return accumulator + currentReturn;
+    //             },
+    //             0
+    //         ),
+    //     [isOpen, tickets]
+    // ) as number;
 
     return (
         <>
@@ -338,9 +338,9 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                             ? "x250"
                                                                             : findPana(ticket) === 3 
                                                                             ? "x490"
-                                                                            : findKing(ticket) === 5000
-                                                                            ? "x5000"
-                                                                            : "x2500"
+                                                                            : findKing(ticket) === 10000
+                                                                            ? "x10000"
+                                                                            : "x1000"
                                                                             }
                                                                     </td>
                                                                     <td className="text-center leading-[14px]">
@@ -350,7 +350,7 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                                                             : isOpen === "single"
                                                                             ? amount * 9
                                                                             : isOpen === "double"
-                                                                            ? amount * 99
+                                                                            ? amount * 90
                                                                             : findPana(ticket) === 1
                                                                             ? amount * 150
                                                                             : findPana(ticket) === 2
@@ -393,10 +393,6 @@ const BidModal = ({ isOpen, onClose, time, position, city }) => {
                                         <div className="text-xl p-2 mx-auto w-full flex justify-between">
                                             <p>Total Bid Amount</p>
                                             <p>{totalAmount}</p>
-                                        </div>{" "}
-                                        <div className="text-xl p-2 mx-auto w-full flex justify-between">
-                                            <p>Total Winning Amount</p>
-                                            <p>{totalReturnAmount}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -71,7 +71,7 @@ export const Home = () => {
             <div className="flex w-full justify-center gap-4 my-8">
                 <div className="group p-1 rounded-lg hover:text-orange-700  bg-gradient-to-r from-[#ffd800] to-[#fe480f] shadow-lg ">
                     <NavLink
-                        to={`https://wa.me/${agentPhone ?? '+9779707559773'}?text=I%20want%20to%20withdraw%20from%20my%20balance.`}
+                        to={`https://wa.me/${agentPhone ?? '+9779707559773'}?text=I%20want%20to%20deposit%20on%20my%20account.`}
                         target="_blank"
                         className="flex items-center bg-[#3c170a]  justify-start w-full p-2 px-8 lg:px-16 xl:px-16"
                         // onClick={toggleSidebar}
