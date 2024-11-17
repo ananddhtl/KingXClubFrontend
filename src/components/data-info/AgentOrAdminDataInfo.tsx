@@ -16,7 +16,7 @@ export const AgentOrAdminDataInfo = () => {
         () => [
             {
                 Header: "Ticket Number",
-                accessor: "ticket" || "",
+                accessor: "ticket",
             },
             {
                 Header: "Purchase Time",
@@ -68,15 +68,15 @@ export const AgentOrAdminDataInfo = () => {
             },
             {
                 Header: "Position",
-                accessor: "position" || "",
+                accessor: "position",
             },
             {
                 Header: "Returns",
-                accessor: "returns" || "",
+                accessor: "returns",
             },
             {
                 Header: "Place",
-                accessor: "place" || "",
+                accessor: "place",
             },
             {
                 Header: "Won",
@@ -97,7 +97,7 @@ export const AgentOrAdminDataInfo = () => {
             },
             {
                 Header: "User",
-                accessor: "user" || "",
+                accessor: "user",
             },
         ],
         []
@@ -107,7 +107,7 @@ export const AgentOrAdminDataInfo = () => {
         () => [
             {
                 Header: "Ticket Number",
-                accessor: "_id.ticket" || "",
+                accessor: "_id.ticket" ,
             },
             {
                 Header: "Result Time",
@@ -133,23 +133,23 @@ export const AgentOrAdminDataInfo = () => {
             },
             {
                 Header: "Place",
-                accessor: "_id.place" || "",
+                accessor: "_id.place" ,
             },
             {
                 Header: "Position",
-                accessor: "_id.position" || "",
+                accessor: "_id.position" ,
             },
             {
                 Header: "Count",
-                accessor: "count" || "",
+                accessor: "count" ,
             },
             {
                 Header: "Amount",
-                accessor: "totalAmount" || "",
+                accessor: "totalAmount" ,
             },
             {
                 Header: "Returns",
-                accessor: "returnAmount" || "",
+                accessor: "returnAmount",
             },
         ],
         []
@@ -260,23 +260,23 @@ const DepositAmount: FC = () => {
         () => [
             {
                 Header: "Phone",
-                accessor: "phone" || "",
+                accessor: "phone",
             },
             {
                 Header: "Email",
-                accessor: "email" || "",
+                accessor: "email",
             },
             {
                 Header: "Balance",
-                accessor: "amount" || "",
+                accessor: "amount",
             },
             {
                 Header: "Role",
-                accessor: "role" || "",
+                accessor: "role",
             },
             {
                 Header: "Id",
-                accessor: "_id" || "",
+                accessor: "_id",
             },
         ],
             [])
