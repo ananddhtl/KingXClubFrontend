@@ -41,15 +41,17 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: "./",
-    plugins: [react(), svgr(), VitePWA(manifestForPlugin)],
-    resolve: {
-        alias: [
-            {
-                find: "@",
-                replacement: path.resolve(__dirname, "src"),
-            },
-        ],
-    },
+  plugins: [
+    react(),
+    VitePWA({
+      workbox: {
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // Set the limit to 4 MiB
+      },
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true, // Enable PWA development mode
+      },
+    }),
+  ],
 });
 
