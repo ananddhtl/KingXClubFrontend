@@ -59,39 +59,39 @@ const DepositAmount: FC = () => {
         () => [
             {
                 Header: "Phone",
-                accessor: "phone" || "",
+                accessor: "phone" ,
             },
             {
                 Header: "Email",
-                accessor: "email" || "",
+                accessor: "email" ,
             },
             {
                 Header: "Name",
-                accessor: "name" || "",
+                accessor: "name" ,
             },
             {
                 Header: "Country",
-                accessor: "country" || "",
+                accessor: "country" ,
             },
             {
                 Header: "Address",
-                accessor: "address" || "",
+                accessor: "address" ,
             },
             {
                 Header: "Balance",
-                accessor: "amount" || "",
+                accessor: "amount" ,
             },
             {
                 Header: "Role",
-                accessor: "role" || "",
+                accessor: "role" ,
             },
             {
                 Header: "Refer Code",
-                accessor: "referCode" || "",
+                accessor: "referCode" ,
             },
             {
                 Header: "Id",
-                accessor: "_id" || "",
+                accessor: "_id" ,
             },
             {
                 Header: "Created Time",

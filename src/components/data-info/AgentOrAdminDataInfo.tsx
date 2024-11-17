@@ -64,7 +64,7 @@ export const AgentOrAdminDataInfo = () => {
             },
             {
                 Header: "Amount",
-                accessor: "amount" || "",
+                accessor: "amount",
             },
             {
                 Header: "Position",

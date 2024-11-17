@@ -40,7 +40,7 @@ export const MasterResultInfo = () => {
         () => [
             {
                 Header: "Ticket Number",
-                accessor: "ticket" || "",
+                accessor: "ticket" ,
             },
             {
                 Header: "Purchase Time",
@@ -88,19 +88,19 @@ export const MasterResultInfo = () => {
             },
             {
                 Header: "Amount",
-                accessor: "amount" || "",
+                accessor: "amount" ,
             },
             {
                 Header: "Position",
-                accessor: "position" || "",
+                accessor: "position" ,
             },
             {
                 Header: "Returns",
-                accessor: "returns" || "",
+                accessor: "returns" ,
             },
             {
                 Header: "Place",
-                accessor: "place" || "",
+                accessor: "place" ,
             },
             {
                 Header: "Won",
@@ -121,7 +121,7 @@ export const MasterResultInfo = () => {
             },
             {
                 Header: "User Id",
-                accessor: "user" || "",
+                accessor: "user" ,
             },
         ],
         []
@@ -131,7 +131,7 @@ export const MasterResultInfo = () => {
         () => [
             {
                 Header: "Ticket Number",
-                accessor: "_id.ticket" || "",
+                accessor: "_id.ticket" ,
             },
             {
                 Header: "Result Time",
@@ -157,27 +157,27 @@ export const MasterResultInfo = () => {
             },
             {
                 Header: "Place",
-                accessor: "_id.place" || "",
+                accessor: "_id.place" ,
             },
             {
                 Header: "Position",
-                accessor: "_id.position" || "",
+                accessor: "_id.position" ,
             },
             {
                 Header: "Customers",
-                accessor: "count" || "",
+                accessor: "count" ,
             },
             {
                 Header: "Amount",
-                accessor: "totalAmount" || "",
+                accessor: "totalAmount" ,
             },
             {
                 Header: "Returns",
-                accessor: "returnAmount" || "",
+                accessor: "returnAmount" ,
             },
             {
                 Header: "Possibility",
-                accessor: "possibility" || "",
+                accessor: "possibility" ,
             },
         ],
         []
